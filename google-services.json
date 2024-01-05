@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "560980864181",
+    "project_id": "discussit-37dba",
+    "storage_bucket": "discussit-37dba.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:560980864181:android:a8da7d40a4d9b4891ba2fc",
+        "android_client_info": {
+          "package_name": "com.Discussit"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3v_TsmY8zFLBme5hoABPW-NC7LXTdvJo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
