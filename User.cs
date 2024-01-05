@@ -1,9 +1,6 @@
 ﻿using Android.Gms.Tasks;
 using Java.Util;
-using System;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using static Java.Util.Jar.Attributes;
+using Newtonsoft.Json;
 
 namespace Discussit
 {
@@ -14,6 +11,10 @@ namespace Discussit
             get
             {
                 return fbd.GetUserId();
+            }
+            set
+            {
+                Id = value;
             }
         }
         public string Username { get; set; }
@@ -57,7 +58,9 @@ namespace Discussit
 
         internal Task SetFbUser()
         {
-            return fbd.SetDocument(General.USERS_COLLECTION, Id, out string id, GetHashMap()); 
+            Task TaskSetDocument = fbd.SetDocument(General.USERS_COLLECTION, Id, out string id, GetHashMap());
+            Id = id;
+            return TaskSetDocument;
         }
 
         private HashMap GetHashMap()
@@ -69,12 +72,12 @@ namespace Discussit
 
         public string GetJson()
         {
-            return JsonSerializer.Serialize(this);
+            return JsonConvert.SerializeObject(this);
         }
 
         public static User GetUserJson(string json)
         {
-            return JsonSerializer.Deserialize<User>(json);
+            return JsonConvert.DeserializeObject<User>(json);
         }
 
         public void Forget()

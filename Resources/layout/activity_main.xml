@@ -7,8 +7,8 @@
     android:background="@drawable/background"
     android:gravity="center_horizontal">
     <ImageView
-        android:layout_width="@dimen/Main_logoWidth"
         android:layout_height="@dimen/Main_logoHeight"
+        android:layout_width="@dimen/Main_logoWidth"
         android:background="@drawable/Logo"
         android:contentDescription="@string/logo"/>
     <TextView
@@ -19,103 +19,112 @@
         android:textSize="@dimen/Main_TitleSize"
         android:textColor="@color/textColor"
         android:layout_marginBottom="@dimen/Main_marginBottom"/>
-    <RelativeLayout
-        android:id="@+id/rlUsername"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="invisible"
-        android:layout_marginLeft="@dimen/Main_marginLeft"
-        android:layout_marginRight="@dimen/Main_marginRight">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/textColor"
-            android:fontFamily="serif"
-            android:text="@string/Username"
-            android:layout_centerVertical="true"/>
-        <EditText
-            android:id="@+id/etUsername"
-            android:inputType="text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/HintUsername"
-            android:textColor="@color/textColor"
-            android:fontFamily="serif"
-            android:textSize="@dimen/Main_textSize"
-            android:textColorHint="@color/hintColor"
-            android:backgroundTint="@color/clickable"
-            android:layout_marginLeft="80dp"/>
-    </RelativeLayout>
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
         <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/Main_marginLeft"
-        android:layout_marginRight="@dimen/Main_marginRight">
-        <TextView
+            android:id="@+id/rlUsername"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            android:layout_marginLeft="@dimen/Main_marginLeft"
+            android:layout_marginRight="@dimen/Main_marginRight">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/textColor"
+                android:fontFamily="serif"
+                android:textSize="@dimen/Main_textSize"
+                android:text="@string/Username"
+                android:layout_centerVertical="true"/>
+            <EditText
+                android:id="@+id/etUsername"
+                android:inputType="text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/HintUsername"
+                android:textColor="@color/textColor"
+                android:fontFamily="serif"
+                android:textSize="@dimen/Main_textSize"
+                android:textColorHint="@color/hintColor"
+                android:backgroundTint="@color/clickable"
+                android:layout_marginLeft="@dimen/Main_etMarginLeft"/>
+        </RelativeLayout>
+            <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/Main_marginLeft"
+            android:layout_marginRight="@dimen/Main_marginRight">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/textColor"
+                android:fontFamily="serif"
+                android:textSize="@dimen/Main_textSize"
+                android:text="@string/Email"
+                android:layout_centerVertical="true"/>
+            <EditText
+                android:id="@+id/etEmail"
+                android:inputType="textEmailAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/HintEmail"
+                android:textColor="@color/textColor"
+                android:fontFamily="serif"
+                android:textSize="@dimen/Main_textSize"
+                android:textColorHint="@color/hintColor"
+                android:backgroundTint="@color/clickable"
+                android:layout_marginLeft="@dimen/Main_etMarginLeft"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/Main_marginLeft"
+            android:layout_marginRight="@dimen/Main_marginRight">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/textColor"
+                android:fontFamily="serif"
+                android:textSize="@dimen/Main_textSize"
+                android:text="@string/Password"
+                android:layout_centerVertical="true"/>
+            <EditText
+                android:id="@+id/etPassword"
+                android:inputType="textPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/HintPassword"
+                android:textColor="@color/textColor"
+                android:fontFamily="serif"
+                android:textSize="@dimen/Main_textSize"
+                android:textColorHint="@color/hintColor"
+                android:backgroundTint="@color/clickable"
+                android:layout_marginLeft="@dimen/Main_etMarginLeft"/>
+        </RelativeLayout>
+        <CheckBox
+            android:id="@+id/chkRemember"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/textColor"
-            android:fontFamily="serif"
-            android:text="@string/Email"
-            android:layout_centerVertical="true"/>
-        <EditText
-            android:id="@+id/etEmail"
-            android:inputType="textEmailAddress"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/HintEmail"
-            android:textColor="@color/textColor"
-            android:fontFamily="serif"
-            android:textSize="@dimen/Main_textSize"
-            android:textColorHint="@color/hintColor"
-            android:backgroundTint="@color/clickable"
-            android:layout_marginLeft="80dp"/>
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/Main_marginLeft"
-        android:layout_marginRight="@dimen/Main_marginRight">
+            android:buttonTint="@color/clickable"
+            android:text="@string/Remember"/>
         <TextView
+            android:id="@+id/tvNewUser"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/textColor"
-            android:fontFamily="serif"
-            android:text="@string/Password"
-            android:layout_centerVertical="true"/>
-        <EditText
-            android:id="@+id/etPassword"
-            android:inputType="textPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/HintPassword"
-            android:textColor="@color/textColor"
-            android:fontFamily="serif"
-            android:textSize="@dimen/Main_textSize"
-            android:textColorHint="@color/hintColor"
-            android:backgroundTint="@color/clickable"
-            android:layout_marginLeft="80dp"/>
-    </RelativeLayout>
-    <CheckBox
-        android:id="@+id/chkRemember"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/textColor"
-        android:buttonTint="@color/clickable"
-        android:text="@string/Remember"/>
-    <TextView
-        android:id="@+id/tvNewUser"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/NewUser"
-        android:textColor="@color/clickable"/>
-    <Button
-        android:id="@+id/btnEnter"
-        android:layout_width="@dimen/Main_buttonWidth"
-        android:layout_height="@dimen/Main_buttonHeight"
-        android:textSize="@dimen/Main_buttonTextSize"
-        android:text="@string/Login"
-        android:textAllCaps="false"
-        android:textColor="@color/clickable"
-        android:backgroundTint="@android:color/transparent"/>//make Border
+            android:text="@string/NewUser"
+            android:textColor="@color/clickable"/>
+        <Button
+            android:id="@+id/btnEnter"
+            android:layout_width="@dimen/Main_buttonWidth"
+            android:layout_height="@dimen/Main_buttonHeight"
+            android:textSize="@dimen/Main_buttonTextSize"
+            android:text="@string/Login"
+            android:textAllCaps="false"
+            android:textColor="@color/clickable"
+            android:backgroundTint="@android:color/transparent"/>//make Border
+    </LinearLayout>
 </LinearLayout>

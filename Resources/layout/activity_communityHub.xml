@@ -11,8 +11,8 @@
         android:layout_height="wrap_content">
         <ImageView
             android:id="@+id/Hublogo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/Hub_logoWidth"
+            android:layout_height="@dimen/Hub_logoHeight"
             android:background="@drawable/Logo"
             android:contentDescription="@string/logo"
             android:layout_centerHorizontal="true"/>
@@ -35,10 +35,12 @@
             android:id="@+id/etCommunitySearchBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="text"
             android:textSize="@dimen/Hub_searchBarText"
             android:textColor="@color/textColor"
             android:hint="@string/SearchHint"
-            android:textColorHint="@color/clickable"
+            android:textColorHint="@color/hintColor"
+            android:backgroundTint="@color/clickable"
             android:fadeScrollbars="false"
             android:layout_weight="1"/>
         <ImageButton
