@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -24,7 +22,57 @@
             android:contentDescription="@string/logo"
             android:layout_toRightOf="@id/logo"
             android:layout_centerVertical="true"/>
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/back"
+            android:contentDescription="@string/back"
+            android:layout_toLeftOf="@id/logo"
+            android:layout_centerVertical="true"/>
     </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/Community_marginTop"
+        android:layout_marginLeft="@dimen/marginLeft"
+        android:layout_marginRight="@dimen/marginRight">
+        <TextView
+            android:id="@+id/tvCommunityName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="@dimen/Community_nameSize"
+            android:textColor="@color/textColor"/>
+        <TextView
+            android:id="@+id/tvMemberCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/ViewCommunity_memberMarginRight"
+            android:layout_gravity="center_vertical"
+            android:textColor="@color/textColor"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/members"
+            android:layout_gravity="center_vertical"
+            android:textColor="@color/textColor"/>
+    </LinearLayout>
+    <TextView
+        android:id="@+id/tvDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/marginLeft"
+        android:layout_marginRight="@dimen/marginRight"
+        android:textColor="@color/textColor"/>
+    <TextView
+        android:id="@+id/tvViewDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/marginLeft"
+        android:textColor="@color/clickable"
+        android:text="@string/showDescription"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -36,9 +84,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
-            android:textSize="@dimen/Hub_searchBarText"
+            android:textSize="@dimen/ViewCommunity_textSize"
             android:textColor="@color/textColor"
-            android:hint="@string/CommunitySearchHint"
+            android:hint="@string/PostSearchHint"
             android:textColorHint="@color/hintColor"
             android:backgroundTint="@color/clickable"
             android:layout_weight="1"/>
@@ -66,23 +114,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/clickable"
-            android:text="@string/sortMembers"/>
+            android:text="@string/sortDate"/>
     </LinearLayout>
     <ListView
-        android:id="@+id/lvCommunities"
+        android:id="@+id/lvPosts"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:layout_marginLeft="@dimen/marginLeft"
         android:layout_marginRight="@dimen/marginRight"/>
     <Button
-        android:id="@+id/btnNewCommunity"
+        android:id="@+id/btnNewPost"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/CreateCommunity"
+        android:text="@string/CreatePost"
         android:layout_gravity="center_horizontal"
         android:textAllCaps="false"
-        android:textSize="@dimen/Hub_newCommunityText"
+        android:textSize="@dimen/ViewCommunity_textSize"
         android:textColor="@color/clickable"
         android:backgroundTint="@android:color/transparent"/>
 </LinearLayout>

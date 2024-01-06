@@ -10,12 +10,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <ImageButton
-            android:id="@+id/btnProfilePicture"
+            android:id="@+id/btnPicture"
             android:layout_width="@dimen/Profile_profileWidth"
             android:layout_height="@dimen/Profile_profileHeight"
             android:background="@drawable/profilepicture"
-            android:layout_marginLeft="@dimen/Profile_marginLeft"
-            android:layout_marginRight="@dimen/Profile_marginRight"
+            android:layout_marginLeft="@dimen/marginLeft"
+            android:layout_marginRight="@dimen/marginRight"
             android:contentDescription="@string/profile"
             android:layout_centerHorizontal="true"/>
         <ImageButton
@@ -24,19 +24,19 @@
             android:layout_height="wrap_content"
             android:background="@drawable/logout"
             android:contentDescription="@string/logout"
-            android:layout_toRightOf="@id/btnProfilePicture"
+            android:layout_toRightOf="@id/btnPicture"
             android:layout_centerVertical="true"/>
         <ImageButton
-            android:id="@+id/btnProfileBack"
+            android:id="@+id/btnBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/back"
             android:contentDescription="@string/logout"
-            android:layout_toLeftOf="@id/btnProfilePicture"
+            android:layout_toLeftOf="@id/btnPicture"
             android:layout_centerVertical="true"/>
     </RelativeLayout>
     <TextView
-        android:id="@+id/tvProfileUserName"
+        android:id="@+id/tvUserName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/textColor"
@@ -73,6 +73,16 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/Profile_marginTop"
             android:text="@string/viewComments"
+            android:textAllCaps="false"
+            android:textSize="@dimen/Profile_btnTextSize"
+            android:textColor="@color/clickable"
+            android:backgroundTint="@android:color/transparent"/>
+        <Button
+            android:id="@+id/btnManageCommunities"
+            android:layout_width="@dimen/Profile_btnWidth"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/Profile_marginTop"
+            android:text="@string/manageCommunities"
             android:textAllCaps="false"
             android:textSize="@dimen/Profile_btnTextSize"
             android:textColor="@color/clickable"

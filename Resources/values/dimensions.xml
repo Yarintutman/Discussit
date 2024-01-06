@@ -1,8 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <resources>
+  <dimen name="logoWidth">175dp</dimen>
+  <dimen name="logoHeight">150dp</dimen>
+  <dimen name="marginLeft">25dp</dimen>
+  <dimen name="marginRight">25dp</dimen>
   <dimen name="Main_marginBottom">20dp</dimen>
-  <dimen name="Main_marginLeft">25dp</dimen>
-  <dimen name="Main_marginRight">25dp</dimen>
   <dimen name="Main_textSize">15sp</dimen>
   <dimen name="Main_etMarginLeft">80dp</dimen>
   <dimen name="Main_TitleSize">30sp</dimen>
@@ -11,18 +13,19 @@
   <dimen name="Main_buttonHeight">60dp</dimen>
   <dimen name="Main_logoWidth">250dp</dimen>
   <dimen name="Main_logoHeight">200dp</dimen>
-  <dimen name="Hub_marginLeft">25dp</dimen>
-  <dimen name="Hub_marginRight">25dp</dimen>
   <dimen name="Hub_searchBarText">20sp</dimen>
   <dimen name="Hub_newCommunityText">20sp</dimen>
-  <dimen name="Hub_logoWidth">175dp</dimen>
-  <dimen name="Hub_logoHeight">150dp</dimen>
-  <dimen name="Profile_marginLeft">25dp</dimen>
-  <dimen name="Profile_marginRight">25dp</dimen>
   <dimen name="Profile_marginTop">20dp</dimen>
   <dimen name="Profile_profileWidth">120dp</dimen>
   <dimen name="Profile_profileHeight">120dp</dimen>
   <dimen name="Profile_usernameSize">30sp</dimen>
   <dimen name="Profile_btnTextSize">20sp</dimen>
-  <dimen name="Profile_btnWidth">200dp</dimen>
+  <dimen name="Profile_btnWidth">220dp</dimen>
+  <dimen name="Community_marginTop">5dp</dimen>
+  <dimen name="Community_marginBottom">5dp</dimen>
+  <dimen name="Community_memberMarginRight">5dp</dimen>
+  <dimen name="Community_nameSize">20sp</dimen>
+  <dimen name="Community_descriptionSize">15sp</dimen>
+  <dimen name="ViewCommunity_textSize">20sp</dimen>
+  <dimen name="ViewCommunity_memberMarginRight">5dp</dimen>
 </resources>
