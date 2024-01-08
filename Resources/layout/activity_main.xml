@@ -125,6 +125,6 @@
             android:text="@string/Login"
             android:textAllCaps="false"
             android:textColor="@color/clickable"
-            android:backgroundTint="@android:color/transparent"/>//make Border
+            android:background="@android:color/transparent"/>//make Border
     </LinearLayout>
 </LinearLayout>

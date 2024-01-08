@@ -13,6 +13,7 @@ namespace Discussit
     public class CommunityHubActivity : AppCompatActivity, View.IOnClickListener
     {
         User user;
+        ImageButton ibtnProfile;
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -30,7 +31,7 @@ namespace Discussit
 
         private void InitViews()
         {
-
+            ibtnProfile = FindViewById<ImageButton>(Resource.Id.ibtnProfile);
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)

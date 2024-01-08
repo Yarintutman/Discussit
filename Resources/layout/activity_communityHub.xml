@@ -10,19 +10,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <ImageView
-            android:id="@+id/logo"
+            android:id="@+id/ivlogo"
             android:layout_width="@dimen/logoWidth"
             android:layout_height="@dimen/logoHeight"
             android:background="@drawable/Logo"
             android:contentDescription="@string/logo"
             android:layout_centerHorizontal="true"/>
         <ImageButton
-            android:id="@+id/btnProfile"
+            android:id="@+id/ibtnProfile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/profilepicture"
             android:contentDescription="@string/logo"
-            android:layout_toRightOf="@id/logo"
+            android:layout_toRightOf="@id/ivlogo"
             android:layout_centerVertical="true"/>
     </RelativeLayout>
     <LinearLayout
@@ -84,5 +84,5 @@
         android:textAllCaps="false"
         android:textSize="@dimen/Hub_newCommunityText"
         android:textColor="@color/clickable"
-        android:backgroundTint="@android:color/transparent"/>
+        android:background="@android:color/transparent"/>
 </LinearLayout>

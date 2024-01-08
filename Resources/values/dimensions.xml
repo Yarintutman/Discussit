@@ -21,6 +21,9 @@
   <dimen name="Profile_usernameSize">30sp</dimen>
   <dimen name="Profile_btnTextSize">20sp</dimen>
   <dimen name="Profile_btnWidth">220dp</dimen>
+  <dimen name="Settigns_profileWidth">120dp</dimen>
+  <dimen name="Settigns_profileHeight">120dp</dimen>
+  <dimen name="Settigns_marginTop">20dp</dimen>
   <dimen name="Community_marginTop">5dp</dimen>
   <dimen name="Community_marginBottom">5dp</dimen>
   <dimen name="Community_memberMarginRight">5dp</dimen>
