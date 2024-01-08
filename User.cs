@@ -6,17 +6,7 @@ namespace Discussit
 {
     internal class User
     {
-        public string Id
-        {
-            get
-            {
-                return fbd.GetUserId();
-            }
-            set
-            {
-                Id = value;
-            }
-        }
+        public string Id => fbd.GetUserId();
         public string Username { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
@@ -59,7 +49,6 @@ namespace Discussit
         internal Task SetFbUser()
         {
             Task TaskSetDocument = fbd.SetDocument(General.USERS_COLLECTION, Id, out string id, GetHashMap());
-            Id = id;
             return TaskSetDocument;
         }
 

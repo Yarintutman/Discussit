@@ -119,6 +119,7 @@ namespace Discussit
             Intent intent = new Intent(this, typeof(CommunityHubActivity));
             intent.PutExtra(General.KEY_USER, user.GetJson());
             StartActivity(intent);
+            Finish();
         }
 
         private void HideSoftKeyboard()
