@@ -24,6 +24,7 @@
             android:orientation="horizontal"
             android:layout_marginTop="@dimen/Settigns_marginTop">
             <EditText
+                android:id="@+id/etChangeUserName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -32,18 +33,53 @@
                 android:backgroundTint="@color/hintColor"
                 android:layout_marginLeft="@dimen/marginLeft"/>
             <Button
+                android:id="@+id/btnChangeUserName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/resetPassword"
+                android:text="@string/changeName"
                 android:textAllCaps="false"
                 android:background="@android:color/transparent"
                 android:layout_marginRight="@dimen/marginRight"
                 android:textColor="@color/clickable"/>
         </LinearLayout>
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        </LinearLayout>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/Settigns_marginTop">
+            <Button
+                android:id="@+id/btnResetPassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/sendResetPasswordEmail"
+                android:textAllCaps="false"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/clickable"
+                android:background="@android:color/transparent"/>
+            <LinearLayout
+                android:id="@+id/llResetPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+                <EditText
+                    android:id="@+id/etChangeUserName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:textColor="@color/clickable"
+                    android:backgroundTint="@color/hintColor"
+                    android:layout_marginLeft="@dimen/marginLeft"
+                    android:layout_marginRight="@dimen/marginRight"/>
+                <Button
+                    android:id="@+id/btnChangeUserName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/resetPassword"
+                    android:textAllCaps="false"
+                    android:background="@android:color/transparent"
+                    android:textColor="@color/clickable"/>
+            </LinearLayout>
+        </RelativeLayout>
     </LinearLayout>
     <Button
         android:layout_width="wrap_content"

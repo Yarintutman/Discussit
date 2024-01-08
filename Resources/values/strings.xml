@@ -36,9 +36,11 @@
   <string name="InvalidFields">Invalid Input Fields</string>
   <string name="InvalidUserAlreadyExists">User Already Exists</string>
   <string name="InvalidLoginFields">Invalid Email of password</string>
-  <string name="changeName">Change UserName</string>
-  <string name="resetPassword">Reset Password</string>
-  <string name="passwordEmail">Password reset request sent to Email: </string>
+  <string name="changeName">Change Username</string>
+  <string name="resetPassword">Send Email verification</string>
+  <string name="sendResetPasswordEmail">Send Email verification</string>
+  <string name="passwordEmail">Sent verification Email</string>
+  <string name="wrongEmail">Email address does not match the user's Email address</string>
   <string name="sendAgain">Resend password reset Email</string>
   <string name="save">Save</string>
 </resources>

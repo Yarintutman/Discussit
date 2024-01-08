@@ -9,8 +9,8 @@
   <dimen name="Main_etMarginLeft">80dp</dimen>
   <dimen name="Main_TitleSize">30sp</dimen>
   <dimen name="Main_buttonTextSize">20sp</dimen>
-  <dimen name="Main_buttonWidth">100dp</dimen>
-  <dimen name="Main_buttonHeight">60dp</dimen>
+  <dimen name="Main_buttonWidth">90dp</dimen>
+  <dimen name="Main_buttonHeight">50dp</dimen>
   <dimen name="Main_logoWidth">250dp</dimen>
   <dimen name="Main_logoHeight">200dp</dimen>
   <dimen name="Hub_searchBarText">20sp</dimen>
@@ -24,6 +24,7 @@
   <dimen name="Settigns_profileWidth">120dp</dimen>
   <dimen name="Settigns_profileHeight">120dp</dimen>
   <dimen name="Settigns_marginTop">20dp</dimen>
+  <dimen name="Settigns_buttonTextSize">20sp</dimen>
   <dimen name="Community_marginTop">5dp</dimen>
   <dimen name="Community_marginBottom">5dp</dimen>
   <dimen name="Community_memberMarginRight">5dp</dimen>

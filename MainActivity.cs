@@ -34,7 +34,6 @@ namespace Discussit
             tvLoginState = FindViewById<TextView>(Resource.Id.tvLoginState);
             tvNewUser = FindViewById<TextView>(Resource.Id.tvNewUser);
             chkRemember = FindViewById<CheckBox>(Resource.Id.chkRemember);
-
             tvNewUser.SetOnClickListener(this);
             btnEnter.SetOnClickListener(this);
         }
