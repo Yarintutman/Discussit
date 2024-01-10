@@ -4,17 +4,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background">
-    <ImageView
-        android:id="@+id/ivProilePicture"
-        android:layout_width="@dimen/Settigns_profileWidth"
-        android:layout_height="@dimen/Settigns_profileHeight"
-        android:background="@drawable/profilepicture"
-        android:layout_gravity="center"
+    <RelativeLayout
         android:layout_marginTop="@dimen/Settigns_marginTop"
-        android:contentDescription="@string/profile"/>
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/ivProilePicture"
+            android:layout_width="@dimen/Settigns_profileWidth"
+            android:layout_height="@dimen/Settigns_profileHeight"
+            android:background="@drawable/profilepicture"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="@dimen/marginLeft"
+            android:contentDescription="@string/profile"/>
+        <ImageButton
+            android:id="@+id/ibtnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/back"
+            android:contentDescription="@string/logout"
+            android:layout_toLeftOf="@id/ivProilePicture"
+            android:layout_centerVertical="true"/>
+    </RelativeLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center"
         android:layout_weight="1">
@@ -50,7 +63,7 @@
                 android:id="@+id/btnResetPassword"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/sendResetPasswordEmail"
+                android:text="@string/resetEmail"
                 android:textAllCaps="false"
                 android:layout_centerHorizontal="true"
                 android:textColor="@color/clickable"
@@ -60,13 +73,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="invisible">
                 <EditText
                     android:id="@+id/etChangeUserName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
                     android:textColor="@color/clickable"
+                    android:hint="@string/enterEmail"
+                    android:textColorHint="@color/hintColor"
                     android:backgroundTint="@color/hintColor"
                     android:layout_marginLeft="@dimen/marginLeft"
                     android:layout_marginRight="@dimen/marginRight"/>
@@ -80,13 +96,20 @@
                     android:textColor="@color/clickable"/>
             </LinearLayout>
         </RelativeLayout>
+        <TextView
+            android:id="@+id/tvEmailAnswer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/textColor"/>
     </LinearLayout>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/save"
         android:textAllCaps="false"
+        android:textSize="@dimen/Settigns_buttonTextSize"
         android:textColor="@color/clickable"
         android:background="@android:color/transparent"
-        android:layout_gravity="center_horizontal"/>
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/Settigns_marginBottom"/>
 </LinearLayout>

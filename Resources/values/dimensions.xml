@@ -24,6 +24,7 @@
   <dimen name="Settigns_profileWidth">120dp</dimen>
   <dimen name="Settigns_profileHeight">120dp</dimen>
   <dimen name="Settigns_marginTop">20dp</dimen>
+  <dimen name="Settigns_marginBottom">20dp</dimen>
   <dimen name="Settigns_buttonTextSize">20sp</dimen>
   <dimen name="Community_marginTop">5dp</dimen>
   <dimen name="Community_marginBottom">5dp</dimen>
@@ -32,4 +33,6 @@
   <dimen name="Community_descriptionSize">15sp</dimen>
   <dimen name="ViewCommunity_textSize">20sp</dimen>
   <dimen name="ViewCommunity_memberMarginRight">5dp</dimen>
+  <dimen name="CreateCommunity_marginTop">20dp</dimen>
+  <dimen name="CreateCommunity_buttonTextSize">20sp</dimen>
 </resources>
