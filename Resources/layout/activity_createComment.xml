@@ -3,14 +3,12 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
-    android:gravity="center_horizontal">
+    android:background="@drawable/background">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/CreateCommunity_marginTop">
-        <ImageButton
-            android:id="@+id/ibtnLogo"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/ivlogo"
             android:layout_width="@dimen/logoWidth"
             android:layout_height="@dimen/logoHeight"
             android:background="@drawable/Logo"
@@ -22,9 +20,24 @@
             android:layout_height="wrap_content"
             android:background="@drawable/back"
             android:contentDescription="@string/back"
-            android:layout_toLeftOf="@id/ibtnLogo"
+            android:layout_toLeftOf="@id/ivlogo"
             android:layout_centerVertical="true"/>
     </RelativeLayout>
+    <TextView
+        android:id="@+id/tvPostName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/textColor"
+        android:textSize="@dimen/CreateComment_postNameTextSize"
+        android:layout_marginLeft="@dimen/marginLeft"
+        android:layout_marginRight="@dimen/marginRight"/>
+    <TextView
+        android:id="@+id/tvPostDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/textColor"
+        android:layout_marginLeft="@dimen/marginLeft"
+        android:layout_marginRight="@dimen/marginRight"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -36,30 +49,15 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/communityName"
+            android:text="@string/CommentDescription"
             android:textColor="@color/textColor"
-            android:textSize="@dimen/CreateCommunity_textSize"/>
+            android:textSize="@dimen/CreateComment_textSize"/>
         <EditText
-            android:id="@+id/etCommunityName"
+            android:id="@+id/etCommentDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
-            android:hint="@string/enterCommunityName"
-            android:textColorHint="@color/hintColor"
-            android:textColor="@color/textColor"
-            android:backgroundTint="@color/clickable"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/communityDescription"
-            android:textColor="@color/textColor"
-            android:textSize="@dimen/CreateCommunity_textSize"/>
-        <EditText
-            android:id="@+id/etCommunityDescription"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text"
-            android:hint="@string/entercommunityDescription"
+            android:hint="@string/enterCommentDescription"
             android:textColorHint="@color/hintColor"
             android:textColor="@color/textColor"
             android:backgroundTint="@color/clickable"/>
@@ -68,9 +66,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAllCaps="false"
-        android:textSize="@dimen/CreateCommunity_buttonTextSize"
+        android:layout_gravity="center_horizontal"
+        android:textSize="@dimen/CreateComment_buttonTextSize"
         android:background="@android:color/transparent"
         android:textColor="@color/clickable"
-        android:text="@string/CreateCommunity"
+        android:text="@string/CreateComment"
         android:layout_marginBottom="@dimen/marginBottom"/>
 </LinearLayout>

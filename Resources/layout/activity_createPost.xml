@@ -25,6 +25,21 @@
             android:layout_toLeftOf="@id/ibtnLogo"
             android:layout_centerVertical="true"/>
     </RelativeLayout>
+    <TextView
+        android:id="@+id/tvCommunityName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/CreatePost_communityNameTextSize"
+        android:textColor="@color/textColor"
+        android:layout_marginLeft="@dimen/marginLeft"
+        android:layout_marginRight="@dimen/marginRight"/>
+    <TextView
+        android:id="@+id/tvCommunityDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/marginLeft"
+        android:layout_marginRight="@dimen/marginRight"
+        android:textColor="@color/textColor"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -36,30 +51,30 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/communityName"
+            android:text="@string/PostName"
             android:textColor="@color/textColor"
-            android:textSize="@dimen/CreateCommunity_textSize"/>
+            android:textSize="@dimen/CreatePost_textSize"/>
         <EditText
-            android:id="@+id/etCommunityName"
+            android:id="@+id/etPostName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
-            android:hint="@string/enterCommunityName"
+            android:hint="@string/enterPostName"
             android:textColorHint="@color/hintColor"
             android:textColor="@color/textColor"
             android:backgroundTint="@color/clickable"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/communityDescription"
+            android:text="@string/PostDescription"
             android:textColor="@color/textColor"
-            android:textSize="@dimen/CreateCommunity_textSize"/>
+            android:textSize="@dimen/CreatePost_textSize"/>
         <EditText
-            android:id="@+id/etCommunityDescription"
+            android:id="@+id/etPostDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
-            android:hint="@string/entercommunityDescription"
+            android:hint="@string/enterPostDescription"
             android:textColorHint="@color/hintColor"
             android:textColor="@color/textColor"
             android:backgroundTint="@color/clickable"/>
@@ -68,9 +83,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAllCaps="false"
-        android:textSize="@dimen/CreateCommunity_buttonTextSize"
+        android:textSize="@dimen/CreatePost_buttonTextSize"
         android:background="@android:color/transparent"
         android:textColor="@color/clickable"
-        android:text="@string/CreateCommunity"
+        android:text="@string/CreatePost"
         android:layout_marginBottom="@dimen/marginBottom"/>
 </LinearLayout>

@@ -3,14 +3,13 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
-    android:gravity="center_horizontal">
+    android:background="@drawable/background">
     <RelativeLayout
+        android:layout_marginTop="@dimen/Settigns_marginTop"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/CreateCommunity_marginTop">
-        <ImageButton
-            android:id="@+id/ibtnLogo"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/ivlogo"
             android:layout_width="@dimen/logoWidth"
             android:layout_height="@dimen/logoHeight"
             android:background="@drawable/Logo"
@@ -22,7 +21,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/back"
             android:contentDescription="@string/back"
-            android:layout_toLeftOf="@id/ibtnLogo"
+            android:layout_toLeftOf="@id/ivlogo"
             android:layout_centerVertical="true"/>
     </RelativeLayout>
     <LinearLayout
@@ -38,7 +37,7 @@
             android:layout_height="wrap_content"
             android:text="@string/communityName"
             android:textColor="@color/textColor"
-            android:textSize="@dimen/CreateCommunity_textSize"/>
+            android:textSize="@dimen/ManageCommunity_textSize"/>
         <EditText
             android:id="@+id/etCommunityName"
             android:layout_width="match_parent"
@@ -53,7 +52,7 @@
             android:layout_height="wrap_content"
             android:text="@string/communityDescription"
             android:textColor="@color/textColor"
-            android:textSize="@dimen/CreateCommunity_textSize"/>
+            android:textSize="@dimen/ManageCommunity_textSize"/>
         <EditText
             android:id="@+id/etCommunityDescription"
             android:layout_width="match_parent"
@@ -63,14 +62,25 @@
             android:textColorHint="@color/hintColor"
             android:textColor="@color/textColor"
             android:backgroundTint="@color/clickable"/>
+        <Button
+            android:id="@+id/btnManageMembers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/manageMembers"
+            android:textAllCaps="false"
+            android:textSize="@dimen/ManageCommunity_buttonTextSize"
+            android:textColor="@color/clickable"
+            android:background="@android:color/transparent"/>
     </LinearLayout>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@string/save"
         android:textAllCaps="false"
-        android:textSize="@dimen/CreateCommunity_buttonTextSize"
-        android:background="@android:color/transparent"
+        android:textSize="@dimen/ManageCommunity_buttonTextSize"
         android:textColor="@color/clickable"
-        android:text="@string/CreateCommunity"
+        android:background="@android:color/transparent"
+        android:layout_gravity="center_horizontal"
         android:layout_marginBottom="@dimen/marginBottom"/>
 </LinearLayout>

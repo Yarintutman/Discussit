@@ -18,7 +18,7 @@
         android:text="@string/Login"
         android:textSize="@dimen/Main_TitleSize"
         android:textColor="@color/textColor"
-        android:layout_marginBottom="@dimen/Main_marginBottom"/>
+        android:layout_marginBottom="@dimen/marginBottom"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

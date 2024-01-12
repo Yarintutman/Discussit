@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginTop="@dimen/Post_marginTop">
+        <ImageView
+            android:id="@+id/ivUserPicture"
+            android:layout_width="@dimen/Post_profileWidth"
+            android:layout_height="@dimen/Post_profileHeight"
+            android:background="@drawable/profilepicture"
+            android:contentDescription="@string/profile"
+            android:layout_marginLeft="@dimen/Post_marginLeft"/>
+        <TextView
+            android:id="@+id/tvUserCreatedPost"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/textColor"
+            android:layout_marginLeft="@dimen/Post_marginLeft"
+            android:layout_marginRight="@dimen/Post_marginRight"/>
+    </LinearLayout>
+    <TextView
+        android:id="@+id/tvPostName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/clickable"
+        android:textSize="@dimen/Post_nameSize"
+        android:layout_marginBottom="@dimen/Post_marginBottom"
+        android:layout_marginLeft="@dimen/Post_marginLeft"
+        android:layout_marginRight="@dimen/Post_marginRight"/>
+</LinearLayout>

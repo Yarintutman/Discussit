@@ -48,7 +48,7 @@ namespace Discussit
 
         internal Task SetFbUser()
         {
-            Task TaskSetDocument = fbd.SetDocument(General.USERS_COLLECTION, Id, out string id, GetHashMap());
+            Task TaskSetDocument = fbd.SetDocument(General.USERS_COLLECTION, Id, out _, GetHashMap());
             return TaskSetDocument;
         }
 

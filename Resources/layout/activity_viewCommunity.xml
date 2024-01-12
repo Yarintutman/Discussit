@@ -16,8 +16,8 @@
             android:layout_centerHorizontal="true"/>
         <ImageButton
             android:id="@+id/ibtnProfile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/profilePictureWidth"
+            android:layout_height="@dimen/profilePictureHeight"
             android:background="@drawable/profilepicture"
             android:contentDescription="@string/logo"
             android:layout_toRightOf="@id/ivlogo"
@@ -99,7 +99,7 @@
             android:layout_gravity="center_vertical"/>
     </LinearLayout>
     <LinearLayout
-        android:id="@+id/llSortBy"
+        android:id="@+id/llSortPostBy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -110,7 +110,7 @@
             android:textColor="@color/clickable"
             android:text="@string/sortBy"/>
         <TextView
-            android:id="@+id/tvSortBy"
+            android:id="@+id/tvSortPostBy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/clickable"
@@ -132,5 +132,6 @@
         android:textAllCaps="false"
         android:textSize="@dimen/ViewCommunity_textSize"
         android:textColor="@color/clickable"
-        android:background="@android:color/transparent"/>
+        android:background="@android:color/transparent"
+        android:layout_marginBottom="@dimen/marginBottom"/>
 </LinearLayout>

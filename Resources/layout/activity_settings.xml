@@ -111,5 +111,5 @@
         android:textColor="@color/clickable"
         android:background="@android:color/transparent"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="@dimen/Settigns_marginBottom"/>
+        android:layout_marginBottom="@dimen/marginBottom"/>
 </LinearLayout>

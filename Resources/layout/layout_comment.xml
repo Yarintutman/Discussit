@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginTop="@dimen/Comment_marginTop">
+        <ImageView
+            android:id="@+id/ivUserPicture"
+            android:layout_width="@dimen/Comment_profileWidth"
+            android:layout_height="@dimen/Comment_profileHeight"
+            android:background="@drawable/profilepicture"
+            android:contentDescription="@string/profile"
+            android:layout_marginLeft="@dimen/Comment_marginLeft"/>
+        <TextView
+            android:id="@+id/tvUserCreatedComment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/textColor"
+            android:layout_marginLeft="@dimen/Comment_marginLeft"
+            android:layout_marginRight="@dimen/Comment_marginRight"/>
+    </LinearLayout>
+    <TextView
+        android:id="@+id/tvCommentDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/clickable"
+        android:textSize="@dimen/Post_nameSize"
+        android:layout_marginBottom="@dimen/Post_marginBottom"
+        android:layout_marginLeft="@dimen/Comment_marginLeft"
+        android:layout_marginRight="@dimen/Comment_marginRight"/>
+</LinearLayout>

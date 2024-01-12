@@ -19,6 +19,7 @@
   <string name="members">Members</string>
   <string name="CreateCommunity">Create a new community</string>
   <string name="CreatePost">Create a new post</string>
+  <string name="CreateComment">Create a new comment</string>
   <string name="CommunitySearchHint">Search for a commnunity</string>
   <string name="PostSearchHint">Search for a post</string>
   <string name="sortBy">Sort by:</string>
@@ -44,10 +45,16 @@
   <string name="passwordEmail">Sent verification Email</string>
   <string name="wrongEmail">Email address does not match the user\'s Email address</string>
   <string name="sendAgain">Resend Email verification</string>
-  <string name="save">Save</string>
-  <string name="communityName">Community Name:</string>
+  <string name="save">Save Changes</string>
+  <string name="communityName">Community Name</string>
   <string name="enterCommunityName">Enter Community Name</string>
-  <string name="communityDescription">Community Description:</string>
+  <string name="communityDescription">Community Description</string>
   <string name="entercommunityDescription">Enter Community Description</string>
-
+  <string name="PostName">Post Name</string>
+  <string name="enterPostName">Enter Post Name</string>
+  <string name="PostDescription">Post Description</string>
+  <string name="enterPostDescription">Enter Post Description</string>
+  <string name="CommentDescription">Comment Description</string>
+  <string name="enterCommentDescription">Enter Comment Description</string>
+  <string name="manageMembers">Manage Members</string>
 </resources>
