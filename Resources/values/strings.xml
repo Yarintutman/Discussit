@@ -22,6 +22,7 @@
   <string name="CreateComment">Create a new comment</string>
   <string name="CommunitySearchHint">Search for a commnunity</string>
   <string name="PostSearchHint">Search for a post</string>
+  <string name="CommentSearchHint">Search for a comment</string>
   <string name="sortBy">Sort by:</string>
   <string name="sortMembers">\ Most members</string>
   <string name="sortActivity">\ Most active</string>
@@ -57,4 +58,5 @@
   <string name="CommentDescription">Comment Description</string>
   <string name="enterCommentDescription">Enter Comment Description</string>
   <string name="manageMembers">Manage Members</string>
+  <string name="close">Close Dialog</string>
 </resources>

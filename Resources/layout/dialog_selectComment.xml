@@ -24,7 +24,7 @@
             android:inputType="text"
             android:textSize="@dimen/dialog_textSize"
             android:textColor="@color/textColor"
-            android:hint="@string/PostSearchHint"
+            android:hint="@string/CommentSearchHint"
             android:textColorHint="@color/hintColor"
             android:backgroundTint="@color/clickable"
             android:layout_weight="1"/>
@@ -37,7 +37,7 @@
             android:layout_gravity="center_vertical"/>
     </LinearLayout>
     <LinearLayout
-        android:id="@+id/llSortPostBy"
+        android:id="@+id/llSortCommentBy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -48,14 +48,14 @@
             android:textColor="@color/clickable"
             android:text="@string/sortBy"/>
         <TextView
-            android:id="@+id/tvSortPostBy"
+            android:id="@+id/tvSortCommentBy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/clickable"
             android:text="@string/sortDate"/>
     </LinearLayout>
         <ListView
-        android:id="@+id/lvPosts"
+        android:id="@+id/lvComments"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"

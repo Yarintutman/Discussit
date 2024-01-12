@@ -66,4 +66,13 @@
   <dimen name="CreateComment_postNameTextSize">25dp</dimen>
   <dimen name="ManageCommunity_buttonTextSize">20sp</dimen>
   <dimen name="ManageCommunity_textSize">15sp</dimen>
+  <dimen name="dialog_width">300dp</dimen>
+  <dimen name="dialog_heigth">400dp</dimen>
+  <dimen name="dialog_marginLeft">5dp</dimen>
+  <dimen name="dialog_marginRight">5dp</dimen>
+  <dimen name="dialog_marginTop">5dp</dimen>
+  <dimen name="dialog_marginBottom">5dp</dimen>
+  <dimen name="dialog_closeWidth">30dp</dimen>
+  <dimen name="dialog_closeHeight">30dp</dimen>
+  <dimen name="dialog_textSize">20sp</dimen>
 </resources>
