@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+  <item android:id="@+id/sortByMemberCount"
+    android:title="@string/sortMembers"/>
+  <item android:id="@+id/sortByActivity"
+    android:title="@string/sortActivity"/>
+  <item android:id="@+id/sortByName"
+    android:title="@string/sortByName"/>
+</menu>

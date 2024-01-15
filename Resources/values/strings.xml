@@ -23,11 +23,14 @@
   <string name="CommunitySearchHint">Search for a commnunity</string>
   <string name="PostSearchHint">Search for a post</string>
   <string name="CommentSearchHint">Search for a comment</string>
-  <string name="sortBy">Sort by:</string>
-  <string name="sortMembers">\ Most members</string>
-  <string name="sortActivity">\ Most active</string>
-  <string name="sortLikes">\ Most likes</string>
-  <string name="sortDate">\ Latest</string>
+  <string name="MemberSearchHint">Search for a member</string>
+  <string name="sortBy">Sort by:\ </string>
+  <string name="sortMembers">Most members</string>
+  <string name="sortActivity">Most active</string>
+  <string name="sortByName">By name</string>
+  <string name="sortLikes">Most likes</string>
+  <string name="sortDate">Latest</string>
+  <string name="sortRank">By rank</string>
   <string name="showDescription">Show Description</string>
   <string name="hideDescription">Hide Description</string>
   <string name="viewCommunities">View Communities</string>
@@ -59,4 +62,13 @@
   <string name="enterCommentDescription">Enter Comment Description</string>
   <string name="manageMembers">Manage Members</string>
   <string name="close">Close Dialog</string>
+  <string name="confirmLogout">Are you sure you want to log out?</string>
+  <string name="confirm">Confirm</string>
+  <string name="cancel">Cancel</string>
+  <string name="edit">Edit</string>
+  <string name="delete">delete</string>
+  <string name="remove">Remove</string>
+  <string name="ban">Ban</string>
+  <string name="promote">Promote</string>
+  <string name="demote">Demote</string>
 </resources>

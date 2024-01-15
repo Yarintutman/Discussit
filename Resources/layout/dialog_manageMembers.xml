@@ -4,14 +4,35 @@
     android:layout_width="@dimen/dialog_width"
     android:layout_height="@dimen/dialog_height"
     android:background="@drawable/background">
-    <ImageButton
-        android:id="@+id/ibtnCloseDialog"
-        android:layout_width="@dimen/dialog_closeWidth"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="@dimen/dialog_closeHeight"
         android:layout_marginLeft="@dimen/dialog_marginLeft"
         android:layout_marginTop="@dimen/dialog_marginTop"
-        android:background="@drawable/close"
-        android:contentDescription="@string/close"/>
+        android:layout_marginRight="@dimen/dialog_marginRight">
+        <ImageButton
+            android:id="@+id/ibtnCloseDialog"
+            android:layout_width="@dimen/dialog_closeWidth"
+            android:layout_height="@dimen/dialog_closeHeight"
+            android:background="@drawable/close"
+            android:contentDescription="@string/close"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/members"
+                android:textColor="@color/textColor"
+                android:gravity="center_vertical"/>
+        </LinearLayout>
+    </RelativeLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -25,7 +46,7 @@
             android:inputType="text"
             android:textSize="@dimen/dialog_textSize"
             android:textColor="@color/textColor"
-            android:hint="@string/CommunitySearchHint"
+            android:hint="@string/MemberSearchHint"
             android:textColorHint="@color/hintColor"
             android:backgroundTint="@color/clickable"
             android:layout_weight="1"/>
@@ -38,7 +59,7 @@
             android:layout_gravity="center_vertical"/>
     </LinearLayout>
     <LinearLayout
-        android:id="@+id/llSortCommunityBy"
+        android:id="@+id/llSortMembersBy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -52,10 +73,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/clickable"
-            android:text="@string/sortMembers"/>
+            android:text="@string/sortByName"/>
     </LinearLayout>
     <ListView
-        android:id="@+id/lvCommunities"
+        android:id="@+id/lvMembers"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"

@@ -48,6 +48,13 @@
   <dimen name="Comment_marginRight">5dp</dimen>
   <dimen name="Comment_profileWidth">25dp</dimen>
   <dimen name="Comment_profileHeight">25dp</dimen>
+  <dimen name="Member_marginTop">5dp</dimen>
+  <dimen name="Member_marginBottom">5dp</dimen>
+  <dimen name="Member_nameSize">15sp</dimen>
+  <dimen name="Member_marginLeft">5dp</dimen>
+  <dimen name="Member_marginRight">5dp</dimen>
+  <dimen name="Member_profileWidth">25dp</dimen>
+  <dimen name="Member_profileHeight">25dp</dimen>
   <dimen name="ViewCommunity_textSize">20sp</dimen>
   <dimen name="ViewCommunity_memberMarginRight">5dp</dimen>
   <dimen name="CreateCommunity_marginTop">20dp</dimen>
@@ -67,7 +74,9 @@
   <dimen name="ManageCommunity_buttonTextSize">20sp</dimen>
   <dimen name="ManageCommunity_textSize">15sp</dimen>
   <dimen name="dialog_width">300dp</dimen>
-  <dimen name="dialog_heigth">400dp</dimen>
+  <dimen name="dialog_height">400dp</dimen>
+  <dimen name="smallDialog_width">320dp</dimen>
+  <dimen name="smallDialog_height">150dp</dimen>
   <dimen name="dialog_marginLeft">5dp</dimen>
   <dimen name="dialog_marginRight">5dp</dimen>
   <dimen name="dialog_marginTop">5dp</dimen>
@@ -75,4 +84,5 @@
   <dimen name="dialog_closeWidth">30dp</dimen>
   <dimen name="dialog_closeHeight">30dp</dimen>
   <dimen name="dialog_textSize">20sp</dimen>
+  <dimen name="dialog_buttonMargin">40dp</dimen>
 </resources>

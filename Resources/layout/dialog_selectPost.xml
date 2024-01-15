@@ -2,9 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="@dimen/dialog_width"
-    android:layout_height="@dimen/dialog_heigth"
+    android:layout_height="@dimen/dialog_height"
     android:background="@drawable/background">
     <ImageButton
+        android:id="@+id/ibtnCloseDialog"
         android:layout_width="@dimen/dialog_closeWidth"
         android:layout_height="@dimen/dialog_closeHeight"
         android:layout_marginLeft="@dimen/dialog_marginLeft"
@@ -48,13 +49,12 @@
             android:textColor="@color/clickable"
             android:text="@string/sortBy"/>
         <TextView
-            android:id="@+id/tvSortPostBy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/clickable"
             android:text="@string/sortDate"/>
     </LinearLayout>
-        <ListView
+    <ListView
         android:id="@+id/lvPosts"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
