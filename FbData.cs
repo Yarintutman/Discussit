@@ -1,9 +1,13 @@
 ﻿using Android.App;
-using Android.Gms.Tasks;
-using Firebase;
 using Firebase.Auth;
 using Firebase.Firestore;
+using Firebase;
+using Android.Gms.Tasks;
 using Java.Util;
+using Firebase.Storage;
+using System;
+using Android.Graphics;
+using Android.Runtime;
 
 namespace Discussit
 {
@@ -69,6 +73,92 @@ namespace Discussit
         public Task GetDocument(string cName, string docId)
         {
             return firestore.Collection(cName).Document(docId).Get();
+        }
+        public Task GetCollection(string cName)
+        {
+            //(QuerySnapshot)task.Result
+            return firestore.Collection(cName).Get();
+        }
+
+        public Task GetCollectionCount(string cName)
+        {
+            return firestore.Collection(cName).Count().Get(AggregateSource.Server);
+        }
+        
+        public Task GetEqualToDocs(string cName, string fName, Java.Lang.Object fValue)
+        {
+            return firestore.Collection(cName).WhereEqualTo(fName, fValue).Get();
+        }
+
+        public Task GetGreaterThan(string cName, string fName, Java.Lang.Object fValue)
+        {
+            return firestore.Collection(cName).WhereGreaterThan(fName, fValue).Get();
+        }
+        public Task GetGreaterThanOrEqual(string cName, string fName, Java.Lang.Object fValue)
+        {
+            return firestore.Collection(cName).WhereGreaterThanOrEqualTo(fName, fValue).Get();
+        }
+
+        public Task GetLessThan(string cName, string fName, Java.Lang.Object fValue)
+        {
+            return firestore.Collection(cName).WhereLessThan(fName, fValue).Get();
+        }
+        public Task GetLessThanOrEqual(string cName, string fName, Java.Lang.Object fValue)
+        {
+            return firestore.Collection(cName).WhereLessThanOrEqualTo(fName, fValue).Get();
+        }
+        public Task IncrementField(string cName, string docId, string fName, double incrementBy)
+        {
+            return firestore.Collection(cName).Document(docId).Update(fName, FieldValue.Increment(incrementBy));
+        }
+
+        public Task UpdateField(string cName, string docId, string fName, Java.Lang.Object fValue)
+        {
+            return firestore.Collection(cName).Document(docId).Update(fName, fValue);
+        }
+
+        public IListenerRegistration AddSnapshotListener(Activity activity, string cName)
+        {
+            return firestore.Collection(cName).AddSnapshotListener((Firebase.Firestore.IEventListener)activity);
+        }
+
+        public IListenerRegistration AddSnapshotListener(Activity activity, string cName, string docId)
+        {
+            return firestore.Collection(cName).Document(docId).AddSnapshotListener((Firebase.Firestore.IEventListener)activity);
+        }
+        public UploadTask SaveImage(string fbImagePath, Bitmap bitmap)
+        {
+            StorageReference storageReference = FirebaseStorage.Instance.GetReference(fbImagePath);
+            Byte[] imgBytes = General.BitmapToByteArray(bitmap);
+            return storageReference.PutBytes(imgBytes);
+        }
+
+        public Task GetDownloadUrl(string fbImagePath)
+        {
+            //(Android.Net.Uri)task.Result
+            StorageReference storageReference = FirebaseStorage.Instance.GetReference(fbImagePath);
+            return storageReference.GetDownloadUrl();
+        }
+        public string GetNewCollectionId()
+        {
+            Guid guid = Guid.NewGuid();
+            return guid.ToString();
+        }
+
+        public Java.Sql.Timestamp DateTimeToFirestoreTimestamp(DateTime dt)
+        {
+            dt = TimeZoneInfo.ConvertTimeToUtc(dt);
+            DateTime ofset = new DateTime(1970, 1, 1);
+            TimeSpan ts = dt - new DateTime(ofset.Ticks);
+            return new Java.Sql.Timestamp((long)ts.TotalMilliseconds);
+        }
+
+        public DateTime FirestoreTimestampToDateTime(Firebase.Timestamp ts)
+        {
+            Java.Util.Date d = ts.ToDate();
+            DateTime dt = new DateTime(1970, 1, 1);
+            dt = dt.AddMilliseconds(d.Time);
+            return TimeZoneInfo.ConvertTimeFromUtc(dt, TimeZoneInfo.Local);
         }
 
     }

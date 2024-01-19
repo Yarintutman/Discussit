@@ -1,10 +1,12 @@
 ﻿using Android.App;
+using Android.App.AppSearch;
 using Android.Content;
 using Android.Gms.Tasks;
 using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using Firebase.Firestore;
 using Java.Util;
 using System;
 using System.Collections.Generic;
@@ -15,42 +17,39 @@ namespace Discussit
 {
     internal class Community
     {
+        public string Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public List<Member> Members { get; set; }
-        public List<Post> Posts { get; set; }
-        public long MemberCount => Members.Count();
-        public long PostCount => Posts.Count();
-        private readonly FbData fbd;
+        public Members Members { get; set; }
+        public Posts Posts { get; set; }
+        public long MemberCount => Members.MemberCount;
+        public long PostCount => Posts.PostCount;
 
         public Community(string name, string description, string leaderUID)
         {
             Name = name;
             Description = description;
-            Members = new List<Member>
-            {
-                new Leader(leaderUID)
-            };
-            Posts = new List<Post>();
         }
 
-        public Community() 
+        public Community() { }
+
+        public void InitCommunity(Activity context)
         {
-            fbd = new FbData();
+            Posts = new Posts(context);
+            Posts.AddSnapshotListener(context, GetCollectionPath());
+            Members = new Members(context);
+            Members.AddSnapshotListener(context, GetCollectionPath());
         }
 
-
-        internal Task SetFbCommunity()
+        public string GetCollectionPath()
         {
-            Task TaskSetDocument = fbd.SetDocument(General.USERS_COLLECTION, string.Empty, out _, GetHashMap());
-            return TaskSetDocument;
+            return General.COMMUNITIES_COLLECTION + "\\" + Id;
         }
 
-        private HashMap GetHashMap()
+        public Task GetCollectionCount(string cName)
         {
-            HashMap hm = new HashMap();
-            hm.Put(General.FIELD_USERNAME, Username);
-            return hm;
+            FbData fbd = new FbData();
+            return fbd.GetCollectionCount(GetCollectionPath() + "\\" + cName);
         }
     }
 }

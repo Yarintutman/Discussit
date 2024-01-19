@@ -11,13 +11,7 @@ using System.Text;
 
 namespace Discussit
 {
-    internal class Member
+    internal class CommentAdapter
     {
-        public string UserID { get; }
-        public Member(string userID)
-        {
-            UserID = userID;
-        }
-        public Member() { }
     }
 }

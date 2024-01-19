@@ -1,4 +1,7 @@
-﻿namespace Discussit
+﻿using Android.Graphics;
+using System.IO;
+
+namespace Discussit
 {
     internal static class General
     {
@@ -9,6 +12,21 @@
         public const string KEY_REGISTERED = "registered";
         public const string KEY_USER = "user";
         public const string FIELD_USERNAME = "Username";
+        public const string FIELD_COMMUNITY_NAME = "Community Name";
+        public const string FIELD_COMMUNITY_DESCRIPTION = "Community Description";
+        public const string FIELD_COMMUNITY_MEMBERS = "Community Members";
+        public const string FIELD_COMMUNITY_POSTS = "Community Posts";
         public const string USERS_COLLECTION = "Users";
+        public const string COMMUNITIES_COLLECTION = "Communities";
+        public const string POSTS_COLLECTION = "Posts";
+        public const string COMMENTS_COLLECTION = "Comments";
+        public const string MEMBERS_COLLECTION = "Members";
+
+        public static byte[] BitmapToByteArray(Bitmap bitmap)
+        {
+            MemoryStream ms = new MemoryStream();
+            bitmap.Compress(Bitmap.CompressFormat.Png, 100, ms);
+            return ms.ToArray();
+        }
     }
 }
