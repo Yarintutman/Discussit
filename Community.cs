@@ -10,6 +10,7 @@ using Firebase.Firestore;
 using Java.Util;
 using System;
 using System.Collections.Generic;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Text;
 
@@ -17,6 +18,7 @@ namespace Discussit
 {
     internal class Community
     {
+        FbData fbd;
         public string Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
@@ -25,10 +27,12 @@ namespace Discussit
         public long MemberCount => Members.MemberCount;
         public long PostCount => Posts.PostCount;
 
-        public Community(string name, string description, string leaderUID)
+        public Community(string name, string description)
         {
+            fbd = new FbData();
             Name = name;
             Description = description;
+            CreateCommunity();
         }
 
         public Community() { }
@@ -48,8 +52,27 @@ namespace Discussit
 
         public Task GetCollectionCount(string cName)
         {
-            FbData fbd = new FbData();
             return fbd.GetCollectionCount(GetCollectionPath() + "\\" + cName);
+        }
+
+        private Task CreateCommunity()
+        {
+            Task tskCreateCommunity = fbd.SetDocument(General.COMMUNITIES_COLLECTION, string.Empty, out string communityId, GetHashMap());
+            Id = communityId;
+            return tskCreateCommunity;
+        }
+
+        public Task InitPostsCollection()
+        {
+            Task tskCreatePostsCollection = fbd.SetDocument(GetCollectionPath() + "\\" + General.POSTS_COLLECTION, string.Empty, out _, //add hashmap);
+        }
+
+        private HashMap GetHashMap()
+        {
+            HashMap hm = new HashMap();
+            hm.Put(General.FIELD_COMMUNITY_NAME, Name);
+            hm.Put(General.FIELD_COMMUNITY_DESCRIPTION, Description);
+            return hm;
         }
     }
 }
