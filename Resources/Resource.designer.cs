@@ -5341,58 +5341,61 @@ namespace Discussit
 			public const int action_settings = 2131689522;
 			
 			// aapt resource value: 0x7F0F0033
-			public const int androidx_startup = 2131689523;
-			
-			// aapt resource value: 0x7F0F0035
-			public const int appbar_scrolling_view_behavior = 2131689525;
+			public const int admin = 2131689523;
 			
 			// aapt resource value: 0x7F0F0034
-			public const int app_name = 2131689524;
+			public const int androidx_startup = 2131689524;
 			
 			// aapt resource value: 0x7F0F0036
-			public const int back = 2131689526;
+			public const int appbar_scrolling_view_behavior = 2131689526;
+			
+			// aapt resource value: 0x7F0F0035
+			public const int app_name = 2131689525;
 			
 			// aapt resource value: 0x7F0F0037
-			public const int ban = 2131689527;
+			public const int back = 2131689527;
 			
 			// aapt resource value: 0x7F0F0038
-			public const int bottom_sheet_behavior = 2131689528;
+			public const int ban = 2131689528;
 			
 			// aapt resource value: 0x7F0F0039
-			public const int call_notification_answer_action = 2131689529;
+			public const int bottom_sheet_behavior = 2131689529;
 			
 			// aapt resource value: 0x7F0F003A
-			public const int call_notification_answer_video_action = 2131689530;
+			public const int call_notification_answer_action = 2131689530;
 			
 			// aapt resource value: 0x7F0F003B
-			public const int call_notification_decline_action = 2131689531;
+			public const int call_notification_answer_video_action = 2131689531;
 			
 			// aapt resource value: 0x7F0F003C
-			public const int call_notification_hang_up_action = 2131689532;
+			public const int call_notification_decline_action = 2131689532;
 			
 			// aapt resource value: 0x7F0F003D
-			public const int call_notification_incoming_text = 2131689533;
+			public const int call_notification_hang_up_action = 2131689533;
 			
 			// aapt resource value: 0x7F0F003E
-			public const int call_notification_ongoing_text = 2131689534;
+			public const int call_notification_incoming_text = 2131689534;
 			
 			// aapt resource value: 0x7F0F003F
-			public const int call_notification_screening_text = 2131689535;
+			public const int call_notification_ongoing_text = 2131689535;
 			
 			// aapt resource value: 0x7F0F0040
-			public const int cancel = 2131689536;
+			public const int call_notification_screening_text = 2131689536;
 			
 			// aapt resource value: 0x7F0F0041
-			public const int changeName = 2131689537;
+			public const int cancel = 2131689537;
 			
 			// aapt resource value: 0x7F0F0042
-			public const int character_counter_content_description = 2131689538;
+			public const int changeName = 2131689538;
 			
 			// aapt resource value: 0x7F0F0043
-			public const int character_counter_pattern = 2131689539;
+			public const int character_counter_content_description = 2131689539;
 			
 			// aapt resource value: 0x7F0F0044
-			public const int close = 2131689540;
+			public const int character_counter_pattern = 2131689540;
+			
+			// aapt resource value: 0x7F0F0045
+			public const int close = 2131689541;
 			
 			// aapt resource value: 0x7F0F0000
 			public const int CommentDescription = 2131689472;
@@ -5400,77 +5403,77 @@ namespace Discussit
 			// aapt resource value: 0x7F0F0001
 			public const int CommentSearchHint = 2131689473;
 			
-			// aapt resource value: 0x7F0F0045
-			public const int common_google_play_services_enable_button = 2131689541;
-			
 			// aapt resource value: 0x7F0F0046
-			public const int common_google_play_services_enable_text = 2131689542;
+			public const int common_google_play_services_enable_button = 2131689542;
 			
 			// aapt resource value: 0x7F0F0047
-			public const int common_google_play_services_enable_title = 2131689543;
+			public const int common_google_play_services_enable_text = 2131689543;
 			
 			// aapt resource value: 0x7F0F0048
-			public const int common_google_play_services_install_button = 2131689544;
+			public const int common_google_play_services_enable_title = 2131689544;
 			
 			// aapt resource value: 0x7F0F0049
-			public const int common_google_play_services_install_text = 2131689545;
+			public const int common_google_play_services_install_button = 2131689545;
 			
 			// aapt resource value: 0x7F0F004A
-			public const int common_google_play_services_install_title = 2131689546;
+			public const int common_google_play_services_install_text = 2131689546;
 			
 			// aapt resource value: 0x7F0F004B
-			public const int common_google_play_services_notification_channel_name = 2131689547;
+			public const int common_google_play_services_install_title = 2131689547;
 			
 			// aapt resource value: 0x7F0F004C
-			public const int common_google_play_services_notification_ticker = 2131689548;
+			public const int common_google_play_services_notification_channel_name = 2131689548;
 			
 			// aapt resource value: 0x7F0F004D
-			public const int common_google_play_services_unknown_issue = 2131689549;
+			public const int common_google_play_services_notification_ticker = 2131689549;
 			
 			// aapt resource value: 0x7F0F004E
-			public const int common_google_play_services_unsupported_text = 2131689550;
+			public const int common_google_play_services_unknown_issue = 2131689550;
 			
 			// aapt resource value: 0x7F0F004F
-			public const int common_google_play_services_update_button = 2131689551;
+			public const int common_google_play_services_unsupported_text = 2131689551;
 			
 			// aapt resource value: 0x7F0F0050
-			public const int common_google_play_services_update_text = 2131689552;
+			public const int common_google_play_services_update_button = 2131689552;
 			
 			// aapt resource value: 0x7F0F0051
-			public const int common_google_play_services_update_title = 2131689553;
+			public const int common_google_play_services_update_text = 2131689553;
 			
 			// aapt resource value: 0x7F0F0052
-			public const int common_google_play_services_updating_text = 2131689554;
+			public const int common_google_play_services_update_title = 2131689554;
 			
 			// aapt resource value: 0x7F0F0053
-			public const int common_google_play_services_wear_update_text = 2131689555;
+			public const int common_google_play_services_updating_text = 2131689555;
 			
 			// aapt resource value: 0x7F0F0054
-			public const int common_open_on_phone = 2131689556;
+			public const int common_google_play_services_wear_update_text = 2131689556;
 			
 			// aapt resource value: 0x7F0F0055
-			public const int common_signin_button_text = 2131689557;
+			public const int common_open_on_phone = 2131689557;
 			
 			// aapt resource value: 0x7F0F0056
-			public const int common_signin_button_text_long = 2131689558;
+			public const int common_signin_button_text = 2131689558;
 			
 			// aapt resource value: 0x7F0F0057
-			public const int communityDescription = 2131689559;
+			public const int common_signin_button_text_long = 2131689559;
 			
 			// aapt resource value: 0x7F0F0058
-			public const int communityName = 2131689560;
+			public const int communityDescription = 2131689560;
+			
+			// aapt resource value: 0x7F0F0059
+			public const int communityName = 2131689561;
 			
 			// aapt resource value: 0x7F0F0002
 			public const int CommunitySearchHint = 2131689474;
 			
-			// aapt resource value: 0x7F0F0059
-			public const int confirm = 2131689561;
-			
 			// aapt resource value: 0x7F0F005A
-			public const int confirmLogout = 2131689562;
+			public const int confirm = 2131689562;
 			
 			// aapt resource value: 0x7F0F005B
-			public const int copy_toast_msg = 2131689563;
+			public const int confirmLogout = 2131689563;
+			
+			// aapt resource value: 0x7F0F005C
+			public const int copy_toast_msg = 2131689564;
 			
 			// aapt resource value: 0x7F0F0003
 			public const int CreateComment = 2131689475;
@@ -5481,56 +5484,56 @@ namespace Discussit
 			// aapt resource value: 0x7F0F0005
 			public const int CreatePost = 2131689477;
 			
-			// aapt resource value: 0x7F0F005C
-			public const int delete = 2131689564;
-			
 			// aapt resource value: 0x7F0F005D
-			public const int demote = 2131689565;
+			public const int delete = 2131689565;
 			
 			// aapt resource value: 0x7F0F005E
-			public const int edit = 2131689566;
+			public const int demote = 2131689566;
+			
+			// aapt resource value: 0x7F0F005F
+			public const int edit = 2131689567;
 			
 			// aapt resource value: 0x7F0F0006
 			public const int Email = 2131689478;
 			
-			// aapt resource value: 0x7F0F005F
-			public const int enterCommentDescription = 2131689567;
-			
-			// aapt resource value: 0x7F0F0064
-			public const int entercommunityDescription = 2131689572;
-			
 			// aapt resource value: 0x7F0F0060
-			public const int enterCommunityName = 2131689568;
-			
-			// aapt resource value: 0x7F0F0061
-			public const int enterEmail = 2131689569;
-			
-			// aapt resource value: 0x7F0F0062
-			public const int enterPostDescription = 2131689570;
-			
-			// aapt resource value: 0x7F0F0063
-			public const int enterPostName = 2131689571;
+			public const int enterCommentDescription = 2131689568;
 			
 			// aapt resource value: 0x7F0F0065
-			public const int fab_transformation_scrim_behavior = 2131689573;
+			public const int entercommunityDescription = 2131689573;
+			
+			// aapt resource value: 0x7F0F0061
+			public const int enterCommunityName = 2131689569;
+			
+			// aapt resource value: 0x7F0F0062
+			public const int enterEmail = 2131689570;
+			
+			// aapt resource value: 0x7F0F0063
+			public const int enterPostDescription = 2131689571;
+			
+			// aapt resource value: 0x7F0F0064
+			public const int enterPostName = 2131689572;
 			
 			// aapt resource value: 0x7F0F0066
-			public const int fab_transformation_sheet_behavior = 2131689574;
+			public const int fab_transformation_scrim_behavior = 2131689574;
 			
 			// aapt resource value: 0x7F0F0067
-			public const int fallback_menu_item_copy_link = 2131689575;
+			public const int fab_transformation_sheet_behavior = 2131689575;
 			
 			// aapt resource value: 0x7F0F0068
-			public const int fallback_menu_item_open_in_browser = 2131689576;
+			public const int fallback_menu_item_copy_link = 2131689576;
 			
 			// aapt resource value: 0x7F0F0069
-			public const int fallback_menu_item_share_link = 2131689577;
+			public const int fallback_menu_item_open_in_browser = 2131689577;
 			
 			// aapt resource value: 0x7F0F006A
-			public const int hideDescription = 2131689578;
+			public const int fallback_menu_item_share_link = 2131689578;
 			
 			// aapt resource value: 0x7F0F006B
-			public const int hide_bottom_view_on_scroll_behavior = 2131689579;
+			public const int hideDescription = 2131689579;
+			
+			// aapt resource value: 0x7F0F006C
+			public const int hide_bottom_view_on_scroll_behavior = 2131689580;
 			
 			// aapt resource value: 0x7F0F0007
 			public const int HintEmail = 2131689479;
@@ -5550,29 +5553,35 @@ namespace Discussit
 			// aapt resource value: 0x7F0F000C
 			public const int InvalidUserAlreadyExists = 2131689484;
 			
+			// aapt resource value: 0x7F0F006D
+			public const int leader = 2131689581;
+			
 			// aapt resource value: 0x7F0F000D
 			public const int Login = 2131689485;
 			
-			// aapt resource value: 0x7F0F006C
-			public const int logo = 2131689580;
-			
-			// aapt resource value: 0x7F0F006D
-			public const int logout = 2131689581;
-			
 			// aapt resource value: 0x7F0F006E
-			public const int manageCommunities = 2131689582;
+			public const int logo = 2131689582;
 			
 			// aapt resource value: 0x7F0F006F
-			public const int manageMembers = 2131689583;
+			public const int logout = 2131689583;
 			
 			// aapt resource value: 0x7F0F0070
-			public const int members = 2131689584;
+			public const int manageCommunities = 2131689584;
+			
+			// aapt resource value: 0x7F0F0071
+			public const int manageMembers = 2131689585;
+			
+			// aapt resource value: 0x7F0F0072
+			public const int member = 2131689586;
+			
+			// aapt resource value: 0x7F0F0073
+			public const int members = 2131689587;
 			
 			// aapt resource value: 0x7F0F000E
 			public const int MemberSearchHint = 2131689486;
 			
-			// aapt resource value: 0x7F0F0071
-			public const int mtrl_chip_close_icon_content_description = 2131689585;
+			// aapt resource value: 0x7F0F0074
+			public const int mtrl_chip_close_icon_content_description = 2131689588;
 			
 			// aapt resource value: 0x7F0F000F
 			public const int NewUser = 2131689487;
@@ -5580,23 +5589,23 @@ namespace Discussit
 			// aapt resource value: 0x7F0F0010
 			public const int Password = 2131689488;
 			
-			// aapt resource value: 0x7F0F0072
-			public const int passwordEmail = 2131689586;
-			
-			// aapt resource value: 0x7F0F0073
-			public const int password_toggle_content_description = 2131689587;
-			
-			// aapt resource value: 0x7F0F0074
-			public const int path_password_eye = 2131689588;
-			
 			// aapt resource value: 0x7F0F0075
-			public const int path_password_eye_mask_strike_through = 2131689589;
+			public const int passwordEmail = 2131689589;
 			
 			// aapt resource value: 0x7F0F0076
-			public const int path_password_eye_mask_visible = 2131689590;
+			public const int password_toggle_content_description = 2131689590;
 			
 			// aapt resource value: 0x7F0F0077
-			public const int path_password_strike_through = 2131689591;
+			public const int path_password_eye = 2131689591;
+			
+			// aapt resource value: 0x7F0F0078
+			public const int path_password_eye_mask_strike_through = 2131689592;
+			
+			// aapt resource value: 0x7F0F0079
+			public const int path_password_eye_mask_visible = 2131689593;
+			
+			// aapt resource value: 0x7F0F007A
+			public const int path_password_strike_through = 2131689594;
 			
 			// aapt resource value: 0x7F0F0011
 			public const int PostDescription = 2131689489;
@@ -5607,11 +5616,11 @@ namespace Discussit
 			// aapt resource value: 0x7F0F0013
 			public const int PostSearchHint = 2131689491;
 			
-			// aapt resource value: 0x7F0F0078
-			public const int profile = 2131689592;
+			// aapt resource value: 0x7F0F007B
+			public const int profile = 2131689595;
 			
-			// aapt resource value: 0x7F0F0079
-			public const int promote = 2131689593;
+			// aapt resource value: 0x7F0F007C
+			public const int promote = 2131689596;
 			
 			// aapt resource value: 0x7F0F0014
 			public const int Register = 2131689492;
@@ -5619,74 +5628,74 @@ namespace Discussit
 			// aapt resource value: 0x7F0F0015
 			public const int Remember = 2131689493;
 			
-			// aapt resource value: 0x7F0F007A
-			public const int remove = 2131689594;
-			
-			// aapt resource value: 0x7F0F007B
-			public const int resetEmail = 2131689595;
-			
-			// aapt resource value: 0x7F0F007C
-			public const int resetPassword = 2131689596;
-			
 			// aapt resource value: 0x7F0F007D
-			public const int save = 2131689597;
+			public const int remove = 2131689597;
 			
 			// aapt resource value: 0x7F0F007E
-			public const int search = 2131689598;
+			public const int resetEmail = 2131689598;
 			
 			// aapt resource value: 0x7F0F007F
-			public const int search_menu_title = 2131689599;
+			public const int resetPassword = 2131689599;
 			
 			// aapt resource value: 0x7F0F0080
-			public const int sendAgain = 2131689600;
+			public const int save = 2131689600;
 			
 			// aapt resource value: 0x7F0F0081
-			public const int sendResetPasswordEmail = 2131689601;
+			public const int search = 2131689601;
 			
 			// aapt resource value: 0x7F0F0082
-			public const int settings = 2131689602;
+			public const int search_menu_title = 2131689602;
 			
 			// aapt resource value: 0x7F0F0083
-			public const int showDescription = 2131689603;
+			public const int sendAgain = 2131689603;
 			
 			// aapt resource value: 0x7F0F0084
-			public const int sortActivity = 2131689604;
+			public const int sendResetPasswordEmail = 2131689604;
 			
 			// aapt resource value: 0x7F0F0085
-			public const int sortBy = 2131689605;
+			public const int settings = 2131689605;
 			
 			// aapt resource value: 0x7F0F0086
-			public const int sortByName = 2131689606;
+			public const int showDescription = 2131689606;
 			
 			// aapt resource value: 0x7F0F0087
-			public const int sortDate = 2131689607;
+			public const int sortActivity = 2131689607;
 			
 			// aapt resource value: 0x7F0F0088
-			public const int sortLikes = 2131689608;
+			public const int sortBy = 2131689608;
 			
 			// aapt resource value: 0x7F0F0089
-			public const int sortMembers = 2131689609;
+			public const int sortByName = 2131689609;
 			
 			// aapt resource value: 0x7F0F008A
-			public const int sortRank = 2131689610;
+			public const int sortDate = 2131689610;
 			
 			// aapt resource value: 0x7F0F008B
-			public const int status_bar_notification_info_overflow = 2131689611;
+			public const int sortLikes = 2131689611;
+			
+			// aapt resource value: 0x7F0F008C
+			public const int sortMembers = 2131689612;
+			
+			// aapt resource value: 0x7F0F008D
+			public const int sortRank = 2131689613;
+			
+			// aapt resource value: 0x7F0F008E
+			public const int status_bar_notification_info_overflow = 2131689614;
 			
 			// aapt resource value: 0x7F0F0016
 			public const int Username = 2131689494;
 			
-			// aapt resource value: 0x7F0F008C
-			public const int viewComments = 2131689612;
-			
-			// aapt resource value: 0x7F0F008D
-			public const int viewCommunities = 2131689613;
-			
-			// aapt resource value: 0x7F0F008E
-			public const int viewPosts = 2131689614;
-			
 			// aapt resource value: 0x7F0F008F
-			public const int wrongEmail = 2131689615;
+			public const int viewComments = 2131689615;
+			
+			// aapt resource value: 0x7F0F0090
+			public const int viewCommunities = 2131689616;
+			
+			// aapt resource value: 0x7F0F0091
+			public const int viewPosts = 2131689617;
+			
+			// aapt resource value: 0x7F0F0092
+			public const int wrongEmail = 2131689618;
 			
 			static String()
 			{

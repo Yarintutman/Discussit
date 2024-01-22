@@ -14,6 +14,11 @@ namespace Discussit
         public const string FIELD_USERNAME = "Username";
         public const string FIELD_COMMUNITY_NAME = "Community Name";
         public const string FIELD_COMMUNITY_DESCRIPTION = "Community Description";
+        public const string FIELD_POST_CREATOR = "Username";
+        public const string FIELD_POST_TITLE = "Community Name";
+        public const string FIELD_POST_DESCRIPTION = "Community Description";
+        public const string FIELD_UID = "UserID";
+        public const string FIELD_MEMBER_TYPE = "Member Type";
         public const string USERS_COLLECTION = "Users";
         public const string COMMUNITIES_COLLECTION = "Communities";
         public const string POSTS_COLLECTION = "Posts";

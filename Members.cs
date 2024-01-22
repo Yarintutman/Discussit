@@ -1,21 +1,16 @@
 ﻿using Android.App;
-using Android.Content;
+using Android.Content.Res;
 using Android.Gms.Tasks;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 using Firebase.Firestore;
-using System;
+using Firebase.Firestore.Auth;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Discussit
 {
     internal class Members
     {
         private readonly FbData fbd;
+        public string Path { get; private set; }
         public MemberAdapter MemberAdapter { get; }
         private IListenerRegistration onCollectionChangeListener;
         public long MemberCount => MemberAdapter.Count;
@@ -28,15 +23,16 @@ namespace Discussit
             }
         }
 
-        public Members(Activity context)
+        public Members(Activity context, string path)
         {
             MemberAdapter = new MemberAdapter(context);
             fbd = new FbData();
+            Path = path;
         }
 
-        public void AddSnapshotListener(Activity context, string path)
+        public void AddSnapshotListener(Activity context)
         {
-            onCollectionChangeListener = fbd.AddSnapshotListener(context, path + "\\" + General.MEMBERS_COLLECTION);
+            onCollectionChangeListener = fbd.AddSnapshotListener(context, Path + "\\" + General.MEMBERS_COLLECTION);
         }
 
         public void RemoveSnapshotListener()
@@ -50,17 +46,27 @@ namespace Discussit
             Member member;
             foreach (DocumentSnapshot document in documents)
             {
-                member = new Member
-                {
-                    //add members
-                };
+                string type = document.GetString(General.FIELD_MEMBER_TYPE);
+                if (type == Application.Context.Resources.GetString(Resource.String.leader))
+                    member = new Leader();
+                else if (type == Application.Context.Resources.GetString(Resource.String.admin))
+                    member = new Admin();
+                else
+                    member = new Member();
+                member.UserID = document.GetString(General.FIELD_UID);
+                member.CommunityPath = Path;
                 MemberAdapter.AddMember(member);
             }
         }
 
+        public Task GetTypeMembers(string type)
+        {
+            return fbd.GetEqualToDocs(Path + "\\" + General.MEMBERS_COLLECTION, General.FIELD_MEMBER_TYPE, type);
+        }
+
         internal Task GetMembers()
         {
-            return fbd.GetCollection(General.COMMUNITIES_COLLECTION);
+            return fbd.GetCollection(Path + "\\" + General.MEMBERS_COLLECTION);
         }
     }
 }

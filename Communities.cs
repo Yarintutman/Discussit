@@ -36,7 +36,7 @@ namespace Discussit
             onCollectionChangeListener?.Remove();
         }
 
-        internal void AddCommunity(IList<DocumentSnapshot> documents)
+        internal void AddCommunities(IList<DocumentSnapshot> documents)
         {
             CommunityAdapter.Clear();
             Community community;

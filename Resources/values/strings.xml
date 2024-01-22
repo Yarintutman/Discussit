@@ -17,6 +17,9 @@
   <string name="Login">Login</string>
   <string name="Register">Register</string>
   <string name="members">Members</string>
+  <string name="member">Member</string>
+  <string name="admin">Admin</string>
+  <string name="leader">Leader</string>
   <string name="CreateCommunity">Create a new community</string>
   <string name="CreatePost">Create a new post</string>
   <string name="CreateComment">Create a new comment</string>

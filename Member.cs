@@ -1,23 +1,29 @@
-﻿using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Java.Util;
 
 namespace Discussit
 {
     internal class Member
     {
-        public string UserID { get; }
-        public Member(string userID)
+        public string Id { get; set; }
+        public string UserID { get; set; }
+        public string CommunityPath { get; set; }
+        public Member(string userID, string communityPath)
         {
             UserID = userID;
+            CommunityPath = communityPath;
         }
         public Member() { }
+
+        public string GetPath()
+        {
+            return CommunityPath + "\\" + General.MEMBERS_COLLECTION + "\\" + Id;
+        }
+
+        public virtual HashMap GetHashMap()
+        {
+            HashMap hm = new HashMap();
+            hm.Put(General.FIELD_UID, UserID);
+            return hm;
+        }
     }
 }

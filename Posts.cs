@@ -1,21 +1,14 @@
 ﻿using Android.App;
-using Android.Content;
 using Android.Gms.Tasks;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 using Firebase.Firestore;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Discussit
 {
     internal class Posts 
     {
         private readonly FbData fbd;
+        public string Path { get; private set; }
         public PostAdapter PostAdapter { get; }
         private IListenerRegistration onCollectionChangeListener;
         public long PostCount => PostAdapter.Count;
@@ -28,15 +21,16 @@ namespace Discussit
             }
         }
 
-        public Posts(Activity context)
+        public Posts(Activity context, string path)
         {
             PostAdapter = new PostAdapter(context);
             fbd = new FbData();
+            Path = path;
         }
 
-        public void AddSnapshotListener(Activity context, string path)
+        public void AddSnapshotListener(Activity context)
         {
-            onCollectionChangeListener = fbd.AddSnapshotListener(context, path + "\\" + General.POSTS_COLLECTION);
+            onCollectionChangeListener = fbd.AddSnapshotListener(context, Path + "\\" + General.POSTS_COLLECTION);
         }
 
         public void RemoveSnapshotListener()
@@ -44,7 +38,7 @@ namespace Discussit
             onCollectionChangeListener?.Remove();
         }
 
-        internal void AddPost(IList<DocumentSnapshot> documents)
+        internal void AddPosts(IList<DocumentSnapshot> documents)
         {
             PostAdapter.Clear();
             Post post;
@@ -52,7 +46,11 @@ namespace Discussit
             {
                 post = new Post
                 {
-                    //add Posts
+                    Id = document.Id,
+                    Title = document.GetString(General.FIELD_POST_TITLE),
+                    Description = document.GetString(General.FIELD_POST_DESCRIPTION),
+                    CreatorUID = document.GetString(General.FIELD_POST_CREATOR),
+                    CommunityPath = Path
                 };
                 PostAdapter.AddPost(post);
             }
@@ -60,7 +58,7 @@ namespace Discussit
 
         internal Task GetPosts()
         {
-            return fbd.GetCollection(General.COMMUNITIES_COLLECTION);
+            return fbd.GetCollection(Path + "\\" + General.POSTS_COLLECTION);
         }
     }
 }

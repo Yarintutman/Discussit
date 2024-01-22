@@ -62,6 +62,7 @@
     <Compile Include="Admin.cs" />
     <Compile Include="Comment.cs" />
     <Compile Include="CommentAdapter.cs" />
+    <Compile Include="Comments.cs" />
     <Compile Include="Communities.cs" />
     <Compile Include="Community.cs" />
     <Compile Include="CommunityAdapter.cs" />

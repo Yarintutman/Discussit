@@ -84,7 +84,7 @@ namespace Discussit
         {
             return firestore.Collection(cName).Count().Get(AggregateSource.Server);
         }
-        
+
         public Task GetEqualToDocs(string cName, string fName, Java.Lang.Object fValue)
         {
             return firestore.Collection(cName).WhereEqualTo(fName, fValue).Get();
