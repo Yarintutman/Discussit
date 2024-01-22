@@ -27,6 +27,7 @@ namespace Discussit
         private void InitObjects()
         {
             user = User.GetUserJson(Intent.GetStringExtra(General.KEY_USER));
+            user.Update();
         }
 
         private void InitViews()

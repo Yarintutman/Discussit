@@ -47,7 +47,5 @@ namespace Discussit
             hm.Put(General.FIELD_POST_DESCRIPTION, Description);
             return hm;
         }
-
-        //recursive commenting TBD
     }
 }

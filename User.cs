@@ -1,4 +1,6 @@
 ﻿using Android.Gms.Tasks;
+using Android.Runtime;
+using Java.Interop;
 using Java.Util;
 using Newtonsoft.Json;
 
@@ -56,7 +58,16 @@ namespace Discussit
         {
             HashMap hm = new HashMap();
             hm.Put(General.FIELD_USERNAME, Username);
+            hm.Put(General.FIELD_USER_COMMUNITIES, new JavaList());
+            hm.Put(General.FIELD_USER_MANAGING_COMMUNITIES, new JavaList());
+            hm.Put(General.FIELD_USER_POSTS, new JavaList());
+            hm.Put(General.FIELD_USER_COMMENTS, new JavaList());
             return hm;
+        }
+
+        public void Update()
+        {
+            fbd.UpdateField(General.USERS_COLLECTION, Id, General.FIELD_USER_POSTS + ".0", "3455");
         }
 
         public string GetJson()

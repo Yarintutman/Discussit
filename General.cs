@@ -12,6 +12,10 @@ namespace Discussit
         public const string KEY_REGISTERED = "registered";
         public const string KEY_USER = "user";
         public const string FIELD_USERNAME = "Username";
+        public const string FIELD_USER_COMMUNITIES = "Communities";
+        public const string FIELD_USER_MANAGING_COMMUNITIES = "Managing Communities";
+        public const string FIELD_USER_POSTS = "Posts";
+        public const string FIELD_USER_COMMENTS = "Comments";
         public const string FIELD_COMMUNITY_NAME = "Community Name";
         public const string FIELD_COMMUNITY_DESCRIPTION = "Community Description";
         public const string FIELD_POST_CREATOR = "Username";
