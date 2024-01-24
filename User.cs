@@ -16,11 +16,20 @@ namespace Discussit
         private readonly SpData spd;
         [JsonIgnore]
         public bool IsRegistered { get; private set; }
+        public JavaList<string> Communities { get; set; }
+        public JavaList<string> ManagingCommunities { get; set; }
+        public JavaList<string> Posts { get; set; }
+        public JavaList<string> Comments { get; set; }
+
 
         public User()
         {
             fbd = new FbData();
             spd = new SpData(General.SP_FILE_NAME);
+            Communities = new JavaList<string>();
+            ManagingCommunities = new JavaList<string>();
+            Posts = new JavaList<string>();
+            Comments = new JavaList<string>();
             IsRegistered = spd.GetBool(General.KEY_REGISTERED, false);
             if (IsRegistered)
             {
@@ -54,20 +63,44 @@ namespace Discussit
             return TaskSetDocument;
         }
 
-        private HashMap GetHashMap()
+        public void UpdateArrayField(string FName, string value)
         {
-            HashMap hm = new HashMap();
-            hm.Put(General.FIELD_USERNAME, Username);
-            hm.Put(General.FIELD_USER_COMMUNITIES, new JavaList());
-            hm.Put(General.FIELD_USER_MANAGING_COMMUNITIES, new JavaList());
-            hm.Put(General.FIELD_USER_POSTS, new JavaList());
-            hm.Put(General.FIELD_USER_COMMENTS, new JavaList());
-            return hm;
+            fbd.UnionArray(General.USERS_COLLECTION, Id, FName, value);
+            switch (FName) 
+            {
+                case General.FIELD_USER_COMMUNITIES:
+                    Communities.Add(value); 
+                    break;
+                case General.FIELD_USER_MANAGING_COMMUNITIES:
+                    ManagingCommunities.Add(value);
+                    break;
+                case General.FIELD_USER_POSTS:
+                    Posts.Add(value);
+                    break;
+                case General.FIELD_USER_COMMENTS:
+                    Comments.Add(value);
+                    break;
+            }
         }
 
-        public void Update()
+        public void RemoveArrayField(string FName, string value)
         {
-            fbd.UpdateField(General.USERS_COLLECTION, Id, General.FIELD_USER_POSTS + ".0", "3455");
+            fbd.RemoveFromArray(General.USERS_COLLECTION, Id, FName, value);
+            switch (FName)
+            {
+                case General.FIELD_USER_COMMUNITIES:
+                    Communities.Remove(value);
+                    break;
+                case General.FIELD_USER_MANAGING_COMMUNITIES:
+                    ManagingCommunities.Remove(value);
+                    break;
+                case General.FIELD_USER_POSTS:
+                    Posts.Remove(value);
+                    break;
+                case General.FIELD_USER_COMMENTS:
+                    Comments.Remove(value);
+                    break;
+            }
         }
 
         public string GetJson()
@@ -88,6 +121,17 @@ namespace Discussit
         public Task GetUserData()
         {
             return fbd.GetDocument(General.USERS_COLLECTION, Id);
+        }
+
+        private HashMap GetHashMap()
+        {
+            HashMap hm = new HashMap();
+            hm.Put(General.FIELD_USERNAME, Username);
+            hm.Put(General.FIELD_USER_COMMUNITIES, Communities);
+            hm.Put(General.FIELD_USER_MANAGING_COMMUNITIES, ManagingCommunities);
+            hm.Put(General.FIELD_USER_POSTS, Posts);
+            hm.Put(General.FIELD_USER_COMMENTS, Comments);
+            return hm;
         }
     }
 }

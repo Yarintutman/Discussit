@@ -75,9 +75,9 @@ namespace Discussit
         {
             return firestore.Collection(cName).Document(docId).Get();
         }
+
         public Task GetCollection(string cName)
         {
-            //(QuerySnapshot)task.Result
             return firestore.Collection(cName).Get();
         }
 
@@ -116,6 +116,16 @@ namespace Discussit
         public Task UpdateField(string cName, string docId, string fName, Java.Lang.Object fValue)
         {
             return firestore.Collection(cName).Document(docId).Update(fName, fValue);
+        }
+
+        public Task UnionArray(string cName, string docId, string fName, Java.Lang.Object fValue)
+        {
+            return firestore.Collection(cName).Document(docId).Update(fName, FieldValue.ArrayUnion(fValue));
+        }
+
+        public Task RemoveFromArray(string cName, string docId, string fName, Java.Lang.Object fValue)
+        {
+            return firestore.Collection(cName).Document(docId).Update(fName, FieldValue.ArrayRemove(fValue));
         }
 
         public IListenerRegistration AddSnapshotListener(Activity activity, string cName)
