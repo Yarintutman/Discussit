@@ -1,5 +1,6 @@
 ﻿using Android.Gms.Tasks;
 using Java.Util;
+using System;
 using static Android.Icu.Text.CaseMap;
 
 namespace Discussit
@@ -12,6 +13,7 @@ namespace Discussit
         public string CreatorUID { get; set; }
         public string ParentPath { get; }
         public Comments Comments { get; set; }
+        public DateTime CreationDate { get; set; }
 
         public Comment(string description, string creatorUID, string parentPath)
         {
@@ -19,6 +21,7 @@ namespace Discussit
             Description = description;
             CreatorUID = creatorUID;
             ParentPath = parentPath;
+            CreationDate = DateTime.Now;
         }
 
         public Comment() { }
@@ -45,7 +48,16 @@ namespace Discussit
             HashMap hm = new HashMap();
             hm.Put(General.FIELD_POST_CREATOR, CreatorUID);
             hm.Put(General.FIELD_POST_DESCRIPTION, Description);
+            hm.Put(General.FIELD_DATE, fbd.DateTimeToFirestoreTimestamp(CreationDate));
             return hm;
+        }
+
+        public void DeleteComment()
+        {
+            if (ParentPath != null)
+            {
+
+            }
         }
     }
 }

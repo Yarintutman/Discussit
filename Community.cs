@@ -1,6 +1,8 @@
 ﻿using Android.App;
 using Android.Gms.Tasks;
 using Java.Util;
+using Newtonsoft.Json.Bson;
+using System;
 
 namespace Discussit
 {
@@ -12,6 +14,7 @@ namespace Discussit
         public string Description { get; set; }
         public Members Members { get; set; }
         public Posts Posts { get; set; }
+        public DateTime CreationDate { get; set; }
         public long MemberCount => Members.MemberCount;
         public long PostCount => Posts.PostCount;
 
@@ -20,6 +23,7 @@ namespace Discussit
             fbd = new FbData();
             Name = name;
             Description = description;
+            CreationDate = DateTime.Now;
             CreateCommunity();
         }
 
@@ -55,6 +59,21 @@ namespace Discussit
             member.Id = memberId;
         }
 
+        public Task RemoveMember(string UserID)
+        {
+            Task NewLeader = null;
+            Member member = Members.GetMemberByUID(UserID);
+            if (member != null)
+            {
+                member.LeaveCommunity();
+                Members.RemoveMember(member);
+                if (member.GetType() == typeof(Leader))
+                    NewLeader = fbd.GetHighestValue(GetCollectionPath() + "\\" + General.MEMBERS_COLLECTION, General.FIELD_MEMBER_TYPE,
+                                                    Application.Context.Resources.GetString(Resource.String.leader), General.FIELD_DATE, 1);
+            }
+            return NewLeader;
+        }
+
         public Task GetPosts()
         {
             return Posts.GetPosts();
@@ -70,6 +89,7 @@ namespace Discussit
             HashMap hm = new HashMap();
             hm.Put(General.FIELD_COMMUNITY_NAME, Name);
             hm.Put(General.FIELD_COMMUNITY_DESCRIPTION, Description);
+            hm.Put(General.FIELD_DATE, fbd.DateTimeToFirestoreTimestamp(CreationDate));
             return hm;
         }
     }

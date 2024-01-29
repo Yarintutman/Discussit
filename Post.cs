@@ -1,6 +1,6 @@
 ﻿using Android.Gms.Tasks;
 using Java.Util;
-
+using System;
 
 namespace Discussit
 {
@@ -13,6 +13,7 @@ namespace Discussit
         public string CreatorUID { get; set; }
         public string CommunityPath { get; set; }
         public Comments Comments { get; set; }
+        public DateTime CreationDate { get; set; }
 
         public Post(string title, string desctiption, string creatorUID, string communityPath)
         {
@@ -21,6 +22,7 @@ namespace Discussit
             Description = desctiption;
             CreatorUID = creatorUID;
             CommunityPath = communityPath;
+            CreationDate = DateTime.Now;
         }
 
         public Post() { }
@@ -53,6 +55,7 @@ namespace Discussit
             hm.Put(General.FIELD_POST_CREATOR, CreatorUID);
             hm.Put(General.FIELD_POST_TITLE, Title);
             hm.Put(General.FIELD_POST_DESCRIPTION, Description);
+            hm.Put(General.FIELD_DATE, fbd.DateTimeToFirestoreTimestamp(CreationDate));
             return hm;
         }
     }

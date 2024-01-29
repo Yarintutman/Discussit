@@ -71,6 +71,11 @@ namespace Discussit
             return t;
         }
 
+        public Task DeleteDocument(string cName, string docId)
+        {
+            return firestore.Collection(cName).Document(docId).Delete();
+        }
+
         public Task GetDocument(string cName, string docId)
         {
             return firestore.Collection(cName).Document(docId).Get();
@@ -84,6 +89,11 @@ namespace Discussit
         public Task GetCollectionCount(string cName)
         {
             return firestore.Collection(cName).Count().Get(AggregateSource.Server);
+        }
+
+        public Task GetHighestValue(string cName, string fNameWhere, Java.Lang.Object fValue, string fNameOrderBy, int limit)
+        {
+            return firestore.Collection(cName).WhereEqualTo(fNameWhere, fValue).OrderBy(fNameOrderBy).Limit(limit).Get();
         }
 
         public Task GetEqualToDocs(string cName, string fName, Java.Lang.Object fValue)

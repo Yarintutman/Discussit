@@ -42,10 +42,22 @@ namespace Discussit
             lstMembers.Add(member);
             NotifyDataSetChanged();
         }
+        
+        public void RemoveMember(Member member)
+        {
+            lstMembers.Remove(member);
+            NotifyDataSetChanged();
+        }
+        
         public void Clear()
         {
             lstMembers.Clear();
             NotifyDataSetChanged();
+        }
+
+        public Member GetMemberByUID(string UID)
+        {
+            return lstMembers.FirstOrDefault(Member => UID == Member.UserID);
         }
     }
 }

@@ -1,4 +1,7 @@
-﻿using Java.Util;
+﻿using Android.App.AppSearch;
+using Android.Media;
+using Java.Util;
+using System;
 
 namespace Discussit
 {
@@ -8,11 +11,13 @@ namespace Discussit
         public string Id { get; set; }
         public string UserID { get; set; }
         public string CommunityPath { get; set; }
+        public DateTime JoinDate { get; set; }
         public Member(string userID, string communityPath)
         {
             fbd = new FbData();
             UserID = userID;
             CommunityPath = communityPath;
+            JoinDate = DateTime.Now;
         }
         public Member() { }
 
@@ -25,14 +30,15 @@ namespace Discussit
         {
             HashMap hm = new HashMap();
             hm.Put(General.FIELD_UID, UserID);
+            hm.Put(General.FIELD_DATE, fbd.DateTimeToFirestoreTimestamp(JoinDate));
             return hm;
         }
 
-        public void LeaveCommunity()
+        public virtual void LeaveCommunity()
         {
-            if (CommunityPath == null)
+            if (CommunityPath != null)
             {
-                
+                fbd.DeleteDocument(CommunityPath + "\\" + General.MEMBERS_COLLECTION, Id);
             }
         }
     }

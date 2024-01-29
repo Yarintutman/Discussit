@@ -59,6 +59,11 @@ namespace Discussit
             }
         }
 
+        public void RemoveMember(Member member)
+        {
+            MemberAdapter.RemoveMember(member);
+        }
+
         public Task GetTypeMembers(string type)
         {
             return fbd.GetEqualToDocs(Path + "\\" + General.MEMBERS_COLLECTION, General.FIELD_MEMBER_TYPE, type);
@@ -67,6 +72,11 @@ namespace Discussit
         internal Task GetMembers()
         {
             return fbd.GetCollection(Path + "\\" + General.MEMBERS_COLLECTION);
+        }
+
+        public Member GetMemberByUID(string UID)
+        {
+            return MemberAdapter.GetMemberByUID(UID);
         }
     }
 }
