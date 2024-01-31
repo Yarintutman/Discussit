@@ -50,15 +50,26 @@ namespace Discussit
                     Title = document.GetString(General.FIELD_POST_TITLE),
                     Description = document.GetString(General.FIELD_POST_DESCRIPTION),
                     CreatorUID = document.GetString(General.FIELD_POST_CREATOR),
-                    CommunityPath = Path
+                    CommunityPath = Path,
+                    CreationDate = fbd.FirestoreTimestampToDateTime(document.GetTimestamp(General.FIELD_DATE))
                 };
                 PostAdapter.AddPost(post);
             }
         }
 
+        public void RemovePost(Post post)
+        {
+            PostAdapter.RemovePost(post);
+        }
+
         internal Task GetPosts()
         {
             return fbd.GetCollection(Path + "\\" + General.POSTS_COLLECTION);
+        }
+
+        public Post GetPostById(string Id)
+        {
+            return PostAdapter.GetPostById(Id);
         }
     }
 }

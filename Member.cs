@@ -34,7 +34,7 @@ namespace Discussit
             return hm;
         }
 
-        public virtual void LeaveCommunity()
+        public void LeaveCommunity()
         {
             if (CommunityPath != null)
             {

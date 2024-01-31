@@ -11,7 +11,7 @@ namespace Discussit
         public string Id { get; set; }
         public string Description { get; set; }
         public string CreatorUID { get; set; }
-        public string ParentPath { get; }
+        public string ParentPath { get; set; }
         public Comments Comments { get; set; }
         public DateTime CreationDate { get; set; }
 
@@ -38,6 +38,19 @@ namespace Discussit
             comment.Id = commentId;
         }
 
+        public void RemoveComment(string commentID, Member member)
+        {
+            Comment comment = Comments.GetCommentById(commentID);
+            if (comment != null)
+            {
+                if (comment.CreatorUID == member.UserID || member.GetType() == typeof(Admin) || member.GetType() == typeof(Leader))
+                {
+                    comment.DeleteComment();
+                    Comments.RemoveComment(comment);
+                }
+            }
+        }
+
         public Task GetComments()
         {
             return Comments.GetComments();
@@ -46,8 +59,8 @@ namespace Discussit
         public HashMap GetHashMap()
         {
             HashMap hm = new HashMap();
-            hm.Put(General.FIELD_POST_CREATOR, CreatorUID);
-            hm.Put(General.FIELD_POST_DESCRIPTION, Description);
+            hm.Put(General.FIELD_COMMENT_CREATOR, CreatorUID);
+            hm.Put(General.FIELD_COMMENT_DESCRIPTION, Description);
             hm.Put(General.FIELD_DATE, fbd.DateTimeToFirestoreTimestamp(CreationDate));
             return hm;
         }
@@ -56,7 +69,7 @@ namespace Discussit
         {
             if (ParentPath != null)
             {
-
+                fbd.DeleteDocument(ParentPath + "\\" + General.COMMENTS_COLLECTION, Id);
             }
         }
     }

@@ -46,15 +46,29 @@ namespace Discussit
             {
                 comment = new Comment
                 {
-                    //add Comments
+                    Id = document.Id,
+                    Description = document.GetString(General.FIELD_COMMENT_DESCRIPTION),
+                    CreatorUID = document.GetString(General.FIELD_COMMENT_CREATOR),
+                    ParentPath = Path,
+                    CreationDate = fbd.FirestoreTimestampToDateTime(document.GetTimestamp(General.FIELD_DATE))
                 };
                 CommentAdapter.AddComment(comment);
             }
         }
 
+        public void RemoveComment(Comment comment)
+        {
+            CommentAdapter.RemoveComment(comment);
+        }
+
         internal Task GetComments()
         {
             return fbd.GetCollection(Path + "\\" + General.COMMENTS_COLLECTION);
+        }
+
+        public Comment GetCommentById(string Id)
+        {
+            return CommentAdapter.GetCommentById(Id);
         }
     }
 }

@@ -58,5 +58,26 @@ namespace Discussit
             hm.Put(General.FIELD_DATE, fbd.DateTimeToFirestoreTimestamp(CreationDate));
             return hm;
         }
+
+        public void RemoveComment(string commentID, Member member)
+        {
+            Comment comment = Comments.GetCommentById(commentID);
+            if (comment != null)
+            {
+                if (comment.CreatorUID == member.UserID || member.GetType() == typeof(Admin) || member.GetType() == typeof(Leader))
+                {
+                    comment.DeleteComment();
+                    Comments.RemoveComment(comment);
+                }
+            }
+        }
+
+        public void DeletePost()
+        {
+            if (CommunityPath != null)
+            {
+                fbd.DeleteDocument(CommunityPath + "\\" + General.POSTS_COLLECTION, Id);
+            }
+        }
     }
 }

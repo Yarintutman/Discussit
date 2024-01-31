@@ -2,6 +2,7 @@
 using Android.Views;
 using Android.Widget;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Discussit
 {
@@ -36,10 +37,21 @@ namespace Discussit
             lstComments.Add(comment);
             NotifyDataSetChanged();
         }
+
+        public void RemoveComment(Comment comment)
+        {
+            lstComments.Remove(comment);
+        }
+
         public void Clear()
         {
             lstComments.Clear();
             NotifyDataSetChanged();
+        }
+
+        public Comment GetCommentById(string Id)
+        {
+            return lstComments.FirstOrDefault(Comment => Id == Comment.Id);
         }
     }
 }

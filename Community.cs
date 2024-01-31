@@ -1,5 +1,6 @@
 ﻿using Android.App;
 using Android.Gms.Tasks;
+using Android.Runtime;
 using Java.Util;
 using Newtonsoft.Json.Bson;
 using System;
@@ -72,6 +73,26 @@ namespace Discussit
                                                     Application.Context.Resources.GetString(Resource.String.leader), General.FIELD_DATE, 1);
             }
             return NewLeader;
+        }
+
+        public void RemovePost(string postID, Member member)
+        {
+            Post post = Posts.GetPostById(postID);
+            if (post != null)
+            {
+                if (post.CreatorUID == member.UserID || member.GetType() == typeof(Admin) || member.GetType() == typeof(Leader))
+                {
+                    post.DeletePost();
+                    Posts.RemovePost(post);
+                } 
+            }
+        }
+
+        public void DeleteCommunity(Member member) 
+        {
+            if (member.GetType() == typeof(Leader))
+                fbd.DeleteDocument(General.COMMUNITIES_COLLECTION, Id);
+            JavaList gil = new JavaList();
         }
 
         public Task GetPosts()
