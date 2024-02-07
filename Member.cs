@@ -21,17 +21,23 @@ namespace Discussit
         }
         public Member() { }
 
-        public string GetPath()
-        {
-            return CommunityPath + "\\" + General.MEMBERS_COLLECTION + "\\" + Id;
+        public string Path 
+        { 
+            get
+            {
+                return CommunityPath + "\\" + General.MEMBERS_COLLECTION + "\\" + Id;
+            } 
         }
 
-        public virtual HashMap GetHashMap()
+        public virtual HashMap HashMap
         {
-            HashMap hm = new HashMap();
-            hm.Put(General.FIELD_UID, UserID);
-            hm.Put(General.FIELD_DATE, fbd.DateTimeToFirestoreTimestamp(JoinDate));
-            return hm;
+            get
+            {
+                HashMap hm = new HashMap();
+                hm.Put(General.FIELD_UID, UserID);
+                hm.Put(General.FIELD_DATE, fbd.DateTimeToFirestoreTimestamp(JoinDate));
+                return hm;
+            }
         }
 
         public void LeaveCommunity()

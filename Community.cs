@@ -30,33 +30,48 @@ namespace Discussit
 
         public Community() { }
 
-        public string GetCollectionPath()
+        private HashMap HashMap
         {
-            return General.COMMUNITIES_COLLECTION + "\\" + Id;
+            get 
+            {
+                HashMap hm = new HashMap();
+                hm.Put(General.FIELD_COMMUNITY_NAME, Name);
+                hm.Put(General.FIELD_COMMUNITY_DESCRIPTION, Description);
+                hm.Put(General.FIELD_DATE, fbd.DateTimeToFirestoreTimestamp(CreationDate));
+                return hm;
+            }
+        }
+
+        public string CollectionPath 
+        { 
+            get
+            {
+                return General.COMMUNITIES_COLLECTION + "\\" + Id;
+            }
         }
 
         public Task GetCollectionCount(string cName)
         {
-            return fbd.GetCollectionCount(GetCollectionPath() + "\\" + cName);
+            return fbd.GetCollectionCount(CollectionPath + "\\" + cName);
         }
 
         private void CreateCommunity()
         {
-            fbd.SetDocument(General.COMMUNITIES_COLLECTION, string.Empty, out string communityId, GetHashMap());
+            fbd.SetDocument(General.COMMUNITIES_COLLECTION, string.Empty, out string communityId, HashMap);
             Id = communityId;
         }
 
         public void AddPost(string title, string description, string creatorUID)
         {
-            Post post = new Post(title, description, creatorUID, GetCollectionPath());
-            fbd.SetDocument(GetCollectionPath() + "\\" + General.POSTS_COLLECTION, string.Empty, out string postId, post.GetHashMap());
+            Post post = new Post(title, description, creatorUID, CollectionPath);
+            fbd.SetDocument(CollectionPath + "\\" + General.POSTS_COLLECTION, string.Empty, out string postId, post.HashMap);
             post.Id = postId;
         }
 
         public void AddMember(string UID)
         {
-            Member member = new Member(UID, GetCollectionPath());
-            fbd.SetDocument(GetCollectionPath() + "\\" + General.MEMBERS_COLLECTION, string.Empty, out string memberId, member.GetHashMap());
+            Member member = new Member(UID, CollectionPath);
+            fbd.SetDocument(CollectionPath + "\\" + General.MEMBERS_COLLECTION, string.Empty, out string memberId, member.HashMap);
             member.Id = memberId;
         }
 
@@ -69,7 +84,7 @@ namespace Discussit
                 member.LeaveCommunity();
                 Members.RemoveMember(member);
                 if (member.GetType() == typeof(Leader))
-                    NewLeader = fbd.GetHighestValue(GetCollectionPath() + "\\" + General.MEMBERS_COLLECTION, General.FIELD_MEMBER_TYPE,
+                    NewLeader = fbd.GetHighestValue(CollectionPath + "\\" + General.MEMBERS_COLLECTION, General.FIELD_MEMBER_TYPE,
                                                     Application.Context.Resources.GetString(Resource.String.leader), General.FIELD_DATE, 1);
             }
             return NewLeader;
@@ -92,7 +107,6 @@ namespace Discussit
         {
             if (member.GetType() == typeof(Leader))
                 fbd.DeleteDocument(General.COMMUNITIES_COLLECTION, Id);
-            JavaList gil = new JavaList();
         }
 
         public Task GetPosts()
@@ -103,15 +117,6 @@ namespace Discussit
         public Task GetMembers()
         {
             return Members.GetMembers();
-        }
-
-        private HashMap GetHashMap()
-        {
-            HashMap hm = new HashMap();
-            hm.Put(General.FIELD_COMMUNITY_NAME, Name);
-            hm.Put(General.FIELD_COMMUNITY_DESCRIPTION, Description);
-            hm.Put(General.FIELD_DATE, fbd.DateTimeToFirestoreTimestamp(CreationDate));
-            return hm;
         }
     }
 }

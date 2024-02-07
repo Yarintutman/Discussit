@@ -18,11 +18,14 @@ namespace Discussit
 
         public Admin() { }
 
-        public override HashMap GetHashMap()
+        public override HashMap HashMap
         {
-            HashMap hm = base.GetHashMap();
-            hm.Put(General.FIELD_MEMBER_TYPE, Application.Context.Resources.GetString(Resource.String.admin));
-            return hm;
+            get
+            {
+                HashMap hm = base.HashMap;
+                hm.Put(General.FIELD_MEMBER_TYPE, Application.Context.Resources.GetString(Resource.String.admin));
+                return hm;
+            }
         }
     }
 }

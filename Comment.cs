@@ -1,7 +1,6 @@
 ﻿using Android.Gms.Tasks;
 using Java.Util;
 using System;
-using static Android.Icu.Text.CaseMap;
 
 namespace Discussit
 {
@@ -26,15 +25,30 @@ namespace Discussit
 
         public Comment() { }
 
-        public string GetPath()
+        public HashMap HashMap 
+        { 
+            get 
+            {
+                HashMap hm = new HashMap();
+                hm.Put(General.FIELD_COMMENT_CREATOR, CreatorUID);
+                hm.Put(General.FIELD_COMMENT_DESCRIPTION, Description);
+                hm.Put(General.FIELD_DATE, fbd.DateTimeToFirestoreTimestamp(CreationDate));
+                return hm;
+            }
+        }
+
+        public string Path
         {
-            return ParentPath + "\\" + General.COMMENTS_COLLECTION + "\\" + Id;
+            get
+            {
+                return ParentPath + "\\" + General.COMMENTS_COLLECTION + "\\" + Id;
+            }
         }
 
         public void AddComment(string description, string creatorUID)
         {
-            Comment comment = new Comment(description, creatorUID, GetPath());
-            fbd.SetDocument(GetPath() + "\\" + General.COMMENTS_COLLECTION, string.Empty, out string commentId, comment.GetHashMap());
+            Comment comment = new Comment(description, creatorUID, Path);
+            fbd.SetDocument(Path + "\\" + General.COMMENTS_COLLECTION, string.Empty, out string commentId, comment.HashMap);
             comment.Id = commentId;
         }
 
@@ -54,15 +68,6 @@ namespace Discussit
         public Task GetComments()
         {
             return Comments.GetComments();
-        }
-
-        public HashMap GetHashMap()
-        {
-            HashMap hm = new HashMap();
-            hm.Put(General.FIELD_COMMENT_CREATOR, CreatorUID);
-            hm.Put(General.FIELD_COMMENT_DESCRIPTION, Description);
-            hm.Put(General.FIELD_DATE, fbd.DateTimeToFirestoreTimestamp(CreationDate));
-            return hm;
         }
 
         public void DeleteComment()
