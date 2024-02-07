@@ -7,8 +7,6 @@ using Java.Util;
 using Firebase.Storage;
 using System;
 using Android.Graphics;
-using Android.Runtime;
-using Firebase.Firestore.Model;
 
 namespace Discussit
 {
