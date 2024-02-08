@@ -66,21 +66,29 @@
     <Compile Include="Communities.cs" />
     <Compile Include="Community.cs" />
     <Compile Include="CommunityAdapter.cs" />
+    <Compile Include="CreateCommentActivity.cs" />
+    <Compile Include="CreateCommunityActivity.cs" />
+    <Compile Include="CreatePostActivity.cs" />
     <Compile Include="FbData.cs" />
     <Compile Include="General.cs" />
     <Compile Include="Leader.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="CommunityHubActivity.cs" />
+    <Compile Include="ManageCommunityActivity.cs" />
     <Compile Include="Member.cs" />
     <Compile Include="MemberAdapter.cs" />
     <Compile Include="Members.cs" />
     <Compile Include="Post.cs" />
     <Compile Include="PostAdapter.cs" />
     <Compile Include="Posts.cs" />
+    <Compile Include="ProfileActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SettingsActivity.cs" />
     <Compile Include="SpData.cs" />
     <Compile Include="User.cs" />
+    <Compile Include="ViewCommunityActivity.cs" />
+    <Compile Include="ViewPostActivity.cs" />
   </ItemGroup>
   <ItemGroup>
     <GoogleServicesJson Include="google-services.json" />

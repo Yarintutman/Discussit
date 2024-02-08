@@ -28,7 +28,13 @@ namespace Discussit
         {
             LayoutInflater li = LayoutInflater.From(context);
             View v = li.Inflate(Resource.Layout.layout_community, parent, false);
-
+            Community community = lstCommunities[position];
+            TextView tvCommunityName = v.FindViewById<TextView>(Resource.Id.tvCommunityName);
+            TextView tvMemberCount = v.FindViewById<TextView>(Resource.Id.tvMemberCount);
+            TextView tvCommunityDescription = v.FindViewById<TextView>(Resource.Id.tvCommunityDescription);
+            tvCommunityName.Text = community.Name;
+            tvMemberCount.Text = (community.Members.MemberCount).ToString();
+            tvCommunityDescription.Text = community.Description;
             return v;
         }
 

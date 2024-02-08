@@ -43,30 +43,20 @@
             android:backgroundTint="@color/clickable"
             android:layout_weight="1"/>
         <ImageButton
-            android:id="@+id/btnSearch"
+            android:id="@+id/ibtnSearch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/search"
             android:contentDescription="@string/search"
             android:layout_gravity="center_vertical"/>
     </LinearLayout>
-    <LinearLayout
-        android:id="@+id/llSortCommunityBy"
+    <TextView
+        android:id="@+id/tvSortBy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginLeft="@dimen/marginLeft">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/clickable"
-            android:text="@string/sortBy"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/clickable"
-            android:text="@string/sortMembers"/>
-    </LinearLayout>
+        android:textColor="@color/clickable"
+        android:text="@string/sortBy"
+        android:layout_marginLeft="@dimen/marginLeft"/>
     <ListView
         android:id="@+id/lvCommunities"
         android:layout_width="match_parent"

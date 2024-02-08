@@ -7,8 +7,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <ImageView
-            android:id="@+id/ivlogo"
+        <ImageButton
+            android:id="@+id/ibtnlogo"
             android:layout_width="@dimen/logoWidth"
             android:layout_height="@dimen/logoHeight"
             android:background="@drawable/Logo"
@@ -20,7 +20,7 @@
             android:layout_height="@dimen/profilePictureHeight"
             android:background="@drawable/profilepicture"
             android:contentDescription="@string/logo"
-            android:layout_toRightOf="@id/ivlogo"
+            android:layout_toRightOf="@id/ibtnlogo"
             android:layout_centerVertical="true"/>
         <ImageButton
             android:id="@+id/ibtnBack"
@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/back"
             android:contentDescription="@string/back"
-            android:layout_toLeftOf="@id/ivlogo"
+            android:layout_toLeftOf="@id/ibtnlogo"
             android:layout_centerVertical="true"/>
     </RelativeLayout>
     <LinearLayout
