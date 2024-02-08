@@ -74,7 +74,6 @@
     <Compile Include="Member.cs" />
     <Compile Include="MemberAdapter.cs" />
     <Compile Include="Members.cs" />
-    <Compile Include="NotificationService.cs" />
     <Compile Include="Post.cs" />
     <Compile Include="PostAdapter.cs" />
     <Compile Include="Posts.cs" />
@@ -125,9 +124,6 @@
     </PackageReference>
     <PackageReference Include="Xamarin.Firebase.Firestore">
       <Version>124.9.1.1</Version>
-    </PackageReference>
-    <PackageReference Include="Xamarin.Firebase.Messaging">
-      <Version>123.3.1.1</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Firebase.Storage">
       <Version>120.3.0.1</Version>
