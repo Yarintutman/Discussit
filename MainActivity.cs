@@ -16,7 +16,7 @@ namespace Discussit
         Button btnEnter;
         TextView tvLoginState, tvNewUser;
         CheckBox chkRemember;
-        Task tskRegister, tskLogin, tskRememberLogin, tskSetFbUser;
+        Task tskRegister, tskLogin, tskRememberLogin, tskSetFbUser, tskGetUser;
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -104,6 +104,10 @@ namespace Discussit
                     else if (task == tskRememberLogin)
                     {
                         OpenCommunityHub();
+                    }
+                    else if (task == tskGetUser)
+                    {
+                        user = task.Result;
                     }
                 }
             }

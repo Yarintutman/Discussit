@@ -27,7 +27,7 @@
   <string name="PostSearchHint">Search for a post</string>
   <string name="CommentSearchHint">Search for a comment</string>
   <string name="MemberSearchHint">Search for a member</string>
-  <string name="sortBy">Sort by:\ </string>
+  <string name="sortBy">Sort by:</string>
   <string name="sortMembers">Most members</string>
   <string name="sortActivity">Most active</string>
   <string name="sortByName">By name</string>

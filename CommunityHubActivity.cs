@@ -31,11 +31,6 @@ namespace Discussit
             InitViews();
         }
 
-        public void SetSorting(string sortBy)
-        {
-            tvSortBy.Text = Resources.GetString(Resource.String.sortBy) + sortBy;
-        }
-
         private void InitObjects()
         {
             user = User.GetUserJson(Intent.GetStringExtra(General.KEY_USER));
@@ -53,18 +48,48 @@ namespace Discussit
             lvCommunities.Adapter = communities.CommunityAdapter;
             communities.AddSnapshotListener(this);
             SetSorting(Resources.GetString(Resource.String.sortDate));
+            ibtnProfile.SetOnClickListener(this);
+            ibtnSearch.SetOnClickListener(this);
+            btnNewCommunity.SetOnClickListener(this);
+            tvSortBy.SetOnClickListener(this);
+        }
+
+        public void SetSorting(string sortBy)
+        {
+            tvSortBy.Text = Resources.GetString(Resource.String.sortBy) + " " + sortBy + user.Username;
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
-
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
 
         public void OnClick(View v)
         {
+            if (v == ibtnProfile)
+            {
 
+            }
+            else if (v == ibtnSearch)
+            {
+
+            }
+            else if (v ==  tvSortBy)
+            {
+
+            }
+            else if (v == btnNewCommunity)
+            {
+                OpenCreateCommunityActivity();
+            }
+        }
+
+        private void OpenCreateCommunityActivity()
+        {
+            Intent intent = new Intent(this, typeof(CreateCommunityActivity));
+            intent.PutExtra(General.KEY_USER, user.GetJson());
+            StartActivity(intent);
         }
 
         public void GetCommunities()
@@ -73,10 +98,7 @@ namespace Discussit
         }
 
 #pragma warning disable CS0672 // Member overrides obsolete member
-        public override void OnBackPressed()
-        {
-            
-        }
+        public override void OnBackPressed() { }
 #pragma warning restore CS0672 // Member overrides obsolete member
 
         public void OnEvent(Object obj, FirebaseFirestoreException error)
