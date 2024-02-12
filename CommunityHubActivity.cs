@@ -1,6 +1,7 @@
 ﻿using Android.App;
 using Android.Content;
 using Android.Gms.Tasks;
+using Android.Icu.Text;
 using Android.OS;
 using Android.Runtime;
 using Android.Views;
@@ -8,6 +9,7 @@ using Android.Widget;
 using AndroidX.AppCompat.App;
 using Firebase.Firestore;
 using Java.Lang;
+using Newtonsoft.Json;
 
 namespace Discussit
 {
@@ -56,7 +58,7 @@ namespace Discussit
 
         public void SetSorting(string sortBy)
         {
-            tvSortBy.Text = Resources.GetString(Resource.String.sortBy) + " " + sortBy + user.Username;
+            tvSortBy.Text = Resources.GetString(Resource.String.sortBy) + " " + sortBy;
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
@@ -94,7 +96,7 @@ namespace Discussit
 
         public void GetCommunities()
         {
-            tskGetCommunities = communities.GetCommunities();
+            tskGetCommunities = communities.GetCommunities().AddOnCompleteListener(this);
         }
 
 #pragma warning disable CS0672 // Member overrides obsolete member
@@ -108,11 +110,15 @@ namespace Discussit
 
         public void OnComplete(Task task)
         {
-            if (task == tskGetCommunities)
+            if (task.IsSuccessful)
             {
-                QuerySnapshot qs = (QuerySnapshot)task.Result;
-                communities.AddCommunities(qs.Documents);
+                if (task == tskGetCommunities)
+                {
+                    QuerySnapshot qs = (QuerySnapshot)task.Result;
+                    communities.AddCommunities(qs.Documents);
+                }
             }
+
         }
     }
 }

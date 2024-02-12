@@ -5,6 +5,7 @@ using Android.OS;
 using Android.Views;
 using Android.Views.InputMethods;
 using Android.Widget;
+using Firebase.Firestore;
 
 namespace Discussit
 {
@@ -79,6 +80,11 @@ namespace Discussit
             HideSoftKeyboard();
         }
 
+        public void GetUser()
+        {
+            tskGetUser = user.GetUserData().AddOnCompleteListener(this);
+        }
+
         public void OnComplete(Task task)
         {
             if (task.IsSuccessful)
@@ -93,21 +99,23 @@ namespace Discussit
                     { 
                         if (chkRemember.Checked)
                             user.Save();
-                        OpenCommunityHub();
+                        GetUser();
                     }
                     else if (task == tskSetFbUser)
                     {
                         if (chkRemember.Checked)
                             user.Save();
-                        OpenCommunityHub();
+                        GetUser();
                     }
                     else if (task == tskRememberLogin)
                     {
-                        OpenCommunityHub();
+                        GetUser();
                     }
                     else if (task == tskGetUser)
                     {
-                        user = task.Result;
+                        DocumentSnapshot ds = (DocumentSnapshot)task.Result;
+                        user.SetUser(ds);
+                        OpenCommunityHub();
                     }
                 }
             }

@@ -1,8 +1,10 @@
 ﻿using Android.Gms.Tasks;
 using Android.Runtime;
-using Java.Interop;
+using Firebase.Auth;
+using Firebase.Firestore;
 using Java.Util;
 using Newtonsoft.Json;
+using System.Linq;
 
 namespace Discussit
 {
@@ -52,6 +54,7 @@ namespace Discussit
         internal bool Save()
         {
             bool success = spd.PutString(General.KEY_EMAIL, Email);
+            success = success && spd.PutString(General.KEY_UID, Id);
             success = success && spd.PutString(General.KEY_PASSWORD, Password);
             success = success && spd.PutBool(General.KEY_REGISTERED, true);
             return success;
@@ -59,8 +62,8 @@ namespace Discussit
 
         internal Task SetFbUser()
         {
-            Task TaskSetDocument = fbd.SetDocument(General.USERS_COLLECTION, Id, out _, GetHashMap());
-            return TaskSetDocument;
+            Task tskSetDocument = fbd.SetDocument(General.USERS_COLLECTION, Id, out _, GetHashMap());
+            return tskSetDocument;
         }
 
         public void UpdateArrayField(string FName, string value)
@@ -132,6 +135,15 @@ namespace Discussit
             hm.Put(General.FIELD_USER_POSTS, Posts);
             hm.Put(General.FIELD_USER_COMMENTS, Comments);
             return hm;
+        }
+
+        public void SetUser(DocumentSnapshot document)
+        {
+            Username = document.GetString(General.FIELD_USERNAME);
+            Communities = General.JaveListToType<string>((JavaList)document.Get(General.FIELD_USER_COMMUNITIES));
+            ManagingCommunities = General.JaveListToType<string>((JavaList)document.Get(General.FIELD_USER_MANAGING_COMMUNITIES));
+            Posts = General.JaveListToType<string>((JavaList)document.Get(General.FIELD_USER_POSTS));
+            Comments = General.JaveListToType<string>((JavaList)document.Get(General.FIELD_USER_COMMENTS));
         }
     }
 }

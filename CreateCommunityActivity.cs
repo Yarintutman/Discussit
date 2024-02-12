@@ -4,6 +4,7 @@ using Android.OS;
 using Android.Views;
 using Android.Widget;
 using AndroidX.AppCompat.App;
+using Firebase.Firestore.Auth;
 
 namespace Discussit
 {
@@ -55,11 +56,25 @@ namespace Discussit
         }
 #pragma warning restore CS0672 // Member overrides obsolete member
 
+        private bool ValidInputFields()
+        {
+            bool status = true;
+            status = status && (etCommunityDescription.Text != string.Empty);
+            status = status && (etCommunityName.Text != string.Empty);
+            return status;
+        }
+
+        private Community CreateCommunity()
+        {
+            Community community = new Community(etCommunityName.Text, etCommunityDescription.Text);
+            return community;
+        }
+
         public void OnClick(View v)
         {
             if (v == ibtnLogo)
             {
-                Back();
+                ReturnToHub();
             }
             else if (v == ibtnBack)
             {
@@ -67,7 +82,14 @@ namespace Discussit
             }
             else if (v == btnCreateCommunity)
             {
-
+                if (ValidInputFields())
+                {
+                    CreateCommunity();
+                }
+                else
+                {
+                    Toast.MakeText(this, Resources.GetString(Resource.String.InvalidFields), ToastLength.Long).Show();
+                }
             }
         }
     }

@@ -14,7 +14,7 @@ namespace Discussit
 {
 	
 	
-	[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Android.Build.Tasks", "13.2.2.120")]
+	[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Android.Build.Tasks", "13.2.1.111")]
 	public partial class Resource
 	{
 		
@@ -5545,22 +5545,13 @@ namespace Discussit
 			public const int gcm_defaultSenderId = 2131689579;
 			
 			// aapt resource value: 0x7F0F006C
-			public const int google_api_key = 2131689580;
+			public const int google_storage_bucket = 2131689580;
 			
 			// aapt resource value: 0x7F0F006D
-			public const int google_app_id = 2131689581;
+			public const int hideDescription = 2131689581;
 			
 			// aapt resource value: 0x7F0F006E
-			public const int google_crash_reporting_api_key = 2131689582;
-			
-			// aapt resource value: 0x7F0F006F
-			public const int google_storage_bucket = 2131689583;
-			
-			// aapt resource value: 0x7F0F0070
-			public const int hideDescription = 2131689584;
-			
-			// aapt resource value: 0x7F0F0071
-			public const int hide_bottom_view_on_scroll_behavior = 2131689585;
+			public const int hide_bottom_view_on_scroll_behavior = 2131689582;
 			
 			// aapt resource value: 0x7F0F0007
 			public const int HintEmail = 2131689479;
@@ -5580,35 +5571,35 @@ namespace Discussit
 			// aapt resource value: 0x7F0F000C
 			public const int InvalidUserAlreadyExists = 2131689484;
 			
-			// aapt resource value: 0x7F0F0072
-			public const int leader = 2131689586;
+			// aapt resource value: 0x7F0F006F
+			public const int leader = 2131689583;
 			
 			// aapt resource value: 0x7F0F000D
 			public const int Login = 2131689485;
 			
+			// aapt resource value: 0x7F0F0070
+			public const int logo = 2131689584;
+			
+			// aapt resource value: 0x7F0F0071
+			public const int logout = 2131689585;
+			
+			// aapt resource value: 0x7F0F0072
+			public const int manageCommunities = 2131689586;
+			
 			// aapt resource value: 0x7F0F0073
-			public const int logo = 2131689587;
+			public const int manageMembers = 2131689587;
 			
 			// aapt resource value: 0x7F0F0074
-			public const int logout = 2131689588;
+			public const int member = 2131689588;
 			
 			// aapt resource value: 0x7F0F0075
-			public const int manageCommunities = 2131689589;
-			
-			// aapt resource value: 0x7F0F0076
-			public const int manageMembers = 2131689590;
-			
-			// aapt resource value: 0x7F0F0077
-			public const int member = 2131689591;
-			
-			// aapt resource value: 0x7F0F0078
-			public const int members = 2131689592;
+			public const int members = 2131689589;
 			
 			// aapt resource value: 0x7F0F000E
 			public const int MemberSearchHint = 2131689486;
 			
-			// aapt resource value: 0x7F0F0079
-			public const int mtrl_chip_close_icon_content_description = 2131689593;
+			// aapt resource value: 0x7F0F0076
+			public const int mtrl_chip_close_icon_content_description = 2131689590;
 			
 			// aapt resource value: 0x7F0F000F
 			public const int NewUser = 2131689487;
@@ -5616,23 +5607,23 @@ namespace Discussit
 			// aapt resource value: 0x7F0F0010
 			public const int Password = 2131689488;
 			
+			// aapt resource value: 0x7F0F0077
+			public const int passwordEmail = 2131689591;
+			
+			// aapt resource value: 0x7F0F0078
+			public const int password_toggle_content_description = 2131689592;
+			
+			// aapt resource value: 0x7F0F0079
+			public const int path_password_eye = 2131689593;
+			
 			// aapt resource value: 0x7F0F007A
-			public const int passwordEmail = 2131689594;
+			public const int path_password_eye_mask_strike_through = 2131689594;
 			
 			// aapt resource value: 0x7F0F007B
-			public const int password_toggle_content_description = 2131689595;
+			public const int path_password_eye_mask_visible = 2131689595;
 			
 			// aapt resource value: 0x7F0F007C
-			public const int path_password_eye = 2131689596;
-			
-			// aapt resource value: 0x7F0F007D
-			public const int path_password_eye_mask_strike_through = 2131689597;
-			
-			// aapt resource value: 0x7F0F007E
-			public const int path_password_eye_mask_visible = 2131689598;
-			
-			// aapt resource value: 0x7F0F007F
-			public const int path_password_strike_through = 2131689599;
+			public const int path_password_strike_through = 2131689596;
 			
 			// aapt resource value: 0x7F0F0011
 			public const int PostDescription = 2131689489;
@@ -5643,14 +5634,14 @@ namespace Discussit
 			// aapt resource value: 0x7F0F0013
 			public const int PostSearchHint = 2131689491;
 			
-			// aapt resource value: 0x7F0F0080
-			public const int profile = 2131689600;
+			// aapt resource value: 0x7F0F007D
+			public const int profile = 2131689597;
 			
-			// aapt resource value: 0x7F0F0081
-			public const int project_id = 2131689601;
+			// aapt resource value: 0x7F0F007E
+			public const int project_id = 2131689598;
 			
-			// aapt resource value: 0x7F0F0082
-			public const int promote = 2131689602;
+			// aapt resource value: 0x7F0F007F
+			public const int promote = 2131689599;
 			
 			// aapt resource value: 0x7F0F0014
 			public const int Register = 2131689492;
@@ -5658,74 +5649,74 @@ namespace Discussit
 			// aapt resource value: 0x7F0F0015
 			public const int Remember = 2131689493;
 			
+			// aapt resource value: 0x7F0F0080
+			public const int remove = 2131689600;
+			
+			// aapt resource value: 0x7F0F0081
+			public const int resetEmail = 2131689601;
+			
+			// aapt resource value: 0x7F0F0082
+			public const int resetPassword = 2131689602;
+			
 			// aapt resource value: 0x7F0F0083
-			public const int remove = 2131689603;
+			public const int save = 2131689603;
 			
 			// aapt resource value: 0x7F0F0084
-			public const int resetEmail = 2131689604;
+			public const int search = 2131689604;
 			
 			// aapt resource value: 0x7F0F0085
-			public const int resetPassword = 2131689605;
+			public const int search_menu_title = 2131689605;
 			
 			// aapt resource value: 0x7F0F0086
-			public const int save = 2131689606;
+			public const int sendAgain = 2131689606;
 			
 			// aapt resource value: 0x7F0F0087
-			public const int search = 2131689607;
+			public const int sendResetPasswordEmail = 2131689607;
 			
 			// aapt resource value: 0x7F0F0088
-			public const int search_menu_title = 2131689608;
+			public const int settings = 2131689608;
 			
 			// aapt resource value: 0x7F0F0089
-			public const int sendAgain = 2131689609;
+			public const int showDescription = 2131689609;
 			
 			// aapt resource value: 0x7F0F008A
-			public const int sendResetPasswordEmail = 2131689610;
+			public const int sortActivity = 2131689610;
 			
 			// aapt resource value: 0x7F0F008B
-			public const int settings = 2131689611;
+			public const int sortBy = 2131689611;
 			
 			// aapt resource value: 0x7F0F008C
-			public const int showDescription = 2131689612;
+			public const int sortByName = 2131689612;
 			
 			// aapt resource value: 0x7F0F008D
-			public const int sortActivity = 2131689613;
+			public const int sortDate = 2131689613;
 			
 			// aapt resource value: 0x7F0F008E
-			public const int sortBy = 2131689614;
+			public const int sortLikes = 2131689614;
 			
 			// aapt resource value: 0x7F0F008F
-			public const int sortByName = 2131689615;
+			public const int sortMembers = 2131689615;
 			
 			// aapt resource value: 0x7F0F0090
-			public const int sortDate = 2131689616;
+			public const int sortRank = 2131689616;
 			
 			// aapt resource value: 0x7F0F0091
-			public const int sortLikes = 2131689617;
-			
-			// aapt resource value: 0x7F0F0092
-			public const int sortMembers = 2131689618;
-			
-			// aapt resource value: 0x7F0F0093
-			public const int sortRank = 2131689619;
-			
-			// aapt resource value: 0x7F0F0094
-			public const int status_bar_notification_info_overflow = 2131689620;
+			public const int status_bar_notification_info_overflow = 2131689617;
 			
 			// aapt resource value: 0x7F0F0016
 			public const int Username = 2131689494;
 			
+			// aapt resource value: 0x7F0F0092
+			public const int viewComments = 2131689618;
+			
+			// aapt resource value: 0x7F0F0093
+			public const int viewCommunities = 2131689619;
+			
+			// aapt resource value: 0x7F0F0094
+			public const int viewPosts = 2131689620;
+			
 			// aapt resource value: 0x7F0F0095
-			public const int viewComments = 2131689621;
-			
-			// aapt resource value: 0x7F0F0096
-			public const int viewCommunities = 2131689622;
-			
-			// aapt resource value: 0x7F0F0097
-			public const int viewPosts = 2131689623;
-			
-			// aapt resource value: 0x7F0F0098
-			public const int wrongEmail = 2131689624;
+			public const int wrongEmail = 2131689621;
 			
 			static String()
 			{

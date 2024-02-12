@@ -1,4 +1,5 @@
 ﻿using Android.Graphics;
+using Android.Runtime;
 using System.IO;
 
 namespace Discussit
@@ -6,6 +7,7 @@ namespace Discussit
     internal static class General
     {
         public const string SP_FILE_NAME = "sp.data";
+        public const string KEY_UID = "uid";
         public const string KEY_USERNAME = "name";
         public const string KEY_EMAIL = "email";
         public const string KEY_PASSWORD = "password";
@@ -38,5 +40,15 @@ namespace Discussit
             bitmap.Compress(Bitmap.CompressFormat.Png, 100, ms);
             return ms.ToArray();
         }
+
+        public static JavaList<T> JaveListToType<T>(JavaList jl)
+        {
+            JavaList<T> newList = new JavaList<T>();
+            for (int i = 0; i < jl.Count; i++)
+            {
+                newList.Add((T)jl[i]);
+            }
+            return newList;
+        } 
     }
 }

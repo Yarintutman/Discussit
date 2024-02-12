@@ -33,7 +33,7 @@ namespace Discussit
             TextView tvMemberCount = v.FindViewById<TextView>(Resource.Id.tvMemberCount);
             TextView tvCommunityDescription = v.FindViewById<TextView>(Resource.Id.tvCommunityDescription);
             tvCommunityName.Text = community.Name;
-            tvMemberCount.Text = (community.Members.MemberCount).ToString();
+            tvMemberCount.Text = (community.Members.MemberCount).ToString(); //Crash here
             tvCommunityDescription.Text = community.Description;
             return v;
         }
