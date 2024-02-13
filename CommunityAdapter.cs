@@ -31,9 +31,9 @@ namespace Discussit
             Community community = lstCommunities[position];
             TextView tvCommunityName = v.FindViewById<TextView>(Resource.Id.tvCommunityName);
             TextView tvMemberCount = v.FindViewById<TextView>(Resource.Id.tvMemberCount);
-            TextView tvCommunityDescription = v.FindViewById<TextView>(Resource.Id.tvCommunityDescription);
+            TextView tvCommunityDescription = v.FindViewById<TextView>(Resource.Id.tvDescription);
             tvCommunityName.Text = community.Name;
-            tvMemberCount.Text = (community.Members.MemberCount).ToString(); //Crash here
+            tvMemberCount.Text = community.MemberCount.ToString();
             tvCommunityDescription.Text = community.Description;
             return v;
         }

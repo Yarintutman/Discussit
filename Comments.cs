@@ -30,7 +30,7 @@ namespace Discussit
 
         public void AddSnapshotListener(Activity context)
         {
-            onCollectionChangeListener = fbd.AddSnapshotListener(context, Path + "\\" + General.COMMENTS_COLLECTION);
+            onCollectionChangeListener = fbd.AddSnapshotListener(context, Path + "/" + General.COMMENTS_COLLECTION);
         }
 
         public void RemoveSnapshotListener()
@@ -63,7 +63,7 @@ namespace Discussit
 
         internal Task GetComments()
         {
-            return fbd.GetCollection(Path + "\\" + General.COMMENTS_COLLECTION);
+            return fbd.GetCollection(Path + "/" + General.COMMENTS_COLLECTION);
         }
 
         public Comment GetCommentById(string Id)

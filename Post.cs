@@ -44,19 +44,19 @@ namespace Discussit
         {
             get
             {
-                return CommunityPath + "\\" + General.POSTS_COLLECTION + "\\" + Id;
+                return CommunityPath + "/" + General.POSTS_COLLECTION + "/" + Id;
             }
         }
 
         public Task GetCollectionCount(string cName)
         {
-            return fbd.GetCollectionCount(Path + "\\" + cName);
+            return fbd.GetCollectionCount(Path + "/" + cName);
         }
 
         public void AddComment(string description, string creatorUID)
         {
             Comment comment = new Comment(description, creatorUID, Path);
-            fbd.SetDocument(Path + "\\" + General.COMMENTS_COLLECTION, string.Empty, out string commentId, comment.HashMap);
+            fbd.SetDocument(Path + "/" + General.COMMENTS_COLLECTION, string.Empty, out string commentId, comment.HashMap);
             comment.Id = commentId;
         }
 
@@ -82,7 +82,7 @@ namespace Discussit
         {
             if (CommunityPath != null)
             {
-                fbd.DeleteDocument(CommunityPath + "\\" + General.POSTS_COLLECTION, Id);
+                fbd.DeleteDocument(CommunityPath + "/" + General.POSTS_COLLECTION, Id);
             }
         }
     }

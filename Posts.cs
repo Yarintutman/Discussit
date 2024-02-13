@@ -30,7 +30,7 @@ namespace Discussit
 
         public void AddSnapshotListener(Activity context)
         {
-            onCollectionChangeListener = fbd.AddSnapshotListener(context, Path + "\\" + General.POSTS_COLLECTION);
+            onCollectionChangeListener = fbd.AddSnapshotListener(context, Path + "/" + General.POSTS_COLLECTION);
         }
 
         public void RemoveSnapshotListener()
@@ -64,7 +64,7 @@ namespace Discussit
 
         internal Task GetPosts()
         {
-            return fbd.GetCollection(Path + "\\" + General.POSTS_COLLECTION);
+            return fbd.GetCollection(Path + "/" + General.POSTS_COLLECTION);
         }
 
         public Post GetPostById(string Id)

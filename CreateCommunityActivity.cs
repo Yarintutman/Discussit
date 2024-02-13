@@ -4,13 +4,13 @@ using Android.OS;
 using Android.Views;
 using Android.Widget;
 using AndroidX.AppCompat.App;
-using Firebase.Firestore.Auth;
 
 namespace Discussit
 {
     [Activity(Label = "CreateCommunityActivity")]
     public class CreateCommunityActivity : AppCompatActivity, View.IOnClickListener
     {
+        User user;
         ImageButton ibtnBack, ibtnLogo;
         EditText etCommunityName, etCommunityDescription;
         Button btnCreateCommunity;
@@ -20,7 +20,13 @@ namespace Discussit
             base.OnCreate(savedInstanceState);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             SetContentView(Resource.Layout.activity_createCommunity);
+            InitObjects();
             InitViews();
+        }
+
+        private void InitObjects()
+        {
+            user = User.GetUserJson(Intent.GetStringExtra(General.KEY_USER));
         }
 
         private void InitViews()
@@ -64,32 +70,34 @@ namespace Discussit
             return status;
         }
 
-        private Community CreateCommunity()
+        private void CreateCommunity()
         {
             Community community = new Community(etCommunityName.Text, etCommunityDescription.Text);
-            return community;
+            community.AddMember(user.Id);
+            ViewCommunity(community);
+        }
+
+        private void ViewCommunity(Community community)
+        {
+            Intent intent = new Intent(this, typeof(ViewCommunityActivity));
+            intent.PutExtra(General.KEY_USER, Intent.GetStringExtra(General.KEY_USER));
+            intent.PutExtra(General.KEY_COMMUNITY, community.GetJson());
+            StartActivity(intent);
+            Finish();
         }
 
         public void OnClick(View v)
         {
             if (v == ibtnLogo)
-            {
                 ReturnToHub();
-            }
             else if (v == ibtnBack)
-            {
                 Back();
-            }
             else if (v == btnCreateCommunity)
             {
                 if (ValidInputFields())
-                {
                     CreateCommunity();
-                }
                 else
-                {
                     Toast.MakeText(this, Resources.GetString(Resource.String.InvalidFields), ToastLength.Long).Show();
-                }
             }
         }
     }

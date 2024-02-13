@@ -1,9 +1,6 @@
 ﻿using Android.App;
-using Android.Content.Res;
 using Android.Gms.Tasks;
 using Firebase.Firestore;
-using Firebase.Firestore.Auth;
-using Java.Lang.Reflect;
 using System.Collections.Generic;
 
 namespace Discussit
@@ -33,7 +30,7 @@ namespace Discussit
 
         public void AddSnapshotListener(Activity context)
         {
-            onCollectionChangeListener = fbd.AddSnapshotListener(context, Path + "\\" + General.MEMBERS_COLLECTION);
+            onCollectionChangeListener = fbd.AddSnapshotListener(context, Path + "/" + General.MEMBERS_COLLECTION);
         }
 
         public void RemoveSnapshotListener()
@@ -67,12 +64,12 @@ namespace Discussit
 
         public Task GetTypeMembers(string type)
         {
-            return fbd.GetEqualToDocs(Path + "\\" + General.MEMBERS_COLLECTION, General.FIELD_MEMBER_TYPE, type);
+            return fbd.GetEqualToDocs(Path + "/" + General.MEMBERS_COLLECTION, General.FIELD_MEMBER_TYPE, type);
         }
 
         internal Task GetMembers()
         {
-            return fbd.GetCollection(Path + "\\" + General.MEMBERS_COLLECTION);
+            return fbd.GetCollection(Path + "/" + General.MEMBERS_COLLECTION);
         }
 
         public void Promote(Member member)

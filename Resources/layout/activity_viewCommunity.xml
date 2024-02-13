@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <ImageButton
-            android:id="@+id/ibtnlogo"
+            android:id="@+id/ibtnLogo"
             android:layout_width="@dimen/logoWidth"
             android:layout_height="@dimen/logoHeight"
             android:background="@drawable/Logo"
@@ -20,7 +20,7 @@
             android:layout_height="@dimen/profilePictureHeight"
             android:background="@drawable/profilepicture"
             android:contentDescription="@string/logo"
-            android:layout_toRightOf="@id/ibtnlogo"
+            android:layout_toRightOf="@id/ibtnLogo"
             android:layout_centerVertical="true"/>
         <ImageButton
             android:id="@+id/ibtnBack"
@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/back"
             android:contentDescription="@string/back"
-            android:layout_toLeftOf="@id/ibtnlogo"
+            android:layout_toLeftOf="@id/ibtnLogo"
             android:layout_centerVertical="true"/>
     </RelativeLayout>
     <LinearLayout
@@ -66,13 +66,15 @@
         android:layout_marginLeft="@dimen/marginLeft"
         android:layout_marginRight="@dimen/marginRight"
         android:textColor="@color/textColor"/>
-    <TextView
-        android:id="@+id/tvViewDescription"
+    <Button
+        android:id="@+id/btnViewDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/marginLeft"
         android:textColor="@color/clickable"
-        android:text="@string/showDescription"/>
+        android:background="@android:color/transparent"
+        android:text="@string/showDescription"
+        android:textAllCaps="false"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -91,30 +93,20 @@
             android:backgroundTint="@color/clickable"
             android:layout_weight="1"/>
         <ImageButton
-            android:id="@+id/btnSearch"
+            android:id="@+id/ibtnSearch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/search"
             android:contentDescription="@string/search"
             android:layout_gravity="center_vertical"/>
     </LinearLayout>
-    <LinearLayout
-        android:id="@+id/llSortPostBy"
+    <TextView
+        android:id="@+id/tvSortBy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginLeft="@dimen/marginLeft">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/clickable"
-            android:text="@string/sortBy"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/clickable"
-            android:text="@string/sortDate"/>
-    </LinearLayout>
+        android:textColor="@color/clickable"
+        android:text="@string/sortBy"
+        android:layout_marginLeft="@dimen/marginLeft"/>
     <ListView
         android:id="@+id/lvPosts"
         android:layout_width="match_parent"

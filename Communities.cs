@@ -47,7 +47,9 @@ namespace Discussit
                     Id = document.Id,
                     Name = document.GetString(General.FIELD_COMMUNITY_NAME),
                     Description = document.GetString(General.FIELD_COMMUNITY_DESCRIPTION),
-                    CreationDate = fbd.FirestoreTimestampToDateTime(document.GetTimestamp(General.FIELD_DATE))
+                    CreationDate = fbd.FirestoreTimestampToDateTime(document.GetTimestamp(General.FIELD_DATE)),
+                    MemberCount = document.GetLong(General.FIELD_MEMBER_COUNT).LongValue(),
+                    PostCount = document.GetLong(General.FIELD_POST_COUNT).LongValue()
                 };
                 CommunityAdapter.AddCommunity(community);
             }

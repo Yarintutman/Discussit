@@ -84,6 +84,11 @@ namespace Discussit
             return firestore.Collection(cName).Get();
         }
 
+        public Task IncrementField(string cName, string docId, string fName, int increment)
+        {
+            return firestore.Collection(cName).Document(docId).Update(fName, FieldValue.Increment(increment));
+        }
+
         public Task GetCollectionCount(string cName)
         {
             return firestore.Collection(cName).Count().Get(AggregateSource.Server);

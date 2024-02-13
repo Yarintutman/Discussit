@@ -25,7 +25,7 @@ namespace Discussit
         { 
             get
             {
-                return CommunityPath + "\\" + General.MEMBERS_COLLECTION + "\\" + Id;
+                return CommunityPath + "/" + General.MEMBERS_COLLECTION + "/" + Id;
             } 
         }
 
@@ -44,7 +44,7 @@ namespace Discussit
         {
             if (CommunityPath != null)
             {
-                fbd.DeleteDocument(CommunityPath + "\\" + General.MEMBERS_COLLECTION, Id);
+                fbd.DeleteDocument(CommunityPath + "/" + General.MEMBERS_COLLECTION, Id);
             }
         }
     }
