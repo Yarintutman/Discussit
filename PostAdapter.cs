@@ -28,7 +28,11 @@ namespace Discussit
         {
             LayoutInflater li = LayoutInflater.From(context);
             View v = li.Inflate(Resource.Layout.layout_post, parent, false);
-
+            Post post = lstPosts[position];
+            TextView tvCreatorName = v.FindViewById<TextView>(Resource.Id.tvCreatorName);
+            TextView tvPostTitle = v.FindViewById<TextView>(Resource.Id.tvPostTitle);
+            tvCreatorName.Text = post.CreatorName;
+            tvPostTitle.Text = post.Title;
             return v;
         }
 

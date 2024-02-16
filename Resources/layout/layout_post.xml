@@ -18,7 +18,7 @@
             android:contentDescription="@string/profile"
             android:layout_marginLeft="@dimen/Post_marginLeft"/>
         <TextView
-            android:id="@+id/tvUserCreatedPost"
+            android:id="@+id/tvCreatorName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/textColor"
@@ -26,7 +26,7 @@
             android:layout_marginRight="@dimen/Post_marginRight"/>
     </LinearLayout>
     <TextView
-        android:id="@+id/tvPostName"
+        android:id="@+id/tvPostTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/clickable"

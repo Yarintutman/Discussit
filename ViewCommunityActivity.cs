@@ -20,6 +20,7 @@ namespace Discussit
         TextView tvCommunityName, tvDescription, tvMemberCount, tvSortBy;
         Button btnViewDescription, btnNewPost;
         EditText etSearchBar;
+        Task tskGetPosts;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -52,8 +53,8 @@ namespace Discussit
             btnNewPost = FindViewById<Button>(Resource.Id.btnNewPost);
             etSearchBar = FindViewById<EditText>(Resource.Id.etSearchBar);
             ListView lvPosts = FindViewById<ListView>(Resource.Id.lvPosts);
-            lvPosts.OnItemClickListener = this;
             lvPosts.Adapter = posts.PostAdapter;
+            lvPosts.OnItemClickListener = this;
             posts.AddSnapshotListener(this);
             ibtnBack.SetOnClickListener(this);
             ibtnLogo.SetOnClickListener(this);
@@ -73,20 +74,78 @@ namespace Discussit
             tvSortBy.Text = Resources.GetString(Resource.String.sortBy) + " " + sortBy;
         }
 
+        private void OpenCreatePostActivity()
+        {
+            Intent intent = new Intent(this, typeof(CreatePostActivity));
+            intent.PutExtra(General.KEY_USER, user.GetJson());
+            intent.PutExtra(General.KEY_COMMUNITY, community.GetJson());
+            StartActivity(intent);
+        }
+
+        public void Back()
+        {
+            Finish();
+        }
+
+        public void ReturnToHub()
+        {
+            Intent intent = new Intent(this, typeof(CommunityHubActivity));
+            intent.AddFlags(ActivityFlags.LaunchedFromHistory);
+            intent.PutExtra(General.KEY_USER, Intent.GetStringExtra(General.KEY_USER));
+            StartActivity(intent);
+            Finish();
+        }
+
+#pragma warning disable CS0672 // Member overrides obsolete member
+        public override void OnBackPressed()
+        {
+            Back();
+        }
+#pragma warning restore CS0672 // Member overrides obsolete member
+
         public void OnClick(View v)
         {
+            if (v == ibtnLogo)
+                ReturnToHub();
+            else if (v == ibtnBack)
+                Back();
+            else if (v == btnNewPost)
+                OpenCreatePostActivity();
+        }
+
+        private void ViewPost(Post post)
+        {
+            Intent intent = new Intent(this, typeof(ViewPostActivity));
+            intent.PutExtra(General.KEY_USER, Intent.GetStringExtra(General.KEY_USER));
+            intent.PutExtra(General.KEY_POST, post.GetJson());
+            StartActivity(intent);
         }
 
         public void OnItemClick(AdapterView parent, View view, int position, long id)
         {
+            ViewPost(posts[position]);
         }
 
-        public void OnComplete(Task task)
+        private void GetPosts()
         {
+            tskGetPosts = community.GetPosts().AddOnCompleteListener(this);
         }
 
         public void OnEvent(Object obj, FirebaseFirestoreException error)
         {
+            GetPosts();
+        }
+
+        public void OnComplete(Task task)
+        {
+            if (task.IsSuccessful)
+            {
+                if (task == tskGetPosts)
+                {
+                    QuerySnapshot qs = (QuerySnapshot)task.Result;
+                    posts.AddPosts(qs.Documents);
+                }
+            }
         }
     }
 }

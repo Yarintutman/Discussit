@@ -1,6 +1,7 @@
 ﻿using Android.App.AppSearch;
 using Android.Media;
 using Java.Util;
+using Newtonsoft.Json;
 using System;
 
 namespace Discussit
@@ -19,8 +20,12 @@ namespace Discussit
             CommunityPath = communityPath;
             JoinDate = DateTime.Now;
         }
-        public Member() { }
+        public Member()
+        {
+            fbd = new FbData();
+        }
 
+        [JsonIgnore]
         public string Path 
         { 
             get
@@ -29,6 +34,7 @@ namespace Discussit
             } 
         }
 
+        [JsonIgnore]
         public virtual HashMap HashMap
         {
             get

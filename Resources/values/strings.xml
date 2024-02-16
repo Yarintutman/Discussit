@@ -57,8 +57,8 @@
   <string name="enterCommunityName">Enter Community Name</string>
   <string name="communityDescription">Community Description</string>
   <string name="entercommunityDescription">Enter Community Description</string>
-  <string name="PostName">Post Name</string>
-  <string name="enterPostName">Enter Post Name</string>
+  <string name="PostTitle">Post Title</string>
+  <string name="enterPostTitle">Enter Post Title</string>
   <string name="PostDescription">Post Description</string>
   <string name="enterPostDescription">Enter Post Description</string>
   <string name="CommentDescription">Comment Description</string>
@@ -74,4 +74,6 @@
   <string name="ban">Ban</string>
   <string name="promote">Promote</string>
   <string name="demote">Demote</string>
+  <string name="recursiveComment">Recursive</string>
+  <string name="CommentOnPost">OnPost</string>
 </resources>

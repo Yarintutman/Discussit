@@ -140,10 +140,10 @@ namespace Discussit
         public void SetUser(DocumentSnapshot document)
         {
             Username = document.GetString(General.FIELD_USERNAME);
-            Communities = General.JaveListToType<string>((JavaList)document.Get(General.FIELD_USER_COMMUNITIES));
-            ManagingCommunities = General.JaveListToType<string>((JavaList)document.Get(General.FIELD_USER_MANAGING_COMMUNITIES));
-            Posts = General.JaveListToType<string>((JavaList)document.Get(General.FIELD_USER_POSTS));
-            Comments = General.JaveListToType<string>((JavaList)document.Get(General.FIELD_USER_COMMENTS));
+            Communities = General.JavaListToType<string>((JavaList)document.Get(General.FIELD_USER_COMMUNITIES));
+            ManagingCommunities = General.JavaListToType<string>((JavaList)document.Get(General.FIELD_USER_MANAGING_COMMUNITIES));
+            Posts = General.JavaListToType<string>((JavaList)document.Get(General.FIELD_USER_POSTS));
+            Comments = General.JavaListToType<string>((JavaList)document.Get(General.FIELD_USER_COMMENTS));
         }
     }
 }

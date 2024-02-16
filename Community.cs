@@ -36,8 +36,12 @@ namespace Discussit
             CreateCommunity();
         }
 
-        public Community() { }
+        public Community() 
+        {
+            fbd = new FbData();
+        }
 
+        [JsonIgnore]
         private HashMap HashMap
         {
             get 
@@ -52,6 +56,7 @@ namespace Discussit
             }
         }
 
+        [JsonIgnore]
         public string CollectionPath 
         { 
             get
@@ -81,13 +86,14 @@ namespace Discussit
             Posts = new Posts(context, CollectionPath);
         }
 
-        public void AddPost(string title, string description, string creatorUID)
+        public Post AddPost(string title, string description, User creator)
         {
-            Post post = new Post(title, description, creatorUID, CollectionPath);
+            Post post = new Post(title, description, creator, CollectionPath);
             fbd.SetDocument(CollectionPath + "/" + General.POSTS_COLLECTION, string.Empty, out string postId, post.HashMap);
             post.Id = postId;
             PostCount++;
             fbd.IncrementField(General.COMMUNITIES_COLLECTION, Id, General.FIELD_POST_COUNT, 1);
+            return post;
         }
 
         public void AddMember(string UID)

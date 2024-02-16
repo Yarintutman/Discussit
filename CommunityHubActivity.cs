@@ -106,7 +106,7 @@ namespace Discussit
             StartActivity(intent);
         }
 
-        public void GetCommunities()
+        private void GetCommunities()
         {
             tskGetCommunities = communities.GetCommunities().AddOnCompleteListener(this);
         }
@@ -130,7 +130,6 @@ namespace Discussit
                     communities.AddCommunities(qs.Documents);
                 }
             }
-
         }
     }
 }

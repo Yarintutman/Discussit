@@ -1,5 +1,6 @@
 ﻿using Android.Gms.Tasks;
 using Java.Util;
+using Newtonsoft.Json;
 using System;
 
 namespace Discussit
@@ -11,6 +12,7 @@ namespace Discussit
         public string Description { get; set; }
         public string CreatorUID { get; set; }
         public string ParentPath { get; set; }
+        [JsonIgnore]
         public Comments Comments { get; set; }
         public DateTime CreationDate { get; set; }
 
@@ -23,8 +25,12 @@ namespace Discussit
             CreationDate = DateTime.Now;
         }
 
-        public Comment() { }
+        public Comment()
+        {
+            fbd = new FbData();
+        }
 
+        [JsonIgnore]
         public HashMap HashMap 
         { 
             get 
@@ -37,6 +43,7 @@ namespace Discussit
             }
         }
 
+        [JsonIgnore]
         public string Path
         {
             get
@@ -76,6 +83,16 @@ namespace Discussit
             {
                 fbd.DeleteDocument(ParentPath + "/" + General.COMMENTS_COLLECTION, Id);
             }
+        }
+
+        public string GetJson()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
+
+        public static Comment GetCommentJson(string json)
+        {
+            return JsonConvert.DeserializeObject<Comment>(json);
         }
     }
 }

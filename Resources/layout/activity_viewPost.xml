@@ -7,8 +7,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <ImageView
-            android:id="@+id/ivlogo"
+        <ImageButton
+            android:id="@+id/ibtnLogo"
             android:layout_width="@dimen/logoWidth"
             android:layout_height="@dimen/logoHeight"
             android:background="@drawable/Logo"
@@ -20,7 +20,7 @@
             android:layout_height="@dimen/profilePictureHeight"
             android:background="@drawable/profilepicture"
             android:contentDescription="@string/logo"
-            android:layout_toRightOf="@id/ivlogo"
+            android:layout_toRightOf="@id/ibtnLogo"
             android:layout_centerVertical="true"/>
         <ImageButton
             android:id="@+id/ibtnBack"
@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/back"
             android:contentDescription="@string/back"
-            android:layout_toLeftOf="@id/ivlogo"
+            android:layout_toLeftOf="@id/ibtnLogo"
             android:layout_centerVertical="true"/>
     </RelativeLayout>
     <LinearLayout
@@ -39,20 +39,20 @@
         android:layout_marginRight="@dimen/marginRight"
         android:gravity="center_vertical">
         <ImageView
-            android:id="@+id/ivUserPicture"
+            android:id="@+id/ivCreatorPicture"
             android:layout_width="@dimen/ViewPost_profileWidth"
             android:layout_height="@dimen/ViewPost_profileHeight"
             android:background="@drawable/profilepicture"
             android:contentDescription="@string/profile"/>
         <TextView
-            android:id="@+id/tvUserCreatedPost"
+            android:id="@+id/tvPostCreator"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/clickable"
             android:layout_marginLeft="@dimen/ViewPost_MarginLeft"/>
     </LinearLayout>
     <TextView
-        android:id="@+id/tvPostName"
+        android:id="@+id/tvPostTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/textColor"
@@ -66,23 +66,14 @@
         android:textColor="@color/textColor"
         android:layout_marginLeft="@dimen/marginLeft"
         android:layout_marginRight="@dimen/marginRight"/>
-    <LinearLayout
-        android:id="@+id/llSortCommentBy"
+    <TextView
+        android:id="@+id/tvSortBy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginLeft="@dimen/marginLeft">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/clickable"
-            android:text="@string/sortBy"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/clickable"
-            android:text="@string/sortDate"/>
-    </LinearLayout>
+        android:textColor="@color/clickable"
+        android:text="@string/sortBy"
+        android:layout_marginLeft="@dimen/marginLeft"
+        android:layout_marginTop="@dimen/Post_marginTop"/>
     <ListView
         android:id="@+id/lvComments"
         android:layout_width="match_parent"

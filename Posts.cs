@@ -49,7 +49,9 @@ namespace Discussit
                     Id = document.Id,
                     Title = document.GetString(General.FIELD_POST_TITLE),
                     Description = document.GetString(General.FIELD_POST_DESCRIPTION),
-                    CreatorUID = document.GetString(General.FIELD_POST_CREATOR),
+                    CreatorUID = document.GetString(General.FIELD_POST_CREATOR_UID),
+                    CreatorName = document.GetString(General.FIELD_POST_CREATOR_NAME),
+                    CommentCount = document.GetLong(General.FIELD_COMMENT_COUNT).LongValue(),
                     CommunityPath = Path,
                     CreationDate = fbd.FirestoreTimestampToDateTime(document.GetTimestamp(General.FIELD_DATE))
                 };

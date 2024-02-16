@@ -7,8 +7,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <ImageView
-            android:id="@+id/ivlogo"
+        <ImageButton
+            android:id="@+id/ibtnLogo"
             android:layout_width="@dimen/logoWidth"
             android:layout_height="@dimen/logoHeight"
             android:background="@drawable/Logo"
@@ -20,11 +20,11 @@
             android:layout_height="wrap_content"
             android:background="@drawable/back"
             android:contentDescription="@string/back"
-            android:layout_toLeftOf="@id/ivlogo"
+            android:layout_toLeftOf="@id/ibtnLogo"
             android:layout_centerVertical="true"/>
     </RelativeLayout>
     <TextView
-        android:id="@+id/tvPostName"
+        android:id="@+id/tvPostTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/textColor"
@@ -63,6 +63,7 @@
             android:backgroundTint="@color/clickable"/>
     </LinearLayout>
     <Button
+        android:id="@+id/btnCreateComment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAllCaps="false"

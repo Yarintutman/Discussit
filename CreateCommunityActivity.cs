@@ -10,7 +10,6 @@ namespace Discussit
     [Activity(Label = "CreateCommunityActivity")]
     public class CreateCommunityActivity : AppCompatActivity, View.IOnClickListener
     {
-        User user;
         ImageButton ibtnBack, ibtnLogo;
         EditText etCommunityName, etCommunityDescription;
         Button btnCreateCommunity;
@@ -20,13 +19,7 @@ namespace Discussit
             base.OnCreate(savedInstanceState);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             SetContentView(Resource.Layout.activity_createCommunity);
-            InitObjects();
             InitViews();
-        }
-
-        private void InitObjects()
-        {
-            user = User.GetUserJson(Intent.GetStringExtra(General.KEY_USER));
         }
 
         private void InitViews()
@@ -49,7 +42,7 @@ namespace Discussit
         public void ReturnToHub()
         {
             Intent intent = new Intent(this, typeof(CommunityHubActivity));
-            intent.AddFlags(ActivityFlags.SingleTop);
+            intent.AddFlags(ActivityFlags.LaunchedFromHistory);
             intent.PutExtra(General.KEY_USER, Intent.GetStringExtra(General.KEY_USER));
             StartActivity(intent);
             Finish();
@@ -65,13 +58,14 @@ namespace Discussit
         private bool ValidInputFields()
         {
             bool status = true;
-            status = status && (etCommunityDescription.Text != string.Empty);
             status = status && (etCommunityName.Text != string.Empty);
+            status = status && (etCommunityDescription.Text != string.Empty);
             return status;
         }
 
         private void CreateCommunity()
         {
+            User user = User.GetUserJson(Intent.GetStringExtra(General.KEY_USER));
             Community community = new Community(etCommunityName.Text, etCommunityDescription.Text);
             community.AddMember(user.Id);
             ViewCommunity(community);
