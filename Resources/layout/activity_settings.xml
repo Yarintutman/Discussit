@@ -8,8 +8,8 @@
         android:layout_marginTop="@dimen/Settigns_marginTop"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <ImageView
-            android:id="@+id/ivProilePicture"
+        <ImageButton
+            android:id="@+id/ibtnProfilePicture"
             android:layout_width="@dimen/Settigns_profileWidth"
             android:layout_height="@dimen/Settigns_profileHeight"
             android:background="@drawable/profilepicture"
@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/back"
             android:contentDescription="@string/logout"
-            android:layout_toLeftOf="@id/ivProilePicture"
+            android:layout_toLeftOf="@id/ibtnProfilePicture"
             android:layout_centerVertical="true"/>
     </RelativeLayout>
     <LinearLayout
@@ -63,7 +63,7 @@
                 android:id="@+id/btnResetPassword"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/resetEmail"
+                android:text="@string/openResetPassword"
                 android:textAllCaps="false"
                 android:layout_centerHorizontal="true"
                 android:textColor="@color/clickable"
@@ -76,10 +76,10 @@
                 android:orientation="vertical"
                 android:visibility="invisible">
                 <EditText
-                    android:id="@+id/etChangeUserName"
+                    android:id="@+id/etEnterEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"
+                    android:inputType="textEmailAddress"
                     android:textColor="@color/clickable"
                     android:hint="@string/enterEmail"
                     android:textColorHint="@color/hintColor"
@@ -87,7 +87,7 @@
                     android:layout_marginLeft="@dimen/marginLeft"
                     android:layout_marginRight="@dimen/marginRight"/>
                 <Button
-                    android:id="@+id/btnChangeUserName"
+                    android:id="@+id/btnConfirmResetPassword"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/resetPassword"
@@ -97,12 +97,13 @@
             </LinearLayout>
         </RelativeLayout>
         <TextView
-            android:id="@+id/tvEmailAnswer"
+            android:id="@+id/tvEmailResult"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/textColor"/>
     </LinearLayout>
     <Button
+        android:id="@+id/btnSaveChanges"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/save"

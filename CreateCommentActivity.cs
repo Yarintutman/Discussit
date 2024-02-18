@@ -20,6 +20,7 @@ namespace Discussit
         Comment comment;
         ImageButton ibtnBack, ibtnLogo;
         EditText etCommentDescription;
+        Button btnCreateComment;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -40,14 +41,69 @@ namespace Discussit
         private void InitViews()
         {
             TextView tvPostTitle = FindViewById<TextView>(Resource.Id.tvPostTitle);
-            //work on views
+            TextView tvPostDescription = FindViewById<TextView>(Resource.Id.tvPostDescription);
             ibtnBack = FindViewById<ImageButton>(Resource.Id.ibtnBack);
             ibtnLogo = FindViewById<ImageButton>(Resource.Id.ibtnLogo);
             etCommentDescription = FindViewById<EditText>(Resource.Id.etCommentDescription);
+            btnCreateComment = FindViewById<Button>(Resource.Id.btnCreateComment);
+            tvPostTitle.Text = post.Title;
+            tvPostDescription.Text = post.Description;
+            ibtnBack.SetOnClickListener(this);
+            ibtnLogo.SetOnClickListener(this);
+            btnCreateComment.SetOnClickListener(this);
+        }
+
+        public void Back()
+        {
+            Finish();
+        }
+
+        public void ReturnToHub()
+        {
+            Intent intent = new Intent(this, typeof(CommunityHubActivity));
+            intent.AddFlags(ActivityFlags.LaunchedFromHistory);
+            intent.PutExtra(General.KEY_USER, Intent.GetStringExtra(General.KEY_USER));
+            StartActivity(intent);
+            Finish();
+        }
+
+#pragma warning disable CS0672 // Member overrides obsolete member
+        public override void OnBackPressed()
+        {
+            Back();
+        }
+#pragma warning restore CS0672 // Member overrides obsolete member
+
+        private bool ValidInputFields()
+        {
+            return etCommentDescription.Text != string.Empty;
+        }
+
+        private void CreateComment()
+        {
+            if (comment == null)
+                post.AddComment(etCommentDescription.Text, User.GetUserJson(Intent.GetStringExtra(General.KEY_USER)));
+            else
+            {
+                comment.AddComment(etCommentDescription.Text, User.GetUserJson(Intent.GetStringExtra(General.KEY_USER)));
+                post.IncrementComments(+1);
+            }
+            Finish();
         }
 
         public void OnClick(View v)
         {
+            if (v == ibtnLogo)
+                ReturnToHub();
+            else if (v == ibtnBack)
+                Back();
+            else if (v == btnCreateComment)
+            {
+                if (ValidInputFields())
+                    CreateComment();
+                else
+                    Toast.MakeText(this, Resources.GetString(Resource.String.InvalidFields), ToastLength.Long).Show();
+            }
         }
     }
 }

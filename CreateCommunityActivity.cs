@@ -67,7 +67,7 @@ namespace Discussit
         {
             User user = User.GetUserJson(Intent.GetStringExtra(General.KEY_USER));
             Community community = new Community(etCommunityName.Text, etCommunityDescription.Text);
-            community.AddMember(user.Id);
+            community.AddMember(user);
             ViewCommunity(community);
         }
 

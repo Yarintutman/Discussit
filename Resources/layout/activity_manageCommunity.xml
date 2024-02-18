@@ -8,8 +8,8 @@
         android:layout_marginTop="@dimen/Settigns_marginTop"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <ImageView
-            android:id="@+id/ivlogo"
+        <ImageButton
+            android:id="@+id/ibtnLogo"
             android:layout_width="@dimen/logoWidth"
             android:layout_height="@dimen/logoHeight"
             android:background="@drawable/Logo"
@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/back"
             android:contentDescription="@string/back"
-            android:layout_toLeftOf="@id/ivlogo"
+            android:layout_toLeftOf="@id/ibtnLogo"
             android:layout_centerVertical="true"/>
     </RelativeLayout>
     <LinearLayout
@@ -74,6 +74,7 @@
             android:background="@android:color/transparent"/>
     </LinearLayout>
     <Button
+        android:id="@+id/btnSaveChanges"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/save"

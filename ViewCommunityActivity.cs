@@ -96,6 +96,13 @@ namespace Discussit
             Finish();
         }
 
+        private void ViewProfile()
+        {
+            Intent intent = new Intent(this, typeof(ProfileActivity));
+            intent.PutExtra(General.KEY_USER, user.GetJson());
+            StartActivity(intent);
+        }
+
 #pragma warning disable CS0672 // Member overrides obsolete member
         public override void OnBackPressed()
         {
@@ -109,6 +116,8 @@ namespace Discussit
                 ReturnToHub();
             else if (v == ibtnBack)
                 Back();
+            else if (v == ibtnProfile)
+                ViewProfile();
             else if (v == btnNewPost)
                 OpenCreatePostActivity();
         }

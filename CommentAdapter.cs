@@ -27,8 +27,12 @@ namespace Discussit
         public override View GetView(int position, View convertView, ViewGroup parent)
         {
             LayoutInflater li = LayoutInflater.From(context);
-            View v = li.Inflate(Resource.Layout.layout_post, parent, false);
-
+            View v = li.Inflate(Resource.Layout.layout_comment, parent, false);
+            Comment comment = lstComments[position];
+            TextView creatorName = v.FindViewById<TextView>(Resource.Id.tvCommentCreator);
+            TextView commentDescription = v.FindViewById<TextView>(Resource.Id.tvCommentDescription);
+            creatorName.Text = comment.CreatorName;
+            commentDescription.Text = comment.Description;
             return v;
         }
 

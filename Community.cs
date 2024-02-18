@@ -92,17 +92,22 @@ namespace Discussit
             fbd.SetDocument(CollectionPath + "/" + General.POSTS_COLLECTION, string.Empty, out string postId, post.HashMap);
             post.Id = postId;
             PostCount++;
+            creator.UpdateArrayField(General.FIELD_USER_POSTS, post.Path);
             fbd.IncrementField(General.COMMUNITIES_COLLECTION, Id, General.FIELD_POST_COUNT, 1);
             return post;
         }
 
-        public void AddMember(string UID)
+        public void AddMember(User user)
         {
             Member member;
-            if (MemberCount == 0)
-                member = new Member(UID, CollectionPath);
+            if (MemberCount != 0)
+                member = new Member(user.Id, CollectionPath);
             else
-                member = new Leader(UID, CollectionPath);
+            { 
+                member = new Leader(user.Id, CollectionPath);
+                user.UpdateArrayField(General.FIELD_USER_MANAGING_COMMUNITIES, CollectionPath);
+            }
+            user.UpdateArrayField(General.FIELD_USER_COMMUNITIES, CollectionPath);
             fbd.SetDocument(CollectionPath + "/" + General.MEMBERS_COLLECTION, string.Empty, out string memberId, member.HashMap);
             member.Id = memberId;
             MemberCount++;

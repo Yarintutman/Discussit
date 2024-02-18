@@ -41,6 +41,7 @@
   <dimen name="Post_marginRight">5dp</dimen>
   <dimen name="Post_profileWidth">25dp</dimen>
   <dimen name="Post_profileHeight">25dp</dimen>
+  <dimen name="Comment_width">300dp</dimen>
   <dimen name="Comment_marginTop">5dp</dimen>
   <dimen name="Comment_marginBottom">5dp</dimen>
   <dimen name="Comment_nameSize">15sp</dimen>

@@ -47,7 +47,7 @@
   <string name="changeName">Change Username</string>
   <string name="resetPassword">Send Email verification</string>
   <string name="enterEmail">Enter your Email address</string>
-  <string name="resetEmail">Reset your Email</string>
+  <string name="openResetPassword">Reset your Password</string>
   <string name="sendResetPasswordEmail">Send Email verification</string>
   <string name="passwordEmail">Sent verification Email</string>
   <string name="wrongEmail">Email address does not match the user\'s Email address</string>
@@ -76,4 +76,8 @@
   <string name="demote">Demote</string>
   <string name="recursiveComment">Recursive</string>
   <string name="CommentOnPost">OnPost</string>
+  <string name="Communities">Communities</string>
+  <string name="ManagedCommunities">Managed Communities</string>
+  <string name="Posts">Posts</string>
+  <string name="Comments">Comments</string>
 </resources>

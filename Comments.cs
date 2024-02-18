@@ -48,7 +48,8 @@ namespace Discussit
                 {
                     Id = document.Id,
                     Description = document.GetString(General.FIELD_COMMENT_DESCRIPTION),
-                    CreatorUID = document.GetString(General.FIELD_COMMENT_CREATOR),
+                    CreatorName = document.GetString(General.FIELD_COMMENT_CREATOR_NAME),
+                    CreatorUID = document.GetString(General.FIELD_COMMENT_CREATOR_UID),
                     ParentPath = Path,
                     CreationDate = fbd.FirestoreTimestampToDateTime(document.GetTimestamp(General.FIELD_DATE))
                 };

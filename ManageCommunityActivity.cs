@@ -4,6 +4,7 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using AndroidX.AppCompat.App;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,13 +13,41 @@ using System.Text;
 namespace Discussit
 {
     [Activity(Label = "ManageCommunityActivity")]
-    public class ManageCommunityActivity : Activity
+    public class ManageCommunityActivity : AppCompatActivity, View.IOnClickListener
     {
+        ImageButton ibtnLogo, ibtnBack;
+        EditText etCommunityName, etCommunityDescription;
+        Button btnManageMembers, btnSaveChanges;
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
+            Xamarin.Essentials.Platform.Init(this, savedInstanceState);
+            SetContentView(Resource.Layout.activity_manageCommunity);
+            InitObjects();
+            InitViews();
+        }
 
-            // Create your application here
+        private void InitObjects()
+        {
+        }
+
+        private void InitViews()
+        {
+            ibtnBack = FindViewById<ImageButton>(Resource.Id.ibtnBack);
+            ibtnLogo = FindViewById<ImageButton>(Resource.Id.ibtnLogo);
+            etCommunityName = FindViewById<EditText>(Resource.Id.etCommunityName);
+            etCommunityDescription = FindViewById<EditText>(Resource.Id.etCommunityDescription);
+            btnManageMembers = FindViewById<Button>(Resource.Id.btnManageMembers);
+            btnSaveChanges = FindViewById<Button>(Resource.Id.btnSaveChanges);
+            ibtnLogo.SetOnClickListener(this);
+            ibtnBack.SetOnClickListener(this);
+            btnManageMembers.SetOnClickListener(this);
+            btnSaveChanges.SetOnClickListener(this);
+        }
+
+        public void OnClick(View v)
+        {
         }
     }
 }

@@ -74,13 +74,17 @@
         android:text="@string/sortBy"
         android:layout_marginLeft="@dimen/marginLeft"
         android:layout_marginTop="@dimen/Post_marginTop"/>
-    <ListView
-        android:id="@+id/lvComments"
+    <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:layout_marginLeft="@dimen/marginLeft"
-        android:layout_marginRight="@dimen/marginRight"/>
+        android:layout_marginRight="@dimen/marginRight">
+        <ListView
+            android:id="@+id/lvComments"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </HorizontalScrollView>
     <Button
         android:id="@+id/btnNewComment"
         android:layout_width="wrap_content"

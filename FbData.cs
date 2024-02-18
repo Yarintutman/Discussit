@@ -7,6 +7,9 @@ using Java.Util;
 using Firebase.Storage;
 using System;
 using Android.Graphics;
+using Android.Runtime;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace Discussit
 {
@@ -77,6 +80,11 @@ namespace Discussit
         public Task GetDocument(string cName, string docId)
         {
             return firestore.Collection(cName).Document(docId).Get();
+        }
+
+        public Task GetDocumentsInList(string cName, IList<Java.Lang.Object> lst)
+        {
+            return firestore.Collection(cName).WhereIn(FieldPath.DocumentId(), lst).Get();
         }
 
         public Task GetCollection(string cName)

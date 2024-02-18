@@ -72,7 +72,7 @@ namespace Discussit
         public void IncrementComments(int value)
         {
             CommentCount += value;
-            fbd.IncrementField(CommunityPath + "/", Id, General.FIELD_COMMENT_COUNT, value);
+            fbd.IncrementField(CommunityPath + "/" + General.POSTS_COLLECTION, Id, General.FIELD_COMMENT_COUNT, value);
         }
 
         public Task GetCollectionCount(string cName)
@@ -80,11 +80,12 @@ namespace Discussit
             return fbd.GetCollectionCount(Path + "/" + cName);
         }
 
-        public void AddComment(string description, string creatorUID)
+        public void AddComment(string description, User creator)
         {
-            Comment comment = new Comment(description, creatorUID, Path);
+            Comment comment = new Comment(description, creator, Path);
             fbd.SetDocument(Path + "/" + General.COMMENTS_COLLECTION, string.Empty, out string commentId, comment.HashMap);
             comment.Id = commentId;
+            creator.UpdateArrayField(General.FIELD_USER_COMMENTS, comment.Path);
             IncrementComments(1);
 
         }

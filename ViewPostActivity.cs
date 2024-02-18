@@ -2,15 +2,13 @@
 using Android.Content;
 using Android.Gms.Tasks;
 using Android.OS;
-using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using AndroidX.AppCompat.App;
+using AndroidX.AppCompat.Widget;
+using AndroidX.Core.Util;
 using Firebase.Firestore;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Discussit
 {
@@ -23,6 +21,7 @@ namespace Discussit
         ImageButton ibtnBack, ibtnLogo, ibtnProfile;
         TextView tvSortBy;
         Button btnNewComment;
+        Task tskGetComments;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -112,26 +111,56 @@ namespace Discussit
             StartActivity(intent);
         }
 
+        private void GetComments()
+        {
+            tskGetComments = post.GetComments().AddOnCompleteListener(this);
+        }
+
+        private void GetRecursiveComments(Comments comment)
+        {
+            tskGetComments = comment.GetComments().AddOnCompleteListener(this);
+        }
+
+        private void ViewProfile()
+        {
+            Intent intent = new Intent(this, typeof(ProfileActivity));
+            intent.PutExtra(General.KEY_USER, user.GetJson());
+            StartActivity(intent);
+        }
+
         public void OnClick(View v)
         {
             if (v == ibtnLogo)
                 ReturnToHub();
             else if (v == ibtnBack)
                 Back();
+            else if (v == ibtnProfile)
+                ViewProfile();
             else if (v == btnNewComment)
                 OpenCreateCommentActivity();
         }
 
         public void OnComplete(Task task)
         {
+            if (task.IsSuccessful)
+            {
+                if (task == tskGetComments)
+                {
+                    QuerySnapshot qs = (QuerySnapshot)task.Result;
+                    comments.AddComments(qs.Documents);
+                }
+            }
         }
 
         public void OnEvent(Java.Lang.Object obj, FirebaseFirestoreException error)
         {
+            GetComments();
         }
 
         public void OnItemClick(AdapterView parent, View view, int position, long id)
         {
+            //call recursiveComments
+            //GetRecursiveComments();
         }
 
         public bool OnItemLongClick(AdapterView parent, View view, int position, long id)

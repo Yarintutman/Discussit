@@ -66,24 +66,19 @@ namespace Discussit
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
 
+        private void ViewProfile()
+        {
+            Intent intent = new Intent(this, typeof(ProfileActivity));
+            intent.PutExtra(General.KEY_USER, user.GetJson());
+            StartActivity(intent);
+        }
+
         public void OnClick(View v)
         {
             if (v == ibtnProfile)
-            {
-
-            }
-            else if (v == ibtnSearch)
-            {
-
-            }
-            else if (v ==  tvSortBy)
-            {
-
-            }
+                ViewProfile();
             else if (v == btnNewCommunity)
-            {
                 OpenCreateCommunityActivity();
-            }
         }
 
         public void OnItemClick(AdapterView parent, View view, int position, long id)

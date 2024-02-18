@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:background="@android:color/transparent">
     <LinearLayout
@@ -18,8 +18,8 @@
             android:contentDescription="@string/profile"
             android:layout_marginLeft="@dimen/Comment_marginLeft"/>
         <TextView
-            android:id="@+id/tvUserCreatedComment"
-            android:layout_width="match_parent"
+            android:id="@+id/tvCommentCreator"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/textColor"
             android:layout_marginLeft="@dimen/Comment_marginLeft"
@@ -27,11 +27,17 @@
     </LinearLayout>
     <TextView
         android:id="@+id/tvCommentDescription"
-        android:layout_width="match_parent"
+        android:layout_width="@dimen/Comment_width"
         android:layout_height="wrap_content"
         android:textColor="@color/clickable"
         android:textSize="@dimen/Comment_nameSize"
         android:layout_marginBottom="@dimen/Comment_marginBottom"
         android:layout_marginLeft="@dimen/Comment_marginLeft"
         android:layout_marginRight="@dimen/Comment_marginRight"/>
+    <ListView
+        android:id="@+id/lvComments"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/marginLeft"
+        android:layout_marginRight="@dimen/marginRight"/>
 </LinearLayout>

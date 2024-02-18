@@ -1,5 +1,6 @@
 ﻿using Android.Graphics;
 using Android.Runtime;
+using System.Collections.Generic;
 using System.IO;
 
 namespace Discussit
@@ -15,7 +16,6 @@ namespace Discussit
         public const string KEY_USER = "user";
         public const string KEY_COMMUNITY = "community";
         public const string KEY_POST = "post";
-        public const string KEY_VIEW_MODE = "View Mode";
         public const string KEY_COMMENT = "comment";
         public const string KEY_IS_COMMENT_RECURSIVE = "Is recursive";
         public const string FIELD_USERNAME = "Username";
@@ -30,7 +30,9 @@ namespace Discussit
         public const string FIELD_POST_CREATOR_NAME = "CreatorName";
         public const string FIELD_POST_TITLE = "Community Name";
         public const string FIELD_POST_DESCRIPTION = "Community Description";
-        public const string FIELD_COMMENT_CREATOR = "Username";
+        public const string FIELD_COMMENT_CREATOR_NAME = "CreatorName";
+        public const string FIELD_COMMENT_CREATOR_UID = "UID";
+        public const string FIELD_COMMENT_TITLE = "Community Name";
         public const string FIELD_COMMENT_DESCRIPTION = "Community Description";
         public const string FIELD_MEMBER_COUNT = "Members Count";
         public const string FIELD_POST_COUNT = "Posts Count";
@@ -58,6 +60,21 @@ namespace Discussit
                 newList.Add((T)jl[i]);
             }
             return newList;
-        } 
+        }
+
+        public static IList<Java.Lang.Object> JavaListToIListWithCut(JavaList<string> jl, char cutFrom)
+        {
+            IList<Java.Lang.Object> newList = new List<Java.Lang.Object>();
+            for (int i = 0; i < jl.Count; i++)
+            {
+                newList.Add(CutStringFrom(cutFrom, jl[i]));
+            }
+            return newList;
+        }
+
+        public static string CutStringFrom(char cutFrom, string str)
+        {
+            return str.Substring(str.IndexOf(cutFrom) + 1);
+        }
     }
 }
