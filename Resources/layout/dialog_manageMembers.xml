@@ -58,23 +58,13 @@
             android:contentDescription="@string/search"
             android:layout_gravity="center_vertical"/>
     </LinearLayout>
-    <LinearLayout
-        android:id="@+id/llSortMembersBy"
+    <TextView
+        android:id="@+id/tvSortBy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginLeft="@dimen/dialog_marginLeft">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/clickable"
-            android:text="@string/sortBy"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/clickable"
-            android:text="@string/sortByName"/>
-    </LinearLayout>
+        android:textColor="@color/clickable"
+        android:text="@string/sortBy"
+        android:layout_marginLeft="@dimen/dialog_marginLeft"/>
     <ListView
         android:id="@+id/lvMembers"
         android:layout_width="match_parent"

@@ -1,6 +1,7 @@
 ﻿using Android.Content;
 using Android.Views;
 using Android.Widget;
+using Firebase.Firestore;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -34,6 +35,27 @@ namespace Discussit
             tvCreatorName.Text = post.CreatorName;
             tvPostTitle.Text = post.Title;
             return v;
+        }
+
+        public void SetPosts(IList<DocumentSnapshot> documents)
+        {
+            Post post;
+            FbData fbd = new FbData();
+            foreach (DocumentSnapshot document in documents)
+            {
+                post = new Post
+                {
+                    Id = document.Id,
+                    Title = document.GetString(General.FIELD_POST_TITLE),
+                    Description = document.GetString(General.FIELD_POST_DESCRIPTION),
+                    CreatorUID = document.GetString(General.FIELD_POST_CREATOR_UID),
+                    CreatorName = document.GetString(General.FIELD_POST_CREATOR_NAME),
+                    CommentCount = document.GetLong(General.FIELD_COMMENT_COUNT).LongValue(),
+                    CommunityPath = General.RemoveFromString('/' + General.POSTS_COLLECTION, document.Id),
+                    CreationDate = fbd.FirestoreTimestampToDateTime(document.GetTimestamp(General.FIELD_DATE))
+                };
+                AddPost(post);
+            }
         }
 
         public void AddPost(Post post)

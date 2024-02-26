@@ -17,6 +17,7 @@ namespace Discussit
         User user;
         ImageButton ibtnPicture, ibtnBack, ibtnLogout, ibtnCloseDialog;
         Button btnViewCommunities, btnViewPosts, btnViewComments, btnManageCommunities, btnSettings;
+        TextView tvSortBy;
         Dialog dialogViewCommunities, dialogViewPosts, dialogViewComments, dialogViewManagedCommunities;
         Task tskGetCommunities, tskGetPosts, tskGetComments, tskGetManagedCommunities;
         CommunityAdapter communities, managedCommunities;
@@ -60,6 +61,11 @@ namespace Discussit
             btnSettings.SetOnClickListener(this);
         }
 
+        public void SetSorting(string sortBy)
+        {
+            tvSortBy.Text = Resources.GetString(Resource.String.sortBy) + " " + sortBy;
+        }
+
         public void Back()
         {
             Finish();
@@ -90,6 +96,24 @@ namespace Discussit
             Finish();
         }
 
+
+        private void ViewCommunities()
+        {
+            dialogViewCommunities = new Dialog(this);
+            dialogViewCommunities.SetContentView(Resource.Layout.dialog_selectCommunity);
+            dialogViewCommunities.Show();
+            dialogViewCommunities.SetCancelable(true);
+            ibtnCloseDialog = dialogViewCommunities.FindViewById<ImageButton>(Resource.Id.ibtnCloseDialog);
+            ibtnCloseDialog.SetOnClickListener(this);
+            currentDialog = Resources.GetString(Resource.String.Communities);
+            tvSortBy = dialogViewCommunities.FindViewById<TextView>(Resource.Id.tvSortBy);
+            SetSorting(Resources.GetString(Resource.String.sortDate));
+            FbData fbd = new FbData();
+            if (user.Communities.Size() != 0)
+                tskGetCommunities = fbd.GetDocumentsInList(General.COMMUNITIES_COLLECTION,
+                                           General.JavaListToIListWithCut(user.Communities, "/")).AddOnCompleteListener(this);
+        }
+
         private void ViewManagedCommunities()
         {
             dialogViewManagedCommunities = new Dialog(this);
@@ -99,32 +123,56 @@ namespace Discussit
             ibtnCloseDialog = dialogViewManagedCommunities.FindViewById<ImageButton>(Resource.Id.ibtnCloseDialog);
             ibtnCloseDialog.SetOnClickListener(this);
             currentDialog = Resources.GetString(Resource.String.ManagedCommunities);
+            tvSortBy = dialogViewManagedCommunities.FindViewById<TextView>(Resource.Id.tvSortBy);
+            SetSorting(Resources.GetString(Resource.String.sortDate));
             FbData fbd = new FbData();
             if (user.ManagingCommunities.Size() != 0)
                 tskGetManagedCommunities = fbd.GetDocumentsInList(General.COMMUNITIES_COLLECTION,
-                                           General.JavaListToIListWithCut(user.ManagingCommunities, '/')).AddOnCompleteListener(this);
+                                           General.JavaListToIListWithCut(user.ManagingCommunities, "/")).AddOnCompleteListener(this);
         }
 
-        private void SetManagingCommunities(IList<DocumentSnapshot> documents)
+        private void ViewPosts()
+        {
+            dialogViewPosts = new Dialog(this);
+            dialogViewPosts.SetContentView(Resource.Layout.dialog_selectPost);
+            dialogViewPosts.Show();
+            dialogViewPosts.SetCancelable(true);
+            ibtnCloseDialog = dialogViewPosts.FindViewById<ImageButton>(Resource.Id.ibtnCloseDialog);
+            ibtnCloseDialog.SetOnClickListener(this);
+            currentDialog = Resources.GetString(Resource.String.Posts);
+            tvSortBy = dialogViewPosts.FindViewById<TextView>(Resource.Id.tvSortBy);
+            SetSorting(Resources.GetString(Resource.String.sortDate));
+            FbData fbd = new FbData();
+            if (user.Posts.Size() != 0)
+                tskGetPosts = fbd.GetDocumentsInList(General.POSTS_COLLECTION,
+                                           General.JavaListToIListWithCut(user.Posts, '/' + General.POSTS_COLLECTION)).AddOnCompleteListener(this);
+        }
+
+        private void SetManagedCommunities(IList<DocumentSnapshot> documents)
         {
             managedCommunities = new CommunityAdapter(dialogViewManagedCommunities.Context);
-            Community community;
-            FbData fbd = new FbData();
-            foreach (DocumentSnapshot document in documents)
-            {
-                community = new Community
-                {
-                    Id = document.Id,
-                    Name = document.GetString(General.FIELD_COMMUNITY_NAME),
-                    Description = document.GetString(General.FIELD_COMMUNITY_DESCRIPTION),
-                    CreationDate = fbd.FirestoreTimestampToDateTime(document.GetTimestamp(General.FIELD_DATE)),
-                    MemberCount = document.GetLong(General.FIELD_MEMBER_COUNT).LongValue(),
-                    PostCount = document.GetLong(General.FIELD_POST_COUNT).LongValue()
-                };
-                managedCommunities.AddCommunity(community);
-            }
-            ListView lvManagedCommunities = dialogViewManagedCommunities.FindViewById<ListView>(Resource.Id.lvCommunities);
-            lvManagedCommunities.Adapter = managedCommunities;
+            managedCommunities.SetCommunities(documents);
+            ListView lvCommunities = dialogViewManagedCommunities.FindViewById<ListView>(Resource.Id.lvCommunities);
+            lvCommunities.Adapter = managedCommunities;
+            lvCommunities.OnItemClickListener = this;
+        }
+
+        private void SetCommunities(IList<DocumentSnapshot> documents)
+        {
+            communities = new CommunityAdapter(dialogViewCommunities.Context);
+            communities.SetCommunities(documents);
+            ListView lvCommunities = dialogViewCommunities.FindViewById<ListView>(Resource.Id.lvCommunities);
+            lvCommunities.Adapter = communities;
+            lvCommunities.OnItemClickListener = this;
+        }
+
+        private void SetPosts(IList<DocumentSnapshot> documents)
+        {
+            posts = new PostAdapter(dialogViewPosts.Context);
+            posts.SetPosts(documents);
+            ListView lvPosts = dialogViewPosts.FindViewById<ListView>(Resource.Id.lvPosts);
+            lvPosts.Adapter = posts;
+            lvPosts.OnItemClickListener = this;
         }
 
         public void OnClick(View v)
@@ -137,6 +185,11 @@ namespace Discussit
                 ViewSettings();
             else if (v == btnManageCommunities)
                 ViewManagedCommunities();
+            else if (v == btnViewCommunities)
+                ViewCommunities();
+            else if (v == btnViewPosts) { }
+            //ViewPosts();
+            else if (v == btnViewComments) { }
             else if (v == ibtnCloseDialog)
             {
                 if (currentDialog == Resources.GetString(Resource.String.ManagedCommunities))
@@ -155,7 +208,12 @@ namespace Discussit
             if (task == tskGetManagedCommunities)
             {
                 QuerySnapshot qs = (QuerySnapshot)task.Result;
-                SetManagingCommunities(qs.Documents);
+                SetManagedCommunities(qs.Documents);
+            }
+            else if (task == tskGetCommunities)
+            {
+                QuerySnapshot qs = (QuerySnapshot)task.Result;
+                SetCommunities(qs.Documents);
             }
         }
 

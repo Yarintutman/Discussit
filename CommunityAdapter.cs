@@ -3,6 +3,8 @@ using Android.Widget;
 using static Java.Util.Jar.Attributes;
 using System.Collections.Generic;
 using Android.Content;
+using Android.App;
+using Firebase.Firestore;
 
 namespace Discussit
 {
@@ -36,6 +38,25 @@ namespace Discussit
             tvMemberCount.Text = community.MemberCount.ToString();
             tvCommunityDescription.Text = community.Description;
             return v;
+        }
+
+        public void SetCommunities(IList<DocumentSnapshot> documents)
+        {
+            Community community;
+            FbData fbd = new FbData();
+            foreach (DocumentSnapshot document in documents)
+            {
+                community = new Community
+                {
+                    Id = document.Id,
+                    Name = document.GetString(General.FIELD_COMMUNITY_NAME),
+                    Description = document.GetString(General.FIELD_COMMUNITY_DESCRIPTION),
+                    CreationDate = fbd.FirestoreTimestampToDateTime(document.GetTimestamp(General.FIELD_DATE)),
+                    MemberCount = document.GetLong(General.FIELD_MEMBER_COUNT).LongValue(),
+                    PostCount = document.GetLong(General.FIELD_POST_COUNT).LongValue()
+                };
+                AddCommunity(community);
+            }
         }
 
         public void AddCommunity(Community community)

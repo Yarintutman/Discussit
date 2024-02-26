@@ -15,6 +15,7 @@ namespace Discussit
     [Activity(Label = "ManageCommunityActivity")]
     public class ManageCommunityActivity : AppCompatActivity, View.IOnClickListener
     {
+        Community community;
         ImageButton ibtnLogo, ibtnBack;
         EditText etCommunityName, etCommunityDescription;
         Button btnManageMembers, btnSaveChanges;
@@ -30,6 +31,7 @@ namespace Discussit
 
         private void InitObjects()
         {
+            community = Community.GetCommunityJson(Intent.GetStringExtra(General.KEY_COMMUNITY));
         }
 
         private void InitViews()
@@ -44,6 +46,8 @@ namespace Discussit
             ibtnBack.SetOnClickListener(this);
             btnManageMembers.SetOnClickListener(this);
             btnSaveChanges.SetOnClickListener(this);
+            etCommunityName.Text = community.Name;
+            etCommunityDescription.Text = community.Description;
         }
 
         public void OnClick(View v)

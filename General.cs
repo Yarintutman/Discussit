@@ -62,7 +62,7 @@ namespace Discussit
             return newList;
         }
 
-        public static IList<Java.Lang.Object> JavaListToIListWithCut(JavaList<string> jl, char cutFrom)
+        public static IList<Java.Lang.Object> JavaListToIListWithCut(JavaList<string> jl, string cutFrom)
         {
             IList<Java.Lang.Object> newList = new List<Java.Lang.Object>();
             for (int i = 0; i < jl.Count; i++)
@@ -72,9 +72,14 @@ namespace Discussit
             return newList;
         }
 
-        public static string CutStringFrom(char cutFrom, string str)
+        public static string CutStringFrom(string cutFrom, string str)
         {
             return str.Substring(str.IndexOf(cutFrom) + 1);
+        }
+
+        public static string RemoveFromString(string cutAfter, string str)
+        {
+            return str.Remove(0, str.LastIndexOf(cutAfter));
         }
     }
 }
