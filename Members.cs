@@ -1,7 +1,10 @@
 ﻿using Android.App;
+using Android.Content;
 using Android.Gms.Tasks;
 using Firebase.Firestore;
 using System.Collections.Generic;
+using System.Runtime.Remoting.Contexts;
+using Context = Android.Content.Context;
 
 namespace Discussit
 {
@@ -21,7 +24,7 @@ namespace Discussit
             }
         }
 
-        public Members(Activity context, string path)
+        public Members(Context context, string path)
         {
             MemberAdapter = new MemberAdapter(context);
             fbd = new FbData();

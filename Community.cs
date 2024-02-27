@@ -1,4 +1,5 @@
 ﻿using Android.App;
+using Android.Content;
 using Android.Gms.Tasks;
 using Android.Runtime;
 using Android.Util;
@@ -7,6 +8,7 @@ using Java.Util;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Bson;
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace Discussit
@@ -76,12 +78,12 @@ namespace Discussit
             Id = communityId;
         }
 
-        public void CreateMembers(Activity context)
+        public void CreateMembers(Context context)
         {
             Members = new Members(context, CollectionPath);
         }
 
-        public void CreatePosts(Activity context)
+        public void CreatePosts(Context context)
         {
             Posts = new Posts(context, CollectionPath);
         }
@@ -101,10 +103,10 @@ namespace Discussit
         {
             Member member;
             if (MemberCount != 0)
-                member = new Member(user.Id, CollectionPath);
+                member = new Member(user, CollectionPath);
             else
             { 
-                member = new Leader(user.Id, CollectionPath);
+                member = new Leader(user, CollectionPath);
                 user.UpdateArrayField(General.FIELD_USER_MANAGING_COMMUNITIES, CollectionPath);
             }
             user.UpdateArrayField(General.FIELD_USER_COMMUNITIES, CollectionPath);
@@ -144,6 +146,14 @@ namespace Discussit
                     PostCount--;
                 } 
             }
+        }
+
+        public void SaveChanges()
+        {
+            Dictionary<string, Java.Lang.Object> fields = new Dictionary<string, Java.Lang.Object>();
+            fields.Add(General.FIELD_COMMUNITY_NAME, Name);
+            fields.Add(General.FIELD_COMMUNITY_DESCRIPTION, Description);
+            fbd.UpdateDocument(General.COMMUNITIES_COLLECTION, Id, fields);
         }
 
         public void DeleteCommunity(Member member) 

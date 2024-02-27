@@ -205,15 +205,18 @@ namespace Discussit
 
         public void OnComplete(Task task)
         {
-            if (task == tskGetManagedCommunities)
+            if (task.IsComplete)
             {
-                QuerySnapshot qs = (QuerySnapshot)task.Result;
-                SetManagedCommunities(qs.Documents);
-            }
-            else if (task == tskGetCommunities)
-            {
-                QuerySnapshot qs = (QuerySnapshot)task.Result;
-                SetCommunities(qs.Documents);
+                if (task == tskGetManagedCommunities)
+                {
+                    QuerySnapshot qs = (QuerySnapshot)task.Result;
+                    SetManagedCommunities(qs.Documents);
+                }
+                else if (task == tskGetCommunities)
+                {
+                    QuerySnapshot qs = (QuerySnapshot)task.Result;
+                    SetCommunities(qs.Documents);
+                }
             }
         }
 
@@ -223,6 +226,7 @@ namespace Discussit
             intent.PutExtra(General.KEY_USER, Intent.GetStringExtra(General.KEY_USER));
             intent.PutExtra(General.KEY_POST, post.GetJson());
             StartActivity(intent);
+            dialogViewPosts.Cancel();
         }
 
         private void ViewCommunity(Community community)
@@ -231,6 +235,7 @@ namespace Discussit
             intent.PutExtra(General.KEY_USER, Intent.GetStringExtra(General.KEY_USER));
             intent.PutExtra(General.KEY_COMMUNITY, community.GetJson());
             StartActivity(intent);
+            dialogViewCommunities.Cancel();
         }
 
         private void ManageCommunity(Community community)
@@ -239,6 +244,7 @@ namespace Discussit
             intent.PutExtra(General.KEY_USER, Intent.GetStringExtra(General.KEY_USER));
             intent.PutExtra(General.KEY_COMMUNITY, community.GetJson());
             StartActivity(intent);
+            dialogViewManagedCommunities.Cancel();
         }
 
         public void OnItemClick(AdapterView parent, View view, int position, long id)

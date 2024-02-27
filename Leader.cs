@@ -15,7 +15,7 @@ namespace Discussit
 {
     internal class Leader : Admin
     {
-        public Leader(string userID, string communityPath) : base(userID, communityPath) { }
+        public Leader(User user, string communityPath) : base(user, communityPath) { }
 
         public Leader() { }
 

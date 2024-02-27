@@ -1,4 +1,5 @@
 ﻿using Android.App;
+using Android.Content;
 using Android.Gms.Tasks;
 using Firebase.Firestore;
 using System.Collections.Generic;
@@ -21,7 +22,7 @@ namespace Discussit
             }
         }
 
-        public Posts(Activity context, string path)
+        public Posts(Context context, string path)
         {
             PostAdapter = new PostAdapter(context);
             fbd = new FbData();

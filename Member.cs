@@ -10,16 +10,19 @@ namespace Discussit
     {
         private readonly FbData fbd;
         public string Id { get; set; }
+        public string Name { get; set; }
         public string UserID { get; set; }
         public string CommunityPath { get; set; }
         public DateTime JoinDate { get; set; }
-        public Member(string userID, string communityPath)
+        public Member(User user, string communityPath)
         {
             fbd = new FbData();
-            UserID = userID;
+            UserID = user.Id;
+            Name = user.Username;
             CommunityPath = communityPath;
             JoinDate = DateTime.Now;
         }
+
         public Member()
         {
             fbd = new FbData();
@@ -41,6 +44,7 @@ namespace Discussit
             {
                 HashMap hm = new HashMap();
                 hm.Put(General.FIELD_UID, UserID);
+                hm.Put(General.FIELD_USERNAME, Name);
                 hm.Put(General.FIELD_DATE, fbd.DateTimeToFirestoreTimestamp(JoinDate));
                 return hm;
             }

@@ -10,6 +10,8 @@ using Android.Graphics;
 using Android.Runtime;
 using System.Linq;
 using System.Collections.Generic;
+using System.Collections;
+using Android.Content;
 
 namespace Discussit
 {
@@ -139,6 +141,11 @@ namespace Discussit
             return firestore.Collection(cName).Document(docId).Update(fName, fValue);
         }
 
+        public Task UpdateDocument(string cName, string docId, IDictionary<string, Java.Lang.Object> fields)
+        {
+            return firestore.Collection(cName).Document(docId).Update(fields);
+        }
+
         public Task UnionArray(string cName, string docId, string fName, Java.Lang.Object fValue)
         {
             return firestore.Collection(cName).Document(docId).Update(fName, FieldValue.ArrayUnion(fValue));
@@ -158,6 +165,7 @@ namespace Discussit
         {
             return firestore.Collection(cName).Document(docId).AddSnapshotListener((Firebase.Firestore.IEventListener)activity);
         }
+
         public UploadTask SaveImage(string fbImagePath, Bitmap bitmap)
         {
             StorageReference storageReference = FirebaseStorage.Instance.GetReference(fbImagePath);
@@ -192,6 +200,5 @@ namespace Discussit
             dt = dt.AddMilliseconds(d.Time);
             return TimeZoneInfo.ConvertTimeFromUtc(dt, TimeZoneInfo.Local);
         }
-
     }
 }

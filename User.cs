@@ -106,16 +106,6 @@ namespace Discussit
             }
         }
 
-        public string GetJson()
-        {
-            return JsonConvert.SerializeObject(this);
-        }
-
-        public static User GetUserJson(string json)
-        {
-            return JsonConvert.DeserializeObject<User>(json);
-        }
-
         public void Forget()
         {
             spd.PutBool(General.KEY_REGISTERED, false);
@@ -144,6 +134,16 @@ namespace Discussit
             ManagingCommunities = General.JavaListToType<string>((JavaList)document.Get(General.FIELD_USER_MANAGING_COMMUNITIES));
             Posts = General.JavaListToType<string>((JavaList)document.Get(General.FIELD_USER_POSTS));
             Comments = General.JavaListToType<string>((JavaList)document.Get(General.FIELD_USER_COMMENTS));
+        }
+
+        public string GetJson()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
+
+        public static User GetUserJson(string json)
+        {
+            return JsonConvert.DeserializeObject<User>(json);
         }
     }
 }

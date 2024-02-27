@@ -4,6 +4,7 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using Firebase.Firestore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,6 +36,23 @@ namespace Discussit
             View v = li.Inflate(Resource.Layout.layout_member, parent, false);
 
             return v;
+        }
+
+        public void SetMembers(IList<DocumentSnapshot> documents)
+        {
+            Member member;
+            FbData fbd = new FbData();
+            foreach (DocumentSnapshot document in documents)
+            {
+                member = new Member
+                {
+                    Id = document.Id,
+                    UserID = document.GetString(General.FIELD_UID),
+                    Name = document.GetString(General.FIELD_USERNAME),
+                    JoinDate = fbd.FirestoreTimestampToDateTime(document.GetTimestamp(General.FIELD_DATE)),
+                };
+                AddMember(member);
+            }
         }
 
         public void AddMember(Member member)
