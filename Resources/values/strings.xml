@@ -36,6 +36,7 @@
   <string name="sortRank">By rank</string>
   <string name="showDescription">Show Description</string>
   <string name="hideDescription">Hide Description</string>
+  <string name="JoinCommunity">Join The Community</string>
   <string name="viewCommunities">View Communities</string>
   <string name="viewPosts">View Posts</string>
   <string name="viewComments">View Comments</string>
@@ -80,4 +81,5 @@
   <string name="ManagedCommunities">Managed Communities</string>
   <string name="Posts">Posts</string>
   <string name="Comments">Comments</string>
+  <string name="joinCommunityToToCreatePost">In order to create a post you must join the community</string>
 </resources>

@@ -135,6 +135,8 @@ namespace Discussit
                 Save();
             else if (v == btnManageMembers)
                 ManageMemebers();
+            else if (v == ibtnCloseDialog)
+                dialogManageMemeber.Cancel();
         }
 
         public void OnComplete(Task task)

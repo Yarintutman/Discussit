@@ -16,11 +16,12 @@ namespace Discussit
         User user;
         Community community;
         Posts posts;
+        Members members;
         ImageButton ibtnBack, ibtnLogo, ibtnProfile, ibtnSearch;
         TextView tvCommunityName, tvDescription, tvMemberCount, tvSortBy;
-        Button btnViewDescription, btnNewPost;
+        Button btnViewDescription, btnNewPost, btnJoinCommunity;
         EditText etSearchBar;
-        Task tskGetPosts;
+        Task tskGetPosts, tskGetMemebers;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -36,7 +37,9 @@ namespace Discussit
             user = User.GetUserJson(Intent.GetStringExtra(General.KEY_USER));
             community = Community.GetCommunityJson(Intent.GetStringExtra(General.KEY_COMMUNITY));
             community.CreatePosts(this);
+            community.CreateMembers(this);
             posts = community.Posts;
+            members = community.Members;
         }
 
         private void InitViews()
@@ -51,22 +54,33 @@ namespace Discussit
             tvSortBy = FindViewById<TextView>(Resource.Id.tvSortBy);
             btnViewDescription = FindViewById<Button>(Resource.Id.btnViewDescription);
             btnNewPost = FindViewById<Button>(Resource.Id.btnNewPost);
+            btnJoinCommunity = FindViewById<Button>(Resource.Id.btnJoinCommunity);
             etSearchBar = FindViewById<EditText>(Resource.Id.etSearchBar);
             ListView lvPosts = FindViewById<ListView>(Resource.Id.lvPosts);
             lvPosts.Adapter = posts.PostAdapter;
             lvPosts.OnItemClickListener = this;
             posts.AddSnapshotListener(this);
+            members.AddSnapshotListener(this);
             ibtnBack.SetOnClickListener(this);
             ibtnLogo.SetOnClickListener(this);
             ibtnProfile.SetOnClickListener(this);
             ibtnSearch.SetOnClickListener(this);
             btnViewDescription.SetOnClickListener(this);
             btnNewPost.SetOnClickListener(this);
+            btnJoinCommunity.SetOnClickListener(this);
             tvSortBy.SetOnClickListener(this);
             SetSorting(Resources.GetString(Resource.String.sortDate));
             tvCommunityName.Text = community.Name;
             tvDescription.Text = community.Description;
             tvMemberCount.Text = community.MemberCount.ToString();
+        }
+
+        private void CheckMembership()
+        {
+            if (members.HasMember(user.Id))
+                btnJoinCommunity.Visibility = ViewStates.Gone;
+            else
+                btnJoinCommunity.Visibility = ViewStates.Visible;
         }
 
         public void SetSorting(string sortBy)
@@ -119,7 +133,20 @@ namespace Discussit
             else if (v == ibtnProfile)
                 ViewProfile();
             else if (v == btnNewPost)
-                OpenCreatePostActivity();
+            {
+                if (btnJoinCommunity.Visibility == ViewStates.Gone)
+                    OpenCreatePostActivity();
+                else
+                    Toast.MakeText(this, Resources.GetString(Resource.String.joinCommunityToToCreatePost), ToastLength.Short).Show();
+            }
+            else if (v == btnJoinCommunity)
+                JoinCommunity();
+        }
+
+        private void JoinCommunity()
+        {
+            community.AddMember(user);
+            user.UpdateArrayField(General.FIELD_USER_COMMUNITIES, community.CollectionPath);
         }
 
         private void ViewPost(Post post)
@@ -140,9 +167,15 @@ namespace Discussit
             tskGetPosts = community.GetPosts().AddOnCompleteListener(this);
         }
 
+        private void GetMembers()
+        {
+            tskGetMemebers = community.GetMembers().AddOnCompleteListener(this);
+        }
+
         public void OnEvent(Object obj, FirebaseFirestoreException error)
         {
             GetPosts();
+            GetMembers();
         }
 
         public void OnComplete(Task task)
@@ -153,6 +186,13 @@ namespace Discussit
                 {
                     QuerySnapshot qs = (QuerySnapshot)task.Result;
                     posts.AddPosts(qs.Documents);
+                }
+                else if (task == tskGetMemebers) 
+                {
+                    QuerySnapshot qs = (QuerySnapshot)task.Result;
+                    members.AddMembers(qs.Documents);
+                    CheckMembership();
+                    tvMemberCount.Text = members.MemberCount.ToString();
                 }
             }
         }

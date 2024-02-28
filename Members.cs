@@ -41,7 +41,7 @@ namespace Discussit
             onCollectionChangeListener?.Remove();
         }
 
-        internal void AddMember(IList<DocumentSnapshot> documents)
+        internal void AddMembers(IList<DocumentSnapshot> documents)
         {
             MemberAdapter.Clear();
             Member member;
@@ -134,6 +134,11 @@ namespace Discussit
         public Member GetMemberByUID(string UID)
         {
             return MemberAdapter.GetMemberByUID(UID);
+        }
+
+        public bool HasMember(string UID)
+        {
+            return MemberAdapter.HasMember(UID);
         }
     }
 }
