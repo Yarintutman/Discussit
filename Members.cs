@@ -144,7 +144,6 @@ namespace Discussit
             SetLeader(newLeader);
             fbd.UpdateField(lastLeader.CommunityPath + "/" + General.MEMBERS_COLLECTION, lastLeader.Id, General.FIELD_MEMBER_TYPE,
                 Application.Context.Resources.GetString(Resource.String.admin));
-            fbd.RemoveFromArray(General.USERS_COLLECTION, lastLeader.UserID, General.FIELD_USER_MANAGING_COMMUNITIES, Path);
         }
 
         public Member GetMemberByUID(string UID)
