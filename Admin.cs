@@ -27,5 +27,10 @@ namespace Discussit
                 return hm;
             }
         }
+
+        public override bool IsHigherRank(Member member)
+        {
+            return !(member is Admin);
+        }
     }
 }

@@ -6,6 +6,9 @@ using Android.Views;
 using Android.Views.InputMethods;
 using Android.Widget;
 using Firebase.Firestore;
+using Kotlin;
+using System;
+using System.Runtime.InteropServices;
 using System.Threading;
 
 namespace Discussit
@@ -195,8 +198,13 @@ namespace Discussit
             }
             catch
             {
-                tvAppName.Text = Resources.GetString(Resource.String.app_name);
-                tvSlogan.Text = Resources.GetString(Resource.String.Slogan);
+                RunOnUiThread(() =>
+                {
+                    TextView appName = FindViewById<TextView>(Resource.Id.tvAppName);
+                    TextView Slogan = FindViewById<TextView>(Resource.Id.tvSlogan);
+                    appName.Text = Resources.GetString(Resource.String.app_name);
+                    Slogan.Text = Resources.GetString(Resource.String.Slogan);
+                });
             }
         }
 

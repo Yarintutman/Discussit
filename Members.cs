@@ -1,6 +1,7 @@
 ﻿using Android.App;
 using Android.Content;
 using Android.Gms.Tasks;
+using AndroidX.Browser.Trusted;
 using Firebase.Firestore;
 using System.Collections.Generic;
 using System.Runtime.Remoting.Contexts;
@@ -89,6 +90,9 @@ namespace Discussit
                 JoinDate = member.JoinDate
             };
             MemberAdapter.AddMember(admin);
+            fbd.UpdateField(admin.CommunityPath + "/" + General.MEMBERS_COLLECTION, admin.Id, General.FIELD_MEMBER_TYPE, 
+                Application.Context.Resources.GetString(Resource.String.admin));
+            fbd.UnionArray(General.USERS_COLLECTION, admin.UserID, General.FIELD_USER_MANAGING_COMMUNITIES, Path);
         }
 
         public void Demote(Admin admin)
@@ -102,6 +106,9 @@ namespace Discussit
                 JoinDate = admin.JoinDate
             };
             MemberAdapter.AddMember(member);
+            fbd.UpdateField(member.CommunityPath + "/" + General.MEMBERS_COLLECTION, member.Id, General.FIELD_MEMBER_TYPE,
+                Application.Context.Resources.GetString(Resource.String.member));
+            fbd.RemoveFromArray(General.USERS_COLLECTION, admin.UserID, General.FIELD_USER_MANAGING_COMMUNITIES, Path);
         }
 
         public void SetLeader(Member member)
@@ -118,6 +125,9 @@ namespace Discussit
                 JoinDate = member.JoinDate
             };
             MemberAdapter.AddMember(newLeader);
+            fbd.UpdateField(newLeader.CommunityPath + "/" + General.MEMBERS_COLLECTION, newLeader.Id, General.FIELD_MEMBER_TYPE,
+                Application.Context.Resources.GetString(Resource.String.leader));
+            fbd.UnionArray(General.USERS_COLLECTION, newLeader.UserID, General.FIELD_USER_MANAGING_COMMUNITIES, Path);
         }
 
         public void TransferLeader(Leader currentLeader, Member newLeader)
@@ -132,6 +142,9 @@ namespace Discussit
             };
             MemberAdapter.AddMember(lastLeader);
             SetLeader(newLeader);
+            fbd.UpdateField(lastLeader.CommunityPath + "/" + General.MEMBERS_COLLECTION, lastLeader.Id, General.FIELD_MEMBER_TYPE,
+                Application.Context.Resources.GetString(Resource.String.admin));
+            fbd.RemoveFromArray(General.USERS_COLLECTION, lastLeader.UserID, General.FIELD_USER_MANAGING_COMMUNITIES, Path);
         }
 
         public Member GetMemberByUID(string UID)

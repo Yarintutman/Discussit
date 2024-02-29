@@ -21,13 +21,13 @@ namespace Discussit
     {
         User user;
         Community community;
-        ImageButton ibtnLogo, ibtnBack, ibtnCloseDialog;
+        ImageButton ibtnLogo, ibtnBack;
         EditText etCommunityName, etCommunityDescription;
-        Button btnManageMembers, btnSaveChanges;
+        Button btnSaveChanges;
         TextView tvSortBy, tvMemberCount;
-        Dialog dialogManageMemeber;
         Members members;
         Task tskGetMembers;
+        Member userAsMember, currentMember;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -50,19 +50,19 @@ namespace Discussit
             ibtnLogo = FindViewById<ImageButton>(Resource.Id.ibtnLogo);
             etCommunityName = FindViewById<EditText>(Resource.Id.etCommunityName);
             etCommunityDescription = FindViewById<EditText>(Resource.Id.etCommunityDescription);
-            btnManageMembers = FindViewById<Button>(Resource.Id.btnManageMembers);
+            ListView lvMembers = FindViewById<ListView>(Resource.Id.lvMembers);
+            tvMemberCount = FindViewById<TextView>(Resource.Id.tvMemberCount);
             btnSaveChanges = FindViewById<Button>(Resource.Id.btnSaveChanges);
             ibtnLogo.SetOnClickListener(this);
             ibtnBack.SetOnClickListener(this);
-            btnManageMembers.SetOnClickListener(this);
             btnSaveChanges.SetOnClickListener(this);
             etCommunityName.Text = community.Name;
             etCommunityDescription.Text = community.Description;
-        }
-
-        public void SetSorting(string sortBy)
-        {
-            tvSortBy.Text = Resources.GetString(Resource.String.sortBy) + " " + sortBy;
+            community.CreateMembers(this);
+            members = community.Members;
+            lvMembers.Adapter = members.MemberAdapter;
+            RegisterForContextMenu(lvMembers);
+            members.AddSnapshotListener(this);
         }
 
         private void Back()
@@ -109,24 +109,6 @@ namespace Discussit
             }
         }
 
-        private void ManageMemebers()
-        {
-            dialogManageMemeber = new Dialog(this);
-            dialogManageMemeber.SetContentView(Resource.Layout.dialog_manageMembers);
-            dialogManageMemeber.Show();
-            dialogManageMemeber.SetCancelable(true);
-            ibtnCloseDialog = dialogManageMemeber.FindViewById<ImageButton>(Resource.Id.ibtnCloseDialog);
-            ibtnCloseDialog.SetOnClickListener(this);
-            tvSortBy = dialogManageMemeber.FindViewById<TextView>(Resource.Id.tvSortBy);
-            tvMemberCount = dialogManageMemeber.FindViewById<TextView>(Resource.Id.tvMemberCount);
-            community.CreateMembers(dialogManageMemeber.Context);
-            members = community.Members;
-            ListView lvMembers = dialogManageMemeber.FindViewById<ListView>(Resource.Id.lvMembers);
-            lvMembers.Adapter = members.MemberAdapter;
-            RegisterForContextMenu(lvMembers);
-            members.AddSnapshotListener(this);
-        }
-
         public void OnClick(View v)
         {
             if (v == ibtnLogo)
@@ -135,10 +117,6 @@ namespace Discussit
                 Back();
             else if (v == btnSaveChanges)
                 Save();
-            else if (v == btnManageMembers)
-                ManageMemebers();
-            else if (v == ibtnCloseDialog)
-                dialogManageMemeber.Cancel();
         }
 
         private void GetMembers()
@@ -167,7 +145,8 @@ namespace Discussit
                     QuerySnapshot qs = (QuerySnapshot)task.Result;
                     members.AddMembers(qs.Documents);
                     tvMemberCount.Text = members.MemberCount.ToString();
-                    SetSorting(Resources.GetString(Resource.String.sortDate));
+                    if (userAsMember == null)
+                        userAsMember = members.GetMemberByUID(user.Id);
                 }
             }
         }
@@ -179,14 +158,48 @@ namespace Discussit
 
         public override void OnCreateContextMenu(Android.Views.IContextMenu menu, Android.Views.View v, Android.Views.IContextMenuContextMenuInfo menuInfo)
         {
-            MenuInflater.Inflate(Resource.Menu.menu_manageMember, menu);
-            base.OnCreateContextMenu(menu, v, menuInfo);
+            AdapterView.AdapterContextMenuInfo info = menuInfo as AdapterView.AdapterContextMenuInfo;
+            if (info != null)
+            {
+                int position = info.Position;
+                currentMember = members[position];
+                if (userAsMember.IsHigherRank(currentMember) && userAsMember != currentMember)
+                {
+                    MenuInflater.Inflate(Resource.Menu.menu_manageMember, menu);
+                    base.OnCreateContextMenu(menu, v, menuInfo);
+                }
+            }
         }
 
         public override bool OnContextItemSelected(Android.Views.IMenuItem item)
         {
-            
+            if (item.ItemId == Resource.Id.itemPromote)
+                Promote(currentMember);
+            else if (item.ItemId == Resource.Id.itemDemote)
+                Demote(currentMember);
             return base.OnContextItemSelected(item);
+        }
+
+        private void ConfirmTransferOwner()
+        {
+            //dialog confirmation to be added
+            members.TransferLeader((Leader)userAsMember, currentMember);
+        }
+
+        private void Promote(Member currentMember)
+        {
+            if (currentMember is Admin)
+                ConfirmTransferOwner();
+            else
+                members.Promote(currentMember);
+        }
+
+        private void Demote(Member currentMember)
+        {
+            if (currentMember is Admin)
+                members.Demote((Admin)currentMember);
+            else
+                Toast.MakeText(this, Resources.GetString(Resource.String.memberDemote), ToastLength.Short).Show();
         }
     }
 }

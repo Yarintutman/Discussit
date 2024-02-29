@@ -57,5 +57,10 @@ namespace Discussit
                 fbd.DeleteDocument(CommunityPath + "/" + General.MEMBERS_COLLECTION, Id);
             }
         }
+
+        public virtual bool IsHigherRank(Member member)
+        {
+            return false;
+        }
     }
 }
