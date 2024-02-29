@@ -9,8 +9,23 @@
     <ImageView
         android:layout_height="@dimen/Main_logoHeight"
         android:layout_width="@dimen/Main_logoWidth"
-        android:background="@drawable/Logo"
+        android:background="@drawable/mainlogo"
         android:contentDescription="@string/logo"/>
+    <TextView
+        android:id="@+id/tvAppName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/Main_AppNameSize"
+        android:textColor="@color/clickable"
+        android:fontFamily="serif"/>
+    <TextView
+        android:id="@+id/tvSlogan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/Main_SloganSize"
+        android:textColor="@color/textColor"
+        android:layout_marginBottom="@dimen/marginBottom"
+        android:fontFamily="serif"/>
     <TextView
         android:id="@+id/tvLoginState"
         android:layout_width="wrap_content"

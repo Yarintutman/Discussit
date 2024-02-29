@@ -23,8 +23,11 @@
             android:layout_alignParentBottom="true"
             android:orientation="horizontal">
             <TextView
+                android:id="@+id/tvMemberCount"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:textColor="@color/textColor"
+                android:layout_marginRight="@dimen/Member_marginRight"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

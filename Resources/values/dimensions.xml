@@ -9,12 +9,14 @@
   <dimen name="marginBottom">20dp</dimen>
   <dimen name="Main_textSize">15sp</dimen>
   <dimen name="Main_etMarginLeft">80dp</dimen>
+  <dimen name="Main_AppNameSize">30sp</dimen>
+  <dimen name="Main_SloganSize">17sp</dimen>
   <dimen name="Main_TitleSize">30sp</dimen>
   <dimen name="Main_buttonTextSize">20sp</dimen>
   <dimen name="Main_buttonWidth">90dp</dimen>
   <dimen name="Main_buttonHeight">50dp</dimen>
-  <dimen name="Main_logoWidth">250dp</dimen>
-  <dimen name="Main_logoHeight">200dp</dimen>
+  <dimen name="Main_logoWidth">175dp</dimen>
+  <dimen name="Main_logoHeight">140dp</dimen>
   <dimen name="Hub_searchBarText">20sp</dimen>
   <dimen name="Hub_newCommunityText">20sp</dimen>
   <dimen name="Profile_marginTop">20dp</dimen>

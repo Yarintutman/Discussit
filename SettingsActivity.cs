@@ -66,6 +66,9 @@ namespace Discussit
 
         private void Back()
         {
+            Intent intent = new Intent();
+            intent.PutExtra(General.KEY_USER, user.GetJson());
+            SetResult(Result.Ok, intent);
             Finish();
         }
 

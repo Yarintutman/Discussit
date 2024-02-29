@@ -1,9 +1,7 @@
 ﻿using Android.App;
 using Android.Content;
-using Android.Content.Res;
 using Android.Views;
 using Android.Widget;
-using Firebase.Firestore;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -42,27 +40,6 @@ namespace Discussit
             else
                 tvRank.Text = Application.Context.Resources.GetString(Resource.String.member);
             return v;
-        }
-
-        public void SetMembers(IList<DocumentSnapshot> documents)
-        {
-            Member member;
-            FbData fbd = new FbData();
-            foreach (DocumentSnapshot document in documents)
-            {
-                string type = document.GetString(General.FIELD_MEMBER_TYPE);
-                if (type == Application.Context.Resources.GetString(Resource.String.leader))
-                    member = new Leader();
-                else if (type == Application.Context.Resources.GetString(Resource.String.admin))
-                    member = new Admin();
-                else
-                    member = new Member(); 
-                member.Id = document.Id;
-                member.UserID = document.GetString(General.FIELD_UID);
-                member.Name = document.GetString(General.FIELD_USERNAME);
-                member.JoinDate = fbd.FirestoreTimestampToDateTime(document.GetTimestamp(General.FIELD_DATE));
-                AddMember(member);
-            }
         }
 
         public void AddMember(Member member)

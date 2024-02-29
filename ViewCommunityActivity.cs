@@ -2,11 +2,13 @@
 using Android.Content;
 using Android.Gms.Tasks;
 using Android.OS;
+using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using AndroidX.AppCompat.App;
 using Firebase.Firestore;
 using Java.Lang;
+using System.Threading;
 
 namespace Discussit
 {
@@ -59,6 +61,7 @@ namespace Discussit
             ListView lvPosts = FindViewById<ListView>(Resource.Id.lvPosts);
             lvPosts.Adapter = posts.PostAdapter;
             lvPosts.OnItemClickListener = this;
+            RegisterForContextMenu(lvPosts);
             posts.AddSnapshotListener(this);
             members.AddSnapshotListener(this);
             ibtnBack.SetOnClickListener(this);
@@ -73,6 +76,18 @@ namespace Discussit
             tvCommunityName.Text = community.Name;
             tvDescription.Text = community.Description;
             tvMemberCount.Text = community.MemberCount.ToString();
+        }
+
+        public override void OnCreateContextMenu(Android.Views.IContextMenu menu, Android.Views.View v, Android.Views.IContextMenuContextMenuInfo menuInfo)
+        {
+            MenuInflater.Inflate(Resource.Menu.menu_manageMember, menu);
+            base.OnCreateContextMenu(menu, v, menuInfo);
+        }
+
+        public override bool OnContextItemSelected(Android.Views.IMenuItem item)
+        {
+
+            return base.OnContextItemSelected(item);
         }
 
         private void CheckMembership()
@@ -93,11 +108,14 @@ namespace Discussit
             Intent intent = new Intent(this, typeof(CreatePostActivity));
             intent.PutExtra(General.KEY_USER, user.GetJson());
             intent.PutExtra(General.KEY_COMMUNITY, community.GetJson());
-            StartActivity(intent);
+            StartActivityForResult(intent, 0);
         }
 
         public void Back()
         {
+            Intent intent = new Intent();
+            intent.PutExtra(General.KEY_USER, user.GetJson());
+            SetResult(Result.Ok, intent);
             Finish();
         }
 
@@ -105,7 +123,7 @@ namespace Discussit
         {
             Intent intent = new Intent(this, typeof(CommunityHubActivity));
             intent.AddFlags(ActivityFlags.LaunchedFromHistory);
-            intent.PutExtra(General.KEY_USER, Intent.GetStringExtra(General.KEY_USER));
+            intent.PutExtra(General.KEY_USER, user.GetJson());
             StartActivity(intent);
             Finish();
         }
@@ -114,7 +132,7 @@ namespace Discussit
         {
             Intent intent = new Intent(this, typeof(ProfileActivity));
             intent.PutExtra(General.KEY_USER, user.GetJson());
-            StartActivity(intent);
+            StartActivityForResult(intent, 0);
         }
 
 #pragma warning disable CS0672 // Member overrides obsolete member
@@ -154,7 +172,7 @@ namespace Discussit
             Intent intent = new Intent(this, typeof(ViewPostActivity));
             intent.PutExtra(General.KEY_USER, Intent.GetStringExtra(General.KEY_USER));
             intent.PutExtra(General.KEY_POST, post.GetJson());
-            StartActivity(intent);
+            StartActivityForResult(intent, 0);
         }
 
         public void OnItemClick(AdapterView parent, View view, int position, long id)
@@ -195,6 +213,27 @@ namespace Discussit
                     tvMemberCount.Text = members.MemberCount.ToString();
                 }
             }
+        }
+
+        protected override void OnActivityResult(int requestCode, [GeneratedEnum] Result resultCode, Intent data)
+        {
+            if (resultCode == Result.Ok)
+                user = User.GetUserJson(data.GetStringExtra(General.KEY_USER));
+            base.OnActivityResult(requestCode, resultCode, data);
+        }
+
+        protected override void OnResume()
+        {
+            base.OnResume();
+            posts.AddSnapshotListener(this);
+            members.AddSnapshotListener(this);
+        }
+
+        protected override void OnPause()
+        {
+            base.OnPause();
+            posts.RemoveSnapshotListener();
+            members.RemoveSnapshotListener();
         }
     }
 }

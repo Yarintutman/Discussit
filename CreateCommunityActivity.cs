@@ -4,12 +4,14 @@ using Android.OS;
 using Android.Views;
 using Android.Widget;
 using AndroidX.AppCompat.App;
+using System;
 
 namespace Discussit
 {
     [Activity(Label = "CreateCommunityActivity")]
     public class CreateCommunityActivity : AppCompatActivity, View.IOnClickListener
     {
+        User user;
         ImageButton ibtnBack, ibtnLogo;
         EditText etCommunityName, etCommunityDescription;
         Button btnCreateCommunity;
@@ -19,7 +21,13 @@ namespace Discussit
             base.OnCreate(savedInstanceState);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             SetContentView(Resource.Layout.activity_createCommunity);
+            InitObjects();
             InitViews();
+        }
+
+        private void InitObjects()
+        {
+            user = User.GetUserJson(Intent.GetStringExtra(General.KEY_USER));
         }
 
         private void InitViews()
@@ -36,6 +44,9 @@ namespace Discussit
 
         public void Back()
         {
+            Intent intent = new Intent();
+            intent.PutExtra(General.KEY_USER, user.GetJson());
+            SetResult(Result.Ok, intent);
             Finish();
         }
 
@@ -43,7 +54,7 @@ namespace Discussit
         {
             Intent intent = new Intent(this, typeof(CommunityHubActivity));
             intent.AddFlags(ActivityFlags.LaunchedFromHistory);
-            intent.PutExtra(General.KEY_USER, Intent.GetStringExtra(General.KEY_USER));
+            intent.PutExtra(General.KEY_USER, user.GetJson());
             StartActivity(intent);
             Finish();
         }
@@ -65,7 +76,6 @@ namespace Discussit
 
         private void CreateCommunity()
         {
-            User user = User.GetUserJson(Intent.GetStringExtra(General.KEY_USER));
             Community community = new Community(etCommunityName.Text, etCommunityDescription.Text);
             community.AddMember(user);
             ViewCommunity(community);
@@ -74,7 +84,7 @@ namespace Discussit
         private void ViewCommunity(Community community)
         {
             Intent intent = new Intent(this, typeof(ViewCommunityActivity));
-            intent.PutExtra(General.KEY_USER, Intent.GetStringExtra(General.KEY_USER));
+            intent.PutExtra(General.KEY_USER, user.GetJson());
             intent.PutExtra(General.KEY_COMMUNITY, community.GetJson());
             StartActivity(intent);
             Finish();

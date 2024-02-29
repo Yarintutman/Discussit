@@ -2,6 +2,7 @@
 using Android.Content;
 using Android.Gms.Tasks;
 using Android.OS;
+using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using AndroidX.AppCompat.App;
@@ -68,6 +69,9 @@ namespace Discussit
 
         public void Back()
         {
+            Intent intent = new Intent();
+            intent.PutExtra(General.KEY_USER, user.GetJson());
+            SetResult(Result.Ok, intent);
             Finish();
         }
 
@@ -84,7 +88,7 @@ namespace Discussit
             SpData spd = new SpData(General.SP_FILE_NAME);
             spd.PutBool(General.KEY_REGISTERED, false);
             Intent intent = new Intent(this, typeof(MainActivity));
-            StartActivity(intent);
+            StartActivityForResult(intent, 0);
             Finish();
         }
 
@@ -92,8 +96,7 @@ namespace Discussit
         {
             Intent intent = new Intent(this, typeof(SettingsActivity));
             intent.PutExtra(General.KEY_USER, user.GetJson());
-            StartActivity(intent);
-            Finish();
+            StartActivityForResult(intent, 0);
         }
 
 
@@ -225,7 +228,7 @@ namespace Discussit
             Intent intent = new Intent(this, typeof(ViewPostActivity));
             intent.PutExtra(General.KEY_USER, Intent.GetStringExtra(General.KEY_USER));
             intent.PutExtra(General.KEY_POST, post.GetJson());
-            StartActivity(intent);
+            StartActivityForResult(intent, 0);
             dialogViewPosts.Cancel();
         }
 
@@ -234,7 +237,7 @@ namespace Discussit
             Intent intent = new Intent(this, typeof(ViewCommunityActivity));
             intent.PutExtra(General.KEY_USER, Intent.GetStringExtra(General.KEY_USER));
             intent.PutExtra(General.KEY_COMMUNITY, community.GetJson());
-            StartActivity(intent);
+            StartActivityForResult(intent, 0);
             dialogViewCommunities.Cancel();
         }
 
@@ -243,7 +246,7 @@ namespace Discussit
             Intent intent = new Intent(this, typeof(ManageCommunityActivity));
             intent.PutExtra(General.KEY_USER, Intent.GetStringExtra(General.KEY_USER));
             intent.PutExtra(General.KEY_COMMUNITY, community.GetJson());
-            StartActivity(intent);
+            StartActivityForResult(intent, 0);
             dialogViewManagedCommunities.Cancel();
         }
 
@@ -257,6 +260,14 @@ namespace Discussit
                 ViewPost(posts[position]);
             else if (currentDialog == Resources.GetString(Resource.String.Comments)) { }
                 //TBD
+        }
+
+
+        protected override void OnActivityResult(int requestCode, [GeneratedEnum] Result resultCode, Intent data)
+        {
+            if (resultCode == Result.Ok)
+                user = User.GetUserJson(data.GetStringExtra(General.KEY_USER));
+            base.OnActivityResult(requestCode, resultCode, data);
         }
     }
 }

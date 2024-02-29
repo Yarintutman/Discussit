@@ -6,6 +6,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using AndroidX.AppCompat.App;
+using AndroidX.Core.Util;
 using Firebase.Firestore;
 using Firebase.Firestore.Auth;
 using System;
@@ -16,15 +17,16 @@ using System.Text;
 namespace Discussit
 {
     [Activity(Label = "ManageCommunityActivity")]
-    public class ManageCommunityActivity : AppCompatActivity, View.IOnClickListener, IOnCompleteListener
+    public class ManageCommunityActivity : AppCompatActivity, View.IOnClickListener, IOnCompleteListener, IEventListener
     {
+        User user;
         Community community;
         ImageButton ibtnLogo, ibtnBack, ibtnCloseDialog;
         EditText etCommunityName, etCommunityDescription;
         Button btnManageMembers, btnSaveChanges;
-        TextView tvSortBy;
+        TextView tvSortBy, tvMemberCount;
         Dialog dialogManageMemeber;
-        MemberAdapter members;
+        Members members;
         Task tskGetMembers;
 
         protected override void OnCreate(Bundle savedInstanceState)
@@ -38,6 +40,7 @@ namespace Discussit
 
         private void InitObjects()
         {
+            user = User.GetUserJson(Intent.GetStringExtra(General.KEY_USER));
             community = Community.GetCommunityJson(Intent.GetStringExtra(General.KEY_COMMUNITY));
         }
 
@@ -64,6 +67,9 @@ namespace Discussit
 
         private void Back()
         {
+            Intent intent = new Intent();
+            intent.PutExtra(General.KEY_USER, user.GetJson());
+            SetResult(Result.Ok, intent);
             Finish();
         }
 
@@ -71,7 +77,7 @@ namespace Discussit
         {
             Intent intent = new Intent(this, typeof(CommunityHubActivity));
             intent.AddFlags(ActivityFlags.LaunchedFromHistory);
-            intent.PutExtra(General.KEY_USER, Intent.GetStringExtra(General.KEY_USER));
+            intent.PutExtra(General.KEY_USER, user.GetJson());
             StartActivity(intent);
             Finish();
         }
@@ -112,17 +118,13 @@ namespace Discussit
             ibtnCloseDialog = dialogManageMemeber.FindViewById<ImageButton>(Resource.Id.ibtnCloseDialog);
             ibtnCloseDialog.SetOnClickListener(this);
             tvSortBy = dialogManageMemeber.FindViewById<TextView>(Resource.Id.tvSortBy);
-            SetSorting(Resources.GetString(Resource.String.sortDate));
-            community.CreateMembers(this);
-            tskGetMembers = community.GetMembers().AddOnCompleteListener(this);
-        }
-
-        private void SetMembers(IList<DocumentSnapshot> documents)
-        {
-            members = new MemberAdapter(dialogManageMemeber.Context);
-            members.SetMembers(documents);
+            tvMemberCount = dialogManageMemeber.FindViewById<TextView>(Resource.Id.tvMemberCount);
+            community.CreateMembers(dialogManageMemeber.Context);
+            members = community.Members;
             ListView lvMembers = dialogManageMemeber.FindViewById<ListView>(Resource.Id.lvMembers);
-            lvMembers.Adapter = members;
+            lvMembers.Adapter = members.MemberAdapter;
+            RegisterForContextMenu(lvMembers);
+            members.AddSnapshotListener(this);
         }
 
         public void OnClick(View v)
@@ -139,6 +141,23 @@ namespace Discussit
                 dialogManageMemeber.Cancel();
         }
 
+        private void GetMembers()
+        {
+            tskGetMembers = community.GetMembers().AddOnCompleteListener(this);
+        }
+
+        protected override void OnResume()
+        {
+            base.OnResume();
+            members?.AddSnapshotListener(this);
+        }
+
+        protected override void OnPause()
+        {
+            base.OnPause();
+            members?.RemoveSnapshotListener();
+        }
+
         public void OnComplete(Task task)
         {
             if (task.IsComplete)
@@ -146,9 +165,28 @@ namespace Discussit
                 if (task == tskGetMembers)
                 {
                     QuerySnapshot qs = (QuerySnapshot)task.Result;
-                    SetMembers(qs.Documents);
+                    members.AddMembers(qs.Documents);
+                    tvMemberCount.Text = members.MemberCount.ToString();
+                    SetSorting(Resources.GetString(Resource.String.sortDate));
                 }
             }
+        }
+
+        public void OnEvent(Java.Lang.Object obj, FirebaseFirestoreException error)
+        {
+            GetMembers();
+        }
+
+        public override void OnCreateContextMenu(Android.Views.IContextMenu menu, Android.Views.View v, Android.Views.IContextMenuContextMenuInfo menuInfo)
+        {
+            MenuInflater.Inflate(Resource.Menu.menu_manageMember, menu);
+            base.OnCreateContextMenu(menu, v, menuInfo);
+        }
+
+        public override bool OnContextItemSelected(Android.Views.IMenuItem item)
+        {
+            
+            return base.OnContextItemSelected(item);
         }
     }
 }

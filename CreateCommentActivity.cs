@@ -16,6 +16,7 @@ namespace Discussit
     [Activity(Label = "CreateCommentActivity")]
     public class CreateCommentActivity : AppCompatActivity, View.IOnClickListener
     {
+        User user;
         Post post;
         Comment comment;
         ImageButton ibtnBack, ibtnLogo;
@@ -33,6 +34,7 @@ namespace Discussit
 
         private void InitObjects()
         {
+            user = User.GetUserJson(Intent.GetStringExtra(General.KEY_USER));
             post = Post.GetPostJson(Intent.GetStringExtra(General.KEY_POST));
             if (Intent.GetBooleanExtra(General.KEY_IS_COMMENT_RECURSIVE, false) == true ) 
                 comment = Comment.GetCommentJson(Intent.GetStringExtra(General.KEY_COMMENT));
@@ -55,6 +57,9 @@ namespace Discussit
 
         public void Back()
         {
+            Intent intent = new Intent();
+            intent.PutExtra(General.KEY_USER, user.GetJson());
+            SetResult(Result.Ok, intent);
             Finish();
         }
 
@@ -62,7 +67,7 @@ namespace Discussit
         {
             Intent intent = new Intent(this, typeof(CommunityHubActivity));
             intent.AddFlags(ActivityFlags.LaunchedFromHistory);
-            intent.PutExtra(General.KEY_USER, Intent.GetStringExtra(General.KEY_USER));
+            intent.PutExtra(General.KEY_USER, user.GetJson());
             StartActivity(intent);
             Finish();
         }
@@ -82,10 +87,10 @@ namespace Discussit
         private void CreateComment()
         {
             if (comment == null)
-                post.AddComment(etCommentDescription.Text, User.GetUserJson(Intent.GetStringExtra(General.KEY_USER)));
+                post.AddComment(etCommentDescription.Text, user);
             else
             {
-                comment.AddComment(etCommentDescription.Text, User.GetUserJson(Intent.GetStringExtra(General.KEY_USER)));
+                comment.AddComment(etCommentDescription.Text, user);
                 post.IncrementComments(+1);
             }
             Finish();

@@ -6,6 +6,7 @@ using Android.Views;
 using Android.Views.InputMethods;
 using Android.Widget;
 using Firebase.Firestore;
+using System.Threading;
 
 namespace Discussit
 {
@@ -164,11 +165,59 @@ namespace Discussit
 
         public void SetLoginMode()
         {
-            tvNewUser.Visibility = Android.Views.ViewStates.Visible;
+            tvNewUser.Visibility = ViewStates.Visible;
             RelativeLayout rlUsername = FindViewById<RelativeLayout>(Resource.Id.rlUsername);
-            rlUsername.Visibility = Android.Views.ViewStates.Invisible;
+            rlUsername.Visibility = ViewStates.Invisible;
             tvLoginState.Text = Resources.GetString(Resource.String.Login);
             btnEnter.Text = Resources.GetString(Resource.String.Login);
+        }
+
+        private void Anim()
+        {
+            TextView tvAppName = FindViewById<TextView>(Resource.Id.tvAppName);
+            TextView tvSlogan = FindViewById<TextView>(Resource.Id.tvSlogan);
+            string text = Resources.GetString(Resource.String.app_name);
+            try
+            {
+                Thread.Sleep(300);
+                for (int i = 0; i <= text.Length; i++)
+                {
+                    RunOnUiThread(() => { tvAppName.Text = text[..i]; });
+                    Thread.Sleep(70);
+                }
+                Thread.Sleep(500);
+                text = Resources.GetString(Resource.String.Slogan);
+                for (int i = 0; i <= text.Length; i++)
+                {
+                    RunOnUiThread(() => { tvSlogan.Text = text[..i]; });
+                    Thread.Sleep(70);
+                }
+            }
+            catch
+            {
+                tvAppName.Text = Resources.GetString(Resource.String.app_name);
+                tvSlogan.Text = Resources.GetString(Resource.String.Slogan);
+            }
+        }
+
+        protected override void OnResume()
+        {
+            base.OnResume();
+            if (!user.IsRegistered)
+            {
+                ThreadStart ts = new ThreadStart(Anim);
+                Thread t = new Thread(ts);
+                t.Start();
+            }
+        }
+
+        protected override void OnPause()
+        {
+            base.OnPause();
+            TextView tvAppName = FindViewById<TextView>(Resource.Id.tvAppName);
+            TextView tvSlogan = FindViewById<TextView>(Resource.Id.tvSlogan);
+            tvAppName.Text = string.Empty;
+            tvSlogan.Text = string.Empty;
         }
     }
 }

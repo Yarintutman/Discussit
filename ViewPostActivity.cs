@@ -2,6 +2,7 @@
 using Android.Content;
 using Android.Gms.Tasks;
 using Android.OS;
+using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using AndroidX.AppCompat.App;
@@ -73,6 +74,9 @@ namespace Discussit
 
         public void Back()
         {
+            Intent intent = new Intent();
+            intent.PutExtra(General.KEY_USER, user.GetJson());
+            SetResult(Result.Ok, intent);
             Finish();
         }
 
@@ -80,8 +84,8 @@ namespace Discussit
         {
             Intent intent = new Intent(this, typeof(CommunityHubActivity));
             intent.AddFlags(ActivityFlags.LaunchedFromHistory);
-            intent.PutExtra(General.KEY_USER, Intent.GetStringExtra(General.KEY_USER));
-            StartActivity(intent);
+            intent.PutExtra(General.KEY_USER, user.GetJson());
+            StartActivityForResult(intent, 0);
             Finish();
         }
 
@@ -98,7 +102,7 @@ namespace Discussit
             intent.PutExtra(General.KEY_USER, user.GetJson());
             intent.PutExtra(General.KEY_IS_COMMENT_RECURSIVE, false);
             intent.PutExtra(General.KEY_POST, post.GetJson());
-            StartActivity(intent);
+            StartActivityForResult(intent, 0);
         }
 
         private void OpenCreateCommentActivity(Comment comment)
@@ -108,7 +112,7 @@ namespace Discussit
             intent.PutExtra(General.KEY_IS_COMMENT_RECURSIVE, true);
             intent.PutExtra(General.KEY_POST, post.GetJson());
             intent.PutExtra(General.KEY_COMMENT, comment.GetJson());
-            StartActivity(intent);
+            StartActivityForResult(intent, 0);
         }
 
         private void GetComments()
@@ -125,7 +129,7 @@ namespace Discussit
         {
             Intent intent = new Intent(this, typeof(ProfileActivity));
             intent.PutExtra(General.KEY_USER, user.GetJson());
-            StartActivity(intent);
+            StartActivityForResult(intent, 0);
         }
 
         public void OnClick(View v)
@@ -167,6 +171,25 @@ namespace Discussit
         {
             //call create recursive comment after popping menu
             return true;
+        }
+
+        protected override void OnActivityResult(int requestCode, [GeneratedEnum] Result resultCode, Intent data)
+        {
+            if (resultCode == Result.Ok)
+                user = User.GetUserJson(data.GetStringExtra(General.KEY_USER));
+            base.OnActivityResult(requestCode, resultCode, data);
+        }
+
+        protected override void OnResume()
+        {
+            base.OnResume();
+            comments.AddSnapshotListener(this);
+        }
+
+        protected override void OnPause()
+        {
+            base.OnPause();
+            comments.RemoveSnapshotListener();
         }
     }
 }

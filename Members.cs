@@ -54,7 +54,10 @@ namespace Discussit
                     member = new Admin();
                 else
                     member = new Member();
+                member.Id = document.Id;
                 member.UserID = document.GetString(General.FIELD_UID);
+                member.Name = document.GetString(General.FIELD_USERNAME);
+                member.JoinDate = fbd.FirestoreTimestampToDateTime(document.GetTimestamp(General.FIELD_DATE));
                 member.CommunityPath = Path;
                 MemberAdapter.AddMember(member);
             }

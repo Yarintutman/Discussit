@@ -23,7 +23,6 @@ namespace Discussit
         public JavaList<string> Posts { get; set; }
         public JavaList<string> Comments { get; set; }
 
-
         public User()
         {
             fbd = new FbData();

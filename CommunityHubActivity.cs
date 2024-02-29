@@ -6,6 +6,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using AndroidX.AppCompat.App;
+using AndroidX.Core.Util;
 using Firebase.Firestore;
 using Java.Lang;
 
@@ -70,7 +71,7 @@ namespace Discussit
         {
             Intent intent = new Intent(this, typeof(ProfileActivity));
             intent.PutExtra(General.KEY_USER, user.GetJson());
-            StartActivity(intent);
+            StartActivityForResult(intent, 0);
         }
 
         public void OnClick(View v)
@@ -89,16 +90,16 @@ namespace Discussit
         private void ViewCommunity(Community community)
         {
             Intent intent = new Intent(this, typeof(ViewCommunityActivity));
-            intent.PutExtra(General.KEY_USER, Intent.GetStringExtra(General.KEY_USER));
+            intent.PutExtra(General.KEY_USER, user.GetJson());
             intent.PutExtra(General.KEY_COMMUNITY, community.GetJson());
-            StartActivity(intent);
+            StartActivityForResult(intent, 0);
         }
 
         private void OpenCreateCommunityActivity()
         {
             Intent intent = new Intent(this, typeof(CreateCommunityActivity));
             intent.PutExtra(General.KEY_USER, user.GetJson());
-            StartActivity(intent);
+            StartActivityForResult(intent, 0);
         }
 
         private void GetCommunities()
@@ -125,6 +126,25 @@ namespace Discussit
                     communities.AddCommunities(qs.Documents);
                 }
             }
+        }
+
+        protected override void OnActivityResult(int requestCode, [GeneratedEnum] Result resultCode, Intent data)
+        {
+            if (resultCode == Result.Ok)
+                user = User.GetUserJson(data.GetStringExtra(General.KEY_USER));
+            base.OnActivityResult(requestCode, resultCode, data);
+        }
+
+        protected override void OnResume()
+        {
+            base.OnResume();
+            communities.AddSnapshotListener(this);
+        }
+
+        protected override void OnPause()
+        {
+            base.OnPause();
+            communities.RemoveSnapshotListener();
         }
     }
 }

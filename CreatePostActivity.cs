@@ -15,6 +15,7 @@ namespace Discussit
     [Activity(Label = "CreatePostActivity")]
     public class CreatePostActivity : AppCompatActivity, View.IOnClickListener
     {
+        User user;
         Community community;
         ImageButton ibtnBack, ibtnLogo;
         EditText etPostTitle, etPostDescription;
@@ -30,6 +31,7 @@ namespace Discussit
 
         private void InitObjects()
         {
+            user = User.GetUserJson(Intent.GetStringExtra(General.KEY_USER));
             community = Community.GetCommunityJson(Intent.GetStringExtra(General.KEY_COMMUNITY));
         }
 
@@ -51,6 +53,9 @@ namespace Discussit
 
         public void Back()
         {
+            Intent intent = new Intent();
+            intent.PutExtra(General.KEY_USER, user.GetJson());
+            SetResult(Result.Ok, intent);
             Finish();
         }
 
@@ -58,7 +63,7 @@ namespace Discussit
         {
             Intent intent = new Intent(this, typeof(CommunityHubActivity));
             intent.AddFlags(ActivityFlags.LaunchedFromHistory);
-            intent.PutExtra(General.KEY_USER, Intent.GetStringExtra(General.KEY_USER));
+            intent.PutExtra(General.KEY_USER, user.GetJson());
             StartActivity(intent);
             Finish();
         }
@@ -80,7 +85,6 @@ namespace Discussit
 
         private void CreatePost()
         {
-            User user = User.GetUserJson(Intent.GetStringExtra(General.KEY_USER));
             Post post = community.AddPost(etPostTitle.Text, etPostDescription.Text, user);
             ViewPost(post);
         }
@@ -88,7 +92,7 @@ namespace Discussit
         private void ViewPost(Post post)
         {
             Intent intent = new Intent(this, typeof(ViewPostActivity));
-            intent.PutExtra(General.KEY_USER, Intent.GetStringExtra(General.KEY_USER));
+            intent.PutExtra(General.KEY_USER, user.GetJson());
             intent.PutExtra(General.KEY_POST, post.GetJson());
             StartActivity(intent);
             Finish();
