@@ -73,6 +73,6 @@
         android:textAllCaps="false"
         android:textSize="@dimen/Hub_newCommunityText"
         android:textColor="@color/clickable"
-        android:background="@android:color/transparent"
+            android:background="@drawable/shape"
         android:layout_marginBottom="@dimen/marginBottom"/>
 </LinearLayout>

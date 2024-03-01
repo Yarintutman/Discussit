@@ -24,7 +24,7 @@ namespace Discussit
         ImageButton ibtnLogo, ibtnBack;
         EditText etCommunityName, etCommunityDescription;
         Button btnSaveChanges;
-        TextView tvSortBy, tvMemberCount;
+        TextView tvMemberCount;
         Members members;
         Task tskGetMembers;
         Member userAsMember, currentMember;

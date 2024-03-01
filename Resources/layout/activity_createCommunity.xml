@@ -70,7 +70,7 @@
         android:layout_height="wrap_content"
         android:textAllCaps="false"
         android:textSize="@dimen/CreateCommunity_buttonTextSize"
-        android:background="@android:color/transparent"
+        android:background="@drawable/shape"
         android:textColor="@color/clickable"
         android:text="@string/CreateCommunity"
         android:layout_marginBottom="@dimen/marginBottom"/>

@@ -30,7 +30,7 @@
             android:text="@string/cancel"
             android:textColor="@color/clickable"
             android:textAllCaps="false"
-            android:background="@android:color/transparent"/>
+            android:background="@drawable/shape"/>
         <Button
             android:id="@+id/btnConfirm"
             android:layout_width="wrap_content"
@@ -40,6 +40,6 @@
             android:text="@string/confirm"
             android:textColor="@color/clickable"
             android:textAllCaps="false"
-            android:background="@android:color/transparent"/>
+            android:background="@drawable/shape"/>
     </RelativeLayout>
 </LinearLayout>

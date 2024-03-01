@@ -82,7 +82,7 @@
         android:layout_marginRight="@dimen/marginRight">
         <ListView
             android:id="@+id/lvComments"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"/>
     </HorizontalScrollView>
     <Button
@@ -94,6 +94,6 @@
         android:textAllCaps="false"
         android:textSize="@dimen/ViewPost_buttonTextSize"
         android:textColor="@color/clickable"
-        android:background="@android:color/transparent"
+        android:background="@drawable/shape"
         android:layout_marginBottom="@dimen/marginBottom"/>
 </LinearLayout>

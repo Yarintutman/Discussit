@@ -138,6 +138,6 @@
         android:textAllCaps="false"
         android:textSize="@dimen/ViewCommunity_textSize"
         android:textColor="@color/clickable"
-        android:background="@android:color/transparent"
+        android:background="@drawable/shape"
         android:layout_marginBottom="@dimen/marginBottom"/>
 </LinearLayout>

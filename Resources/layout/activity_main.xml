@@ -131,7 +131,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/NewUser"
-            android:textColor="@color/clickable"/>
+            android:textColor="@color/clickable"
+            android:layout_marginBottom="@dimen/Main_marginBottom"/>
         <Button
             android:id="@+id/btnEnter"
             android:layout_width="@dimen/Main_buttonWidth"
@@ -140,6 +141,6 @@
             android:text="@string/Login"
             android:textAllCaps="false"
             android:textColor="@color/clickable"
-            android:background="@android:color/transparent"/>//make Border
+            android:background="@drawable/shape"/>
     </LinearLayout>
-</LinearLayout>
+</LinearLayout> 
