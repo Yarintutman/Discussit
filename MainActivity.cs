@@ -52,6 +52,11 @@ namespace Discussit
             chkRemember = FindViewById<CheckBox>(Resource.Id.chkRemember);
             tvNewUser.SetOnClickListener(this);
             btnEnter.SetOnClickListener(this);
+            if (user.IsRegistered)
+            {
+                etEmail.Text = user.Email;
+                etPassword.Text = user.Password;
+            }
         }
 
         /// <summary>
@@ -61,11 +66,7 @@ namespace Discussit
         {
             user = new User();
             if (user.IsRegistered)
-            {
                 tskRememberLogin = user.Login().AddOnCompleteListener(this);
-                etEmail.Text = user.Email;
-                etPassword.Text = user.Password;
-            }
         }
 
         /// <summary>
@@ -236,14 +237,14 @@ namespace Discussit
                 for (int i = 0; i <= text.Length; i++)
                 {
                     RunOnUiThread(() => { tvAppName.Text = text[..i]; });
-                    Thread.Sleep(70);
+                    Thread.Sleep(90);
                 }
                 Thread.Sleep(500);
                 text = Resources.GetString(Resource.String.Slogan);
                 for (int i = 0; i <= text.Length; i++)
                 {
                     RunOnUiThread(() => { tvSlogan.Text = text[..i]; });
-                    Thread.Sleep(70);
+                    Thread.Sleep(90);
                 }
             }
             catch

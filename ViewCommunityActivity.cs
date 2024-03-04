@@ -27,6 +27,7 @@ namespace Discussit
         Button btnViewDescription, btnNewPost, btnJoinCommunity;
         EditText etSearchBar;
         Task tskGetPosts, tskGetMemebers;
+        Post currentPost;
 
         /// <summary>
         /// Called when the activity is starting.
@@ -89,6 +90,7 @@ namespace Discussit
             tvCommunityName.Text = community.Name;
             tvDescription.Text = community.Description;
             tvMemberCount.Text = community.MemberCount.ToString();
+            RegisterForContextMenu(lvPosts);
         }
 
         /// <summary>
@@ -206,6 +208,7 @@ namespace Discussit
             Intent intent = new Intent(this, typeof(ViewPostActivity));
             intent.PutExtra(General.KEY_USER, Intent.GetStringExtra(General.KEY_USER));
             intent.PutExtra(General.KEY_POST, post.GetJson());
+            intent.PutExtra(General.KEY_GUEST, !members.HasMember(user.Id));
             StartActivityForResult(intent, 0);
         }
 
@@ -271,6 +274,42 @@ namespace Discussit
                     tvMemberCount.Text = members.MemberCount.ToString();
                 }
             }
+        }
+
+        /// <summary>
+        /// Called when creating a context menu for list view items.
+        /// </summary>
+        /// <param name="menu">The context menu that is being built.</param>
+        /// <param name="v">The view for which the context menu is being created.</param>
+        /// <param name="menuInfo">Extra information about the item for which the context menu should be shown.</param>
+        public override void OnCreateContextMenu(Android.Views.IContextMenu menu, Android.Views.View v, Android.Views.IContextMenuContextMenuInfo menuInfo)
+        {
+            AdapterView.AdapterContextMenuInfo info = menuInfo as AdapterView.AdapterContextMenuInfo;
+            if (info != null)
+            {
+                int position = info.Position;
+                currentPost = posts[position];
+                Member userAsMember = members.GetMemberByUID(user.Id);
+                if (userAsMember != null && members.HasMember(user.Id) && (userAsMember is Admin || userAsMember.UserID == currentPost.CreatorUID)) 
+                {
+                    MenuInflater.Inflate(Resource.Menu.menu_manageItem, menu);
+                    base.OnCreateContextMenu(menu, v, menuInfo);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Called when a context menu item is selected.
+        /// </summary>
+        /// <param name="item">The selected menu item.</param>
+        /// <returns>True if the item selection was handled, otherwise false.</returns>
+        public override bool OnContextItemSelected(Android.Views.IMenuItem item)
+        {
+            if (item.ItemId == Resource.Id.itemDelete)
+                
+            else if (item.ItemId == Resource.Id.itemEdit)
+                
+            return base.OnContextItemSelected(item);
         }
 
         /// <summary>

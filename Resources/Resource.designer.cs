@@ -4185,181 +4185,181 @@ namespace Discussit
 			public const int default_activity_button = 2131230834;
 			
 			// aapt resource value: 0x7F080073
-			public const int delete = 2131230835;
+			public const int design_bottom_sheet = 2131230835;
 			
 			// aapt resource value: 0x7F080074
-			public const int design_bottom_sheet = 2131230836;
+			public const int design_menu_item_action_area = 2131230836;
 			
 			// aapt resource value: 0x7F080075
-			public const int design_menu_item_action_area = 2131230837;
+			public const int design_menu_item_action_area_stub = 2131230837;
 			
 			// aapt resource value: 0x7F080076
-			public const int design_menu_item_action_area_stub = 2131230838;
+			public const int design_menu_item_text = 2131230838;
 			
 			// aapt resource value: 0x7F080077
-			public const int design_menu_item_text = 2131230839;
+			public const int design_navigation_view = 2131230839;
 			
 			// aapt resource value: 0x7F080078
-			public const int design_navigation_view = 2131230840;
+			public const int dialog_button = 2131230840;
 			
 			// aapt resource value: 0x7F080079
-			public const int dialog_button = 2131230841;
+			public const int disableHome = 2131230841;
 			
 			// aapt resource value: 0x7F08007A
-			public const int disableHome = 2131230842;
+			public const int edit_query = 2131230842;
 			
 			// aapt resource value: 0x7F08007B
-			public const int edit = 2131230843;
+			public const int edit_text_id = 2131230843;
 			
 			// aapt resource value: 0x7F08007C
-			public const int edit_query = 2131230844;
+			public const int end = 2131230844;
 			
 			// aapt resource value: 0x7F08007D
-			public const int edit_text_id = 2131230845;
+			public const int enterAlways = 2131230845;
 			
 			// aapt resource value: 0x7F08007E
-			public const int end = 2131230846;
+			public const int enterAlwaysCollapsed = 2131230846;
 			
 			// aapt resource value: 0x7F08007F
-			public const int enterAlways = 2131230847;
+			public const int etChangeUserName = 2131230847;
 			
 			// aapt resource value: 0x7F080080
-			public const int enterAlwaysCollapsed = 2131230848;
+			public const int etCommentDescription = 2131230848;
 			
 			// aapt resource value: 0x7F080081
-			public const int etChangeUserName = 2131230849;
+			public const int etCommunityDescription = 2131230849;
 			
 			// aapt resource value: 0x7F080082
-			public const int etCommentDescription = 2131230850;
+			public const int etCommunityName = 2131230850;
 			
 			// aapt resource value: 0x7F080083
-			public const int etCommunityDescription = 2131230851;
+			public const int etEmail = 2131230851;
 			
 			// aapt resource value: 0x7F080084
-			public const int etCommunityName = 2131230852;
+			public const int etEnterEmail = 2131230852;
 			
 			// aapt resource value: 0x7F080085
-			public const int etEmail = 2131230853;
+			public const int etPassword = 2131230853;
 			
 			// aapt resource value: 0x7F080086
-			public const int etEnterEmail = 2131230854;
+			public const int etPostDescription = 2131230854;
 			
 			// aapt resource value: 0x7F080087
-			public const int etPassword = 2131230855;
+			public const int etPostTitle = 2131230855;
 			
 			// aapt resource value: 0x7F080088
-			public const int etPostDescription = 2131230856;
+			public const int etSearchBar = 2131230856;
 			
 			// aapt resource value: 0x7F080089
-			public const int etPostTitle = 2131230857;
+			public const int etUsername = 2131230857;
 			
 			// aapt resource value: 0x7F08008A
-			public const int etSearchBar = 2131230858;
-			
-			// aapt resource value: 0x7F08008B
-			public const int etUsername = 2131230859;
+			public const int exitUntilCollapsed = 2131230858;
 			
 			// aapt resource value: 0x7F08008C
-			public const int exitUntilCollapsed = 2131230860;
+			public const int expanded_menu = 2131230860;
 			
-			// aapt resource value: 0x7F08008E
-			public const int expanded_menu = 2131230862;
+			// aapt resource value: 0x7F08008B
+			public const int expand_activities_button = 2131230859;
 			
 			// aapt resource value: 0x7F08008D
-			public const int expand_activities_button = 2131230861;
-			
-			// aapt resource value: 0x7F08008F
-			public const int fill = 2131230863;
-			
-			// aapt resource value: 0x7F080092
-			public const int filled = 2131230866;
+			public const int fill = 2131230861;
 			
 			// aapt resource value: 0x7F080090
-			public const int fill_horizontal = 2131230864;
+			public const int filled = 2131230864;
+			
+			// aapt resource value: 0x7F08008E
+			public const int fill_horizontal = 2131230862;
+			
+			// aapt resource value: 0x7F08008F
+			public const int fill_vertical = 2131230863;
 			
 			// aapt resource value: 0x7F080091
-			public const int fill_vertical = 2131230865;
+			public const int @fixed = 2131230865;
+			
+			// aapt resource value: 0x7F080092
+			public const int forever = 2131230866;
 			
 			// aapt resource value: 0x7F080093
-			public const int @fixed = 2131230867;
-			
-			// aapt resource value: 0x7F080094
-			public const int forever = 2131230868;
-			
-			// aapt resource value: 0x7F080095
-			public const int fragment_container_view_tag = 2131230869;
+			public const int fragment_container_view_tag = 2131230867;
 			
 			// aapt resource value: 0x7F080002
 			public const int FUNCTION = 2131230722;
 			
+			// aapt resource value: 0x7F080094
+			public const int ghost_view = 2131230868;
+			
+			// aapt resource value: 0x7F080095
+			public const int ghost_view_holder = 2131230869;
+			
 			// aapt resource value: 0x7F080096
-			public const int ghost_view = 2131230870;
+			public const int group_divider = 2131230870;
 			
 			// aapt resource value: 0x7F080097
-			public const int ghost_view_holder = 2131230871;
+			public const int hide_ime_id = 2131230871;
 			
 			// aapt resource value: 0x7F080098
-			public const int group_divider = 2131230872;
+			public const int home = 2131230872;
 			
 			// aapt resource value: 0x7F080099
-			public const int hide_ime_id = 2131230873;
+			public const int homeAsUp = 2131230873;
 			
 			// aapt resource value: 0x7F08009A
-			public const int home = 2131230874;
+			public const int ibtnBack = 2131230874;
 			
 			// aapt resource value: 0x7F08009B
-			public const int homeAsUp = 2131230875;
+			public const int ibtnCloseDialog = 2131230875;
 			
 			// aapt resource value: 0x7F08009C
-			public const int ibtnBack = 2131230876;
+			public const int ibtnLogo = 2131230876;
 			
 			// aapt resource value: 0x7F08009D
-			public const int ibtnCloseDialog = 2131230877;
+			public const int ibtnLogout = 2131230877;
 			
 			// aapt resource value: 0x7F08009E
-			public const int ibtnLogo = 2131230878;
+			public const int ibtnPicture = 2131230878;
 			
 			// aapt resource value: 0x7F08009F
-			public const int ibtnLogout = 2131230879;
+			public const int ibtnProfile = 2131230879;
 			
 			// aapt resource value: 0x7F0800A0
-			public const int ibtnPicture = 2131230880;
+			public const int ibtnProfilePicture = 2131230880;
 			
 			// aapt resource value: 0x7F0800A1
-			public const int ibtnProfile = 2131230881;
+			public const int ibtnSearch = 2131230881;
 			
 			// aapt resource value: 0x7F0800A2
-			public const int ibtnProfilePicture = 2131230882;
+			public const int icon = 2131230882;
 			
 			// aapt resource value: 0x7F0800A3
-			public const int ibtnSearch = 2131230883;
+			public const int icon_group = 2131230883;
 			
 			// aapt resource value: 0x7F0800A4
-			public const int icon = 2131230884;
+			public const int icon_only = 2131230884;
 			
 			// aapt resource value: 0x7F0800A5
-			public const int icon_group = 2131230885;
+			public const int ifRoom = 2131230885;
 			
 			// aapt resource value: 0x7F0800A6
-			public const int icon_only = 2131230886;
+			public const int image = 2131230886;
 			
 			// aapt resource value: 0x7F0800A7
-			public const int ifRoom = 2131230887;
+			public const int info = 2131230887;
 			
 			// aapt resource value: 0x7F0800A8
-			public const int image = 2131230888;
+			public const int italic = 2131230888;
 			
 			// aapt resource value: 0x7F0800A9
-			public const int info = 2131230889;
+			public const int itemBan = 2131230889;
 			
 			// aapt resource value: 0x7F0800AA
-			public const int italic = 2131230890;
+			public const int itemDelete = 2131230890;
 			
 			// aapt resource value: 0x7F0800AB
-			public const int itemBan = 2131230891;
+			public const int itemDemote = 2131230891;
 			
 			// aapt resource value: 0x7F0800AC
-			public const int itemDemote = 2131230892;
+			public const int itemEdit = 2131230892;
 			
 			// aapt resource value: 0x7F0800AD
 			public const int itemPromote = 2131230893;
