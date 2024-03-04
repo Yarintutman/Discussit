@@ -13,6 +13,9 @@ using System.IO;
 
 namespace Discussit
 {
+    /// <summary>
+    /// Represents a community within the application.
+    /// </summary>
     internal class Community
     {
         private readonly FbData fbd;
@@ -25,8 +28,13 @@ namespace Discussit
         public Posts Posts { get; set; }
         public DateTime CreationDate { get; set; }
         public long MemberCount { get; set; }
-        public long PostCount {  get; set; }
+        public long PostCount { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of the Community class with provided name and description.
+        /// </summary>
+        /// <param name="name">The name of the community.</param>
+        /// <param name="description">The description of the community.</param>
         public Community(string name, string description)
         {
             fbd = new FbData();
@@ -38,15 +46,21 @@ namespace Discussit
             CreateCommunity();
         }
 
-        public Community() 
+        /// <summary>
+        /// Initializes a new instance of the Community class.
+        /// </summary>
+        public Community()
         {
             fbd = new FbData();
         }
 
+        /// <summary>
+        /// Gets the HashMap representation of the community.
+        /// </summary>
         [JsonIgnore]
         private HashMap HashMap
         {
-            get 
+            get
             {
                 HashMap hm = new HashMap();
                 hm.Put(General.FIELD_COMMUNITY_NAME, Name);
@@ -58,36 +72,62 @@ namespace Discussit
             }
         }
 
+        /// <summary>
+        /// Gets the collection path of the community.
+        /// </summary>
         [JsonIgnore]
-        public string CollectionPath 
-        { 
+        public string CollectionPath
+        {
             get
             {
                 return General.COMMUNITIES_COLLECTION + "/" + Id;
             }
         }
 
+        /// <summary>
+        /// Gets the count of a specific collection within the community.
+        /// </summary>
+        /// <param name="cName">The name of the collection.</param>
+        /// <returns>A task representing the asynchronous operation.</returns>
         public Task GetCollectionCount(string cName)
         {
             return fbd.GetCollectionCount(CollectionPath + "/" + cName);
         }
 
+        /// <summary>
+        /// Creates the community.
+        /// </summary>
         private void CreateCommunity()
         {
             fbd.SetDocument(General.COMMUNITIES_COLLECTION, string.Empty, out string communityId, HashMap);
             Id = communityId;
         }
 
+        /// <summary>
+        /// Creates a Members instance for managing members within the community.
+        /// </summary>
+        /// <param name="context">The context.</param>
         public void CreateMembers(Context context)
         {
             Members = new Members(context, CollectionPath);
         }
 
+        /// <summary>
+        /// Creates a Posts instance for managing posts within the community.
+        /// </summary>
+        /// <param name="context">The context.</param>
         public void CreatePosts(Context context)
         {
             Posts = new Posts(context, CollectionPath);
         }
 
+        /// <summary>
+        /// Adds a post to the community.
+        /// </summary>
+        /// <param name="title">The title of the post.</param>
+        /// <param name="description">The description of the post.</param>
+        /// <param name="creator">The creator of the post.</param>
+        /// <returns>The added post.</returns>
         public Post AddPost(string title, string description, User creator)
         {
             Post post = new Post(title, description, creator, CollectionPath);
@@ -99,6 +139,10 @@ namespace Discussit
             return post;
         }
 
+        /// <summary>
+        /// Adds a member to the community.
+        /// </summary>
+        /// <param name="user">The user to add as a member.</param>
         public void AddMember(User user)
         {
             Member member;
@@ -116,6 +160,11 @@ namespace Discussit
             fbd.IncrementField(General.COMMUNITIES_COLLECTION, Id, General.FIELD_MEMBER_COUNT, 1);
         }
 
+        /// <summary>
+        /// Removes a member from the community.
+        /// </summary>
+        /// <param name="UserID">The ID of the user to remove.</param>
+        /// <returns>A task representing the asynchronous operation.</returns>
         public Task RemoveMember(string UserID)
         {
             Task NewLeader = null;
@@ -133,6 +182,11 @@ namespace Discussit
             return NewLeader;
         }
 
+        /// <summary>
+        /// Removes a post from the community.
+        /// </summary>
+        /// <param name="postID">The ID of the post to remove.</param>
+        /// <param name="member">The member performing the action.</param>
         public void RemovePost(string postID, Member member)
         {
             Post post = Posts.GetPostById(postID);
@@ -148,6 +202,9 @@ namespace Discussit
             }
         }
 
+        /// <summary>
+        /// Saves changes made to the community.
+        /// </summary>
         public void SaveChanges()
         {
             Dictionary<string, Java.Lang.Object> fields = new Dictionary<string, Java.Lang.Object>();
@@ -156,27 +213,48 @@ namespace Discussit
             fbd.UpdateDocument(General.COMMUNITIES_COLLECTION, Id, fields);
         }
 
+        /// <summary>
+        /// Deletes the community.
+        /// </summary>
+        /// <param name="member">The member performing the action.</param>
         public void DeleteCommunity(Member member) 
         {
             if (member.GetType() == typeof(Leader))
                 fbd.DeleteDocument(General.COMMUNITIES_COLLECTION, Id);
         }
 
+        /// <summary>
+        /// Retrieves posts belonging to the community.
+        /// </summary>
+        /// <returns>A task representing the asynchronous operation.</returns>
         public Task GetPosts()
         {
             return Posts.GetPosts();
         }
 
+        /// <summary>
+        /// Retrieves members of the community.
+        /// </summary>
+        /// <returns>A task representing the asynchronous operation.</returns>
         public Task GetMembers()
         {
             return Members.GetMembers();
         }
 
+        /// <summary>
+        /// Gets the Json representation of the community.
+        /// </summary>
+        /// <returns>The Json representation of the community.</returns>
         public string GetJson()
         {
             return JsonConvert.SerializeObject(this);
         }
 
+        /// <summary>
+        /// Deserializes a Json string into a Community object.
+        /// </summary>
+        /// <param name="json">The Json string representing the community.</param>
+        /// <returns>The deserialized Community object.</returns>
         public static Community GetCommunityJson(string json)
         {
             return JsonConvert.DeserializeObject<Community>(json);

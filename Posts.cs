@@ -6,7 +6,10 @@ using System.Collections.Generic;
 
 namespace Discussit
 {
-    internal class Posts 
+    /// <summary>
+    /// Represents a collection of posts associated with a specific path in the database.
+    /// </summary>
+    internal class Posts
     {
         private readonly FbData fbd;
         public string Path { get; private set; }
@@ -21,7 +24,11 @@ namespace Discussit
                 return PostAdapter[position];
             }
         }
-
+        /// <summary>
+        /// Initializes a new instance of the Posts class with the specified context and path.
+        /// </summary>
+        /// <param name="context">The context in which the Posts instance is being used.</param>
+        /// <param name="path">The path to the collection of posts in the database.</param>
         public Posts(Context context, string path)
         {
             PostAdapter = new PostAdapter(context);
@@ -29,16 +36,27 @@ namespace Discussit
             Path = path;
         }
 
+        /// <summary>
+        /// Adds a snapshot listener to the collection of posts.
+        /// </summary>
+        /// <param name="context">The activity context to use for the snapshot listener.</param>
         public void AddSnapshotListener(Activity context)
         {
             onCollectionChangeListener = fbd.AddSnapshotListener(context, Path + "/" + General.POSTS_COLLECTION);
         }
 
+        /// <summary>
+        /// Removes the snapshot listener from the collection of posts.
+        /// </summary>
         public void RemoveSnapshotListener()
         {
             onCollectionChangeListener?.Remove();
         }
 
+        /// <summary>
+        /// Adds posts to the collection based on the provided list of document snapshots.
+        /// </summary>
+        /// <param name="documents">The list of document snapshots representing the posts to add.</param>
         internal void AddPosts(IList<DocumentSnapshot> documents)
         {
             PostAdapter.Clear();
@@ -60,16 +78,29 @@ namespace Discussit
             }
         }
 
+        /// <summary>
+        /// Removes the specified post from the collection.
+        /// </summary>
+        /// <param name="post">The post to remove.</param>
         public void RemovePost(Post post)
         {
             PostAdapter.RemovePost(post);
         }
 
+        /// <summary>
+        /// Retrieves the posts from the database.
+        /// </summary>
+        /// <returns>A task representing the asynchronous operation of getting the posts.</returns>
         internal Task GetPosts()
         {
             return fbd.GetCollection(Path + "/" + General.POSTS_COLLECTION);
         }
 
+        /// <summary>
+        /// Retrieves the post with the specified ID from the collection.
+        /// </summary>
+        /// <param name="Id">The ID of the post to retrieve.</param>
+        /// <returns>The post with the specified ID, or null if not found.</returns>
         public Post GetPostById(string Id)
         {
             return PostAdapter.GetPostById(Id);

@@ -8,6 +8,9 @@ using System;
 
 namespace Discussit
 {
+    /// <summary>
+    /// Activity for creating a new community.
+    /// </summary>
     [Activity(Label = "CreateCommunityActivity")]
     public class CreateCommunityActivity : AppCompatActivity, View.IOnClickListener
     {
@@ -16,6 +19,10 @@ namespace Discussit
         EditText etCommunityName, etCommunityDescription;
         Button btnCreateCommunity;
 
+        /// <summary>
+        /// Called when the activity is starting.
+        /// </summary>
+        /// <param name="savedInstanceState">Not in use</param>
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -25,11 +32,17 @@ namespace Discussit
             InitViews();
         }
 
+        /// <summary>
+        /// Initializes the objects used in the activity.
+        /// </summary>
         private void InitObjects()
         {
             user = User.GetUserJson(Intent.GetStringExtra(General.KEY_USER));
         }
 
+        /// <summary>
+        /// Initializes the views used in the activity.
+        /// </summary>
         private void InitViews()
         {
             ibtnLogo = FindViewById<ImageButton>(Resource.Id.ibtnLogo);
@@ -42,6 +55,9 @@ namespace Discussit
             btnCreateCommunity.SetOnClickListener(this);
         }
 
+        /// <summary>
+        /// Returns to the previous activity.
+        /// </summary>
         public void Back()
         {
             Intent intent = new Intent();
@@ -50,6 +66,9 @@ namespace Discussit
             Finish();
         }
 
+        /// <summary>
+        /// Returns to the community hub.
+        /// </summary>
         public void ReturnToHub()
         {
             Intent intent = new Intent(this, typeof(CommunityHubActivity));
@@ -59,6 +78,10 @@ namespace Discussit
             Finish();
         }
 
+
+        /// <summary>
+        /// Disables the default back button behavior and invokes the custom back method.
+        /// </summary>
 #pragma warning disable CS0672 // Member overrides obsolete member
         public override void OnBackPressed() 
         {
@@ -66,6 +89,10 @@ namespace Discussit
         }
 #pragma warning restore CS0672 // Member overrides obsolete member
 
+        /// <summary>
+        /// Checks if the input fields contain valid data.
+        /// </summary>
+        /// <returns>true if the input fields are valid; otherwise, false.</returns>
         private bool ValidInputFields()
         {
             bool status = true;
@@ -74,6 +101,9 @@ namespace Discussit
             return status;
         }
 
+        /// <summary>
+        /// Creates a new community with the provided information.
+        /// </summary>
         private void CreateCommunity()
         {
             Community community = new Community(etCommunityName.Text, etCommunityDescription.Text);
@@ -81,6 +111,10 @@ namespace Discussit
             ViewCommunity(community);
         }
 
+        /// <summary>
+        /// Starts the activity to view the created community.
+        /// </summary>
+        /// <param name="community">The community to view.</param>
         private void ViewCommunity(Community community)
         {
             Intent intent = new Intent(this, typeof(ViewCommunityActivity));
@@ -90,6 +124,10 @@ namespace Discussit
             Finish();
         }
 
+        /// <summary>
+        /// Handles click events for views in the activity.
+        /// </summary>
+        /// <param name="v">The view that was clicked.</param>
         public void OnClick(View v)
         {
             if (v == ibtnLogo)

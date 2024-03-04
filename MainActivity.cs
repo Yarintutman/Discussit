@@ -13,8 +13,11 @@ using System.Threading;
 
 namespace Discussit
 {
+    /// <summary>
+    /// Represents the main activity of the application.
+    /// </summary>
     [Activity(Label = "@string/app_name", MainLauncher = true)]
-    public class MainActivity : Activity , View.IOnClickListener, IOnCompleteListener
+    public class MainActivity : Activity, View.IOnClickListener, IOnCompleteListener
     {
         User user;
         EditText etUsername, etEmail, etPassword;
@@ -22,6 +25,11 @@ namespace Discussit
         TextView tvLoginState, tvNewUser;
         CheckBox chkRemember;
         Task tskRegister, tskLogin, tskRememberLogin, tskSetFbUser, tskGetUser;
+
+        /// <summary>
+        /// Method called when the activity is first created.
+        /// </summary>
+        /// <param name="savedInstanceState">Not in use</param>
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -30,6 +38,9 @@ namespace Discussit
             InitViews();
         }
 
+        /// <summary>
+        /// Initializes views in the activity.
+        /// </summary>
         private void InitViews()
         {
             etUsername = FindViewById<EditText>(Resource.Id.etUsername);
@@ -43,13 +54,24 @@ namespace Discussit
             btnEnter.SetOnClickListener(this);
         }
 
+        /// <summary>
+        /// Initializes objects used in the activity.
+        /// </summary>
         private void InitObjects()
         {
             user = new User();
             if (user.IsRegistered)
+            {
                 tskRememberLogin = user.Login().AddOnCompleteListener(this);
+                etEmail.Text = user.Email;
+                etPassword.Text = user.Password;
+            }
         }
 
+        /// <summary>
+        /// Validates the input fields in the activity.
+        /// </summary>
+        /// <returns>True if all input fields are valid, otherwise false.</returns>
         private bool ValidInputFields()
         {
             bool status = true;
@@ -63,6 +85,10 @@ namespace Discussit
             return status && user.Email.Length > 0 && user.Password.Length > 0;
         }
 
+        /// <summary>
+        /// Handles click events for views in the activity.
+        /// </summary>
+        /// <param name="v">The view that was clicked.</param>
         public void OnClick(View v)
         {
             if (v == btnEnter)
@@ -77,18 +103,25 @@ namespace Discussit
                 else
                     Toast.MakeText(this, Resources.GetString(Resource.String.InvalidFields), ToastLength.Long).Show();
             }
-            else if(v == tvNewUser)
+            else if (v == tvNewUser)
             {
                 SetRegisterMode();
             }
             HideSoftKeyboard();
         }
 
+        /// <summary>
+        /// Initiates the process of retrieving user data.
+        /// </summary>
         public void GetUser()
         {
             tskGetUser = user.GetUserData().AddOnCompleteListener(this);
         }
 
+        /// <summary>
+        /// Handles the completion of tasks asynchronously.
+        /// </summary>
+        /// <param name="task">The completed task.</param>
         public void OnComplete(Task task)
         {
             if (task.IsSuccessful)
@@ -100,7 +133,7 @@ namespace Discussit
                 else
                 {
                     if (task == tskLogin)
-                    { 
+                    {
                         if (chkRemember.Checked)
                             user.Save();
                         GetUser();
@@ -129,6 +162,9 @@ namespace Discussit
                 user.Forget();
         }
 
+        /// <summary>
+        /// Opens the Community Hub activity.
+        /// </summary>
         private void OpenCommunityHub()
         {
             Intent intent = new Intent(this, typeof(CommunityHubActivity));
@@ -137,6 +173,9 @@ namespace Discussit
             Finish();
         }
 
+        /// <summary>
+        /// Hides the soft keyboard if it's currently visible.
+        /// </summary>
         private void HideSoftKeyboard()
         {
             View currentFocus = this.CurrentFocus;
@@ -146,7 +185,9 @@ namespace Discussit
                 inputMethodManager.HideSoftInputFromWindow(currentFocus.WindowToken, HideSoftInputFlags.None);
             }
         }
-
+        /// <summary>
+        /// Overrides the back button functionality to switch between login and registration modes.
+        /// </summary>
 #pragma warning disable CS0672 // Member overrides obsolete member
         public override void OnBackPressed()
         {
@@ -157,6 +198,9 @@ namespace Discussit
         }
 #pragma warning restore CS0672 // Member overrides obsolete member
 
+        /// <summary>
+        /// Sets the activity to registration mode, hiding the username field and updating UI elements accordingly.
+        /// </summary>
         public void SetRegisterMode()
         {
             tvNewUser.Visibility = Android.Views.ViewStates.Invisible;
@@ -166,6 +210,9 @@ namespace Discussit
             btnEnter.Text = Resources.GetString(Resource.String.Register);
         }
 
+        /// <summary>
+        /// Sets the activity to login mode, showing the username field and updating UI elements accordingly.
+        /// </summary>
         public void SetLoginMode()
         {
             tvNewUser.Visibility = ViewStates.Visible;
@@ -175,6 +222,9 @@ namespace Discussit
             btnEnter.Text = Resources.GetString(Resource.String.Login);
         }
 
+        /// <summary>
+        /// Animates the app name and slogan text views.
+        /// </summary>
         private void Anim()
         {
             TextView tvAppName = FindViewById<TextView>(Resource.Id.tvAppName);
@@ -208,6 +258,9 @@ namespace Discussit
             }
         }
 
+        /// <summary>
+        /// Called when the activity is resumed. Starts the animation if the user is not registered.
+        /// </summary>
         protected override void OnResume()
         {
             base.OnResume();
@@ -219,6 +272,9 @@ namespace Discussit
             }
         }
 
+        /// <summary>
+        /// Called when the activity is paused. Clears the app name and slogan text views.
+        /// </summary>
         protected override void OnPause()
         {
             base.OnPause();

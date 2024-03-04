@@ -8,10 +8,17 @@ using Firebase.Firestore;
 
 namespace Discussit
 {
+    /// <summary>
+    /// Adapter for displaying a list of communities in a ListView.
+    /// </summary>
     internal class CommunityAdapter : BaseAdapter<Community>
     {
         private readonly Context context;
         private readonly List<Community> lstCommunities;
+
+        /// <summary>
+        /// Adapter for displaying a list of communities in a ListView.
+        /// </summary>
         public CommunityAdapter(Context context)
         {
             this.context = context;
@@ -21,11 +28,23 @@ namespace Discussit
 
         public override int Count => lstCommunities.Count;
 
+        /// <summary>
+        /// Gets the item ID at the specified position.
+        /// </summary>
+        /// <param name="position">The position of the item in the list.</param>
+        /// <returns>The item ID at the specified position.</returns>
         public override long GetItemId(int position)
         {
             return position;
         }
 
+        /// <summary>
+        /// Gets the view for displaying the community at the specified position.
+        /// </summary>
+        /// <param name="position">The position of the community in the list.</param>
+        /// <param name="convertView">Not in use</param>
+        /// <param name="parent">The parent ViewGroup that this view will eventually be attached to.</param>
+        /// <returns>The view for displaying the community at the specified position.</returns>
         public override View GetView(int position, View convertView, ViewGroup parent)
         {
             LayoutInflater li = LayoutInflater.From(context);
@@ -40,6 +59,10 @@ namespace Discussit
             return v;
         }
 
+        /// <summary>
+        /// Sets the list of communities to be displayed in the adapter.
+        /// </summary>
+        /// <param name="documents">The list of documents representing communities.</param>
         public void SetCommunities(IList<DocumentSnapshot> documents)
         {
             Community community;
@@ -59,11 +82,19 @@ namespace Discussit
             }
         }
 
+        /// <summary>
+        /// Adds a community to the adapter.
+        /// </summary>
+        /// <param name="community">The community to add.</param>
         public void AddCommunity(Community community)
         {
             lstCommunities.Add(community);
             NotifyDataSetChanged();
         }
+
+        /// <summary>
+        /// Clears all communities from the adapter.
+        /// </summary>
         public void Clear()
         {
             lstCommunities.Clear();

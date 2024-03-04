@@ -6,6 +6,9 @@ using System;
 
 namespace Discussit
 {
+    /// <summary>
+    /// Represents a comment Object.
+    /// </summary>
     internal class Comment
     {
         private readonly FbData fbd;
@@ -18,6 +21,12 @@ namespace Discussit
         public Comments Comments { get; set; }
         public DateTime CreationDate { get; set; }
 
+        /// <summary>
+        /// Constructor to create a new comment.
+        /// </summary>
+        /// <param name="description">The content of the comment.</param>
+        /// <param name="creator">The user who created the comment.</param>
+        /// <param name="parentPath">The path of the parent to which the comment belongs.</param>
         public Comment(string description, User creator, string parentPath)
         {
             fbd = new FbData();
@@ -28,16 +37,23 @@ namespace Discussit
             CreationDate = DateTime.Now;
         }
 
+        /// <summary>
+        /// Default constructor.
+        /// </summary>
         public Comment()
         {
             fbd = new FbData();
         }
 
+        /// <summary>
+        /// Property to get the comment data as a HashMap.
+        /// </summary>
         [JsonIgnore]
-        public HashMap HashMap 
-        { 
-            get 
+        public HashMap HashMap
+        {
+            get
             {
+                // Create a HashMap and store comment data.
                 HashMap hm = new HashMap();
                 hm.Put(General.FIELD_COMMENT_CREATOR_NAME, CreatorName);
                 hm.Put(General.FIELD_COMMENT_CREATOR_UID, CreatorUID);
@@ -47,6 +63,9 @@ namespace Discussit
             }
         }
 
+        /// <summary>
+        /// Property to get the path of the comment in Firestore.
+        /// </summary>
         [JsonIgnore]
         public string Path
         {
@@ -56,11 +75,20 @@ namespace Discussit
             }
         }
 
+        /// <summary>
+        /// Method to create sub-comments for this comment.
+        /// </summary>
+        /// <param name="context">The activity context.</param>
         public void CreateComments(Activity context)
         {
             Comments = new Comments(context, Path);
         }
 
+        /// <summary>
+        /// Method to add a new sub-comment to this comment.
+        /// </summary>
+        /// <param name="description">The content of the sub-comment.</param>
+        /// <param name="creator">The user who created the sub-comment.</param>
         public void AddComment(string description, User creator)
         {
             Comment comment = new Comment(description, creator, Path);
@@ -68,6 +96,11 @@ namespace Discussit
             comment.Id = commentId;
         }
 
+        /// <summary>
+        /// Method to remove a sub-comment.
+        /// </summary>
+        /// <param name="commentID">The ID of the sub-comment to be removed.</param>
+        /// <param name="member">The member removing the sub-comment.</param>
         public void RemoveComment(string commentID, Member member)
         {
             Comment comment = Comments.GetCommentById(commentID);
@@ -81,11 +114,18 @@ namespace Discussit
             }
         }
 
+        /// <summary>
+        /// Method to retrieve all sub-comments.
+        /// </summary>
+        /// <returns>A task representing the asynchronous operation.</returns>
         public Task GetComments()
         {
             return Comments.GetComments();
         }
 
+        /// <summary>
+        /// Method to delete the comment.
+        /// </summary>
         public void DeleteComment()
         {
             if (ParentPath != null)
@@ -94,14 +134,23 @@ namespace Discussit
             }
         }
 
+        /// <summary>
+        /// Method to serialize the comment object to Json string.
+        /// </summary>
+        /// <returns>A Json representation of the comment.</returns>
         public string GetJson()
         {
             return JsonConvert.SerializeObject(this);
         }
 
-        public static Comment GetCommentJson(string json)
+        /// <summary>
+        /// Method to deserialize a Json string to a Comment object.
+        /// </summary>
+        /// <param name="Json">The Json string to deserialize.</param>
+        /// <returns>A Comment object deserialized from the Json string.</returns>
+        public static Comment GetCommentJson(string Json)
         {
-            return JsonConvert.DeserializeObject<Comment>(json);
+            return JsonConvert.DeserializeObject<Comment>(Json);
         }
     }
 }

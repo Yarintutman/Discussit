@@ -12,6 +12,9 @@ using System.Text;
 
 namespace Discussit
 {
+    /// <summary>
+    /// Activity for creating a new post within a community.
+    /// </summary>
     [Activity(Label = "CreatePostActivity")]
     public class CreatePostActivity : AppCompatActivity, View.IOnClickListener
     {
@@ -20,6 +23,11 @@ namespace Discussit
         ImageButton ibtnBack, ibtnLogo;
         EditText etPostTitle, etPostDescription;
         Button btnCreatePost;
+
+        /// <summary>
+        /// Called when the activity is starting.
+        /// </summary>
+        /// <param name="savedInstanceState">Not in use.</param>
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -29,12 +37,18 @@ namespace Discussit
             InitViews();
         }
 
+        /// <summary>
+        /// Initializes the objects used in the activity.
+        /// </summary>
         private void InitObjects()
         {
             user = User.GetUserJson(Intent.GetStringExtra(General.KEY_USER));
             community = Community.GetCommunityJson(Intent.GetStringExtra(General.KEY_COMMUNITY));
         }
 
+        /// <summary>
+        /// Initializes the views used in the activity.
+        /// </summary>
         private void InitViews()
         {
             TextView tvCommunityName = FindViewById<TextView>(Resource.Id.tvCommunityName);
@@ -51,6 +65,9 @@ namespace Discussit
             btnCreatePost.SetOnClickListener(this);
         }
 
+        /// <summary>
+        /// Returns to the previous activity.
+        /// </summary>
         public void Back()
         {
             Intent intent = new Intent();
@@ -59,6 +76,9 @@ namespace Discussit
             Finish();
         }
 
+        /// <summary>
+        /// Returns to the community hub.
+        /// </summary>
         public void ReturnToHub()
         {
             Intent intent = new Intent(this, typeof(CommunityHubActivity));
@@ -68,6 +88,9 @@ namespace Discussit
             Finish();
         }
 
+        /// <summary>
+        /// Disables the default back button behavior and invokes the custom back method.
+        /// </summary>
 #pragma warning disable CS0672 // Member overrides obsolete member
         public override void OnBackPressed()
         {
@@ -75,6 +98,10 @@ namespace Discussit
         }
 #pragma warning restore CS0672 // Member overrides obsolete member
 
+        /// <summary>
+        /// Checks if the input fields contain valid data.
+        /// </summary>
+        /// <returns>true if the input fields are valid; otherwise, false.</returns>
         private bool ValidInputFields()
         {
             bool status = true;
@@ -83,12 +110,19 @@ namespace Discussit
             return status;
         }
 
+        /// <summary>
+        /// Creates a new post with the provided information within the current community.
+        /// </summary>
         private void CreatePost()
         {
             Post post = community.AddPost(etPostTitle.Text, etPostDescription.Text, user);
             ViewPost(post);
         }
 
+        /// <summary>
+        /// Starts the activity to view the created post.
+        /// </summary>
+        /// <param name="post">The post to view.</param>
         private void ViewPost(Post post)
         {
             Intent intent = new Intent(this, typeof(ViewPostActivity));
@@ -98,6 +132,10 @@ namespace Discussit
             Finish();
         }
 
+        /// <summary>
+        /// Handles click events for views in the activity.
+        /// </summary>
+        /// <param name="v">The view that was clicked.</param>
         public void OnClick(View v)
         {
             if (v == ibtnLogo)

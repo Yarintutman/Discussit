@@ -6,12 +6,19 @@ using static Java.Util.Jar.Attributes;
 
 namespace Discussit
 {
+    /// <summary>
+    /// Represents a collection of communities.
+    /// </summary>
     internal class Communities
     {
-        private readonly FbData fbd;
-        public CommunityAdapter CommunityAdapter { get; }
+        private readonly FbData fbd; 
+        public CommunityAdapter CommunityAdapter { get; } 
         private IListenerRegistration onCollectionChangeListener;
 
+        /// <summary>
+        /// Gets the community at the specified position in the collection.
+        /// </summary>
+        /// <param name="position">The position of the community in the collection.</param>
         public Community this[int position]
         {
             get
@@ -20,25 +27,40 @@ namespace Discussit
             }
         }
 
+        /// <summary>
+        /// Initializes a new instance of the Communities class with the specified context.
+        /// </summary>
+        /// <param name="context">The activity context.</param>
         public Communities(Activity context)
         {
-            CommunityAdapter = new CommunityAdapter(context);
-            fbd = new FbData();
+            CommunityAdapter = new CommunityAdapter(context); 
+            fbd = new FbData(); 
         }
 
+        /// <summary>
+        /// Adds a snapshot listener to listen for changes in the communities collection.
+        /// </summary>
+        /// <param name="context">The activity context.</param>
         public void AddSnapshotListener(Activity context)
         {
             onCollectionChangeListener = fbd.AddSnapshotListener(context, General.COMMUNITIES_COLLECTION);
         }
 
+        /// <summary>
+        /// Removes the snapshot listener.
+        /// </summary>
         public void RemoveSnapshotListener()
         {
             onCollectionChangeListener?.Remove();
         }
 
+        /// <summary>
+        /// Adds communities from the provided list of Firestore documents to the community adapter.
+        /// </summary>
+        /// <param name="documents">The list of Firestore documents representing communities.</param>
         internal void AddCommunities(IList<DocumentSnapshot> documents)
         {
-            CommunityAdapter.Clear();
+            CommunityAdapter.Clear(); 
             Community community;
             foreach (DocumentSnapshot document in documents)
             {
@@ -51,10 +73,14 @@ namespace Discussit
                     MemberCount = document.GetLong(General.FIELD_MEMBER_COUNT).LongValue(),
                     PostCount = document.GetLong(General.FIELD_POST_COUNT).LongValue()
                 };
-                CommunityAdapter.AddCommunity(community);
+                CommunityAdapter.AddCommunity(community); 
             }
         }
 
+        /// <summary>
+        /// Retrieves all communities from the Firestore collection.
+        /// </summary>
+        /// <returns>A task representing the asynchronous operation.</returns>
         internal Task GetCommunities()
         {
             return fbd.GetCollection(General.COMMUNITIES_COLLECTION);

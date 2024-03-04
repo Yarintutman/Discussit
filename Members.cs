@@ -9,6 +9,9 @@ using Context = Android.Content.Context;
 
 namespace Discussit
 {
+    /// <summary>
+    /// Represents a collection of members within a community.
+    /// </summary>
     internal class Members
     {
         private readonly FbData fbd;
@@ -17,6 +20,11 @@ namespace Discussit
         private IListenerRegistration onCollectionChangeListener;
         public long MemberCount => MemberAdapter.Count;
 
+        /// <summary>
+        /// Gets the member at the specified position in the collection.
+        /// </summary>
+        /// <param name="position">The position of the member to retrieve.</param>
+        /// <returns>The member at the specified position.</returns>
         public Member this[int position]
         {
             get
@@ -25,6 +33,11 @@ namespace Discussit
             }
         }
 
+        /// <summary>
+        /// Initializes a new instance of the Members class with the specified context and path.
+        /// </summary>
+        /// <param name="context">The context in which the members will be used.</param>
+        /// <param name="path">The path to the collection of members.</param>
         public Members(Context context, string path)
         {
             MemberAdapter = new MemberAdapter(context);
@@ -32,16 +45,27 @@ namespace Discussit
             Path = path;
         }
 
+        /// <summary>
+        /// Adds a snapshot listener to the collection of members.
+        /// </summary>
+        /// <param name="context">The activity context.</param>
         public void AddSnapshotListener(Activity context)
         {
             onCollectionChangeListener = fbd.AddSnapshotListener(context, Path + "/" + General.MEMBERS_COLLECTION);
         }
 
+        /// <summary>
+        /// Removes the snapshot listener from the collection of members.
+        /// </summary>
         public void RemoveSnapshotListener()
         {
             onCollectionChangeListener?.Remove();
         }
 
+        /// <summary>
+        /// Adds members from the provided list of document snapshots to the collection.
+        /// </summary>
+        /// <param name="documents">The list of document snapshots representing members.</param>
         internal void AddMembers(IList<DocumentSnapshot> documents)
         {
             MemberAdapter.Clear();
@@ -64,21 +88,38 @@ namespace Discussit
             }
         }
 
+        /// <summary>
+        /// Removes the specified member from the collection.
+        /// </summary>
+        /// <param name="member">The member to be removed.</param>
         public void RemoveMember(Member member)
         {
             MemberAdapter.RemoveMember(member);
         }
 
+        /// <summary>
+        /// Gets members of a specific type from the collection.
+        /// </summary>
+        /// <param name="type">The type of members to retrieve.</param>
+        /// <returns>A task representing the asynchronous operation.</returns>
         public Task GetTypeMembers(string type)
         {
             return fbd.GetEqualToDocs(Path + "/" + General.MEMBERS_COLLECTION, General.FIELD_MEMBER_TYPE, type);
         }
 
+        /// <summary>
+        /// Gets all members from the collection.
+        /// </summary>
+        /// <returns>A task representing the asynchronous operation.</returns>
         internal Task GetMembers()
         {
             return fbd.GetCollection(Path + "/" + General.MEMBERS_COLLECTION);
         }
 
+        /// <summary>
+        /// Promotes the specified member to an admin role.
+        /// </summary>
+        /// <param name="member">The member to be promoted.</param>
         public void Promote(Member member)
         {
             MemberAdapter.RemoveMember(member);
@@ -95,6 +136,10 @@ namespace Discussit
             fbd.UnionArray(General.USERS_COLLECTION, admin.UserID, General.FIELD_USER_MANAGING_COMMUNITIES, Path);
         }
 
+        /// <summary>
+        /// Demotes the specified admin to a regular member.
+        /// </summary>
+        /// <param name="admin">The admin to be demoted.</param>
         public void Demote(Admin admin)
         {
             MemberAdapter.RemoveMember(admin);
@@ -111,6 +156,10 @@ namespace Discussit
             fbd.RemoveFromArray(General.USERS_COLLECTION, admin.UserID, General.FIELD_USER_MANAGING_COMMUNITIES, Path);
         }
 
+        /// <summary>
+        /// Sets the specified member as the leader of the community.
+        /// </summary>
+        /// <param name="member">The member to be set as the leader.</param>
         public void SetLeader(Member member)
         {
             if (member.GetType() == typeof(Admin))
@@ -130,6 +179,11 @@ namespace Discussit
             fbd.UnionArray(General.USERS_COLLECTION, newLeader.UserID, General.FIELD_USER_MANAGING_COMMUNITIES, Path);
         }
 
+        /// <summary>
+        /// Transfers the leadership from the current leader to the specified new leader.
+        /// </summary>
+        /// <param name="currentLeader">The current leader.</param>
+        /// <param name="newLeader">The new leader.</param>
         public void TransferLeader(Leader currentLeader, Member newLeader)
         {
             MemberAdapter.RemoveMember(currentLeader);
@@ -146,11 +200,22 @@ namespace Discussit
                 Application.Context.Resources.GetString(Resource.String.admin));
         }
 
+        /// <summary>
+        /// Gets the member with the specified UID.
+        /// </summary>
+        /// <param name="UID">The UID of the member to retrieve.</param>
+        /// <returns>The member with the specified UID, if found; otherwise, null.</returns>
         public Member GetMemberByUID(string UID)
         {
             return MemberAdapter.GetMemberByUID(UID);
         }
 
+
+        /// <summary>
+        /// Checks if the member with the specified UID exists in the collection.
+        /// </summary>
+        /// <param name="UID">The UID of the member to check.</param>
+        /// <returns>True if the member exists in the collection; otherwise, false.</returns>
         public bool HasMember(string UID)
         {
             return MemberAdapter.HasMember(UID);

@@ -8,6 +8,9 @@ using System;
 
 namespace Discussit
 {
+    /// <summary>
+    /// Represents a post within a community.
+    /// </summary>
     internal class Post
     {
         private readonly FbData fbd;
@@ -22,6 +25,13 @@ namespace Discussit
         public long CommentCount { get; set; }
         public DateTime CreationDate { get; set; }
 
+        /// <summary>
+        /// Constructor to create a new post.
+        /// </summary>
+        /// <param name="title">Title of the post.</param>
+        /// <param name="desctiption">Content of the post.</param>
+        /// <param name="creator">User who created the post.</param>
+        /// <param name="communityPath">Path of the community to which the post belongs.</param>
         public Post(string title, string desctiption, User creator, string communityPath)
         {
             fbd = new FbData();
@@ -34,11 +44,17 @@ namespace Discussit
             CommentCount = 0;
         }
 
+        /// <summary>
+        /// Default constructor.
+        /// </summary>
         public Post()
         {
             fbd = new FbData();
         }
 
+        /// <summary>
+        /// HashMap representation of the post for Firestore database.
+        /// </summary>
         [JsonIgnore]
         public HashMap HashMap
         {
@@ -55,6 +71,9 @@ namespace Discussit
             }
         }
 
+        /// <summary>
+        /// Path of the post in the Firestore database.
+        /// </summary>
         [JsonIgnore]
         public string Path
         {
@@ -64,22 +83,40 @@ namespace Discussit
             }
         }
 
+        /// <summary>
+        /// Creates comments associated with the post.
+        /// </summary>
+        /// <param name="context">Activity context.</param>
         public void CreateComments(Activity context)
         {
             Comments = new Comments(context, Path);
         }
 
+        /// <summary>
+        /// Increments the comment count of the post by the specified value.
+        /// </summary>
+        /// <param name="value">Value by which to increment the comment count.</param>
         public void IncrementComments(int value)
         {
             CommentCount += value;
             fbd.IncrementField(CommunityPath + "/" + General.POSTS_COLLECTION, Id, General.FIELD_COMMENT_COUNT, value);
         }
 
+        /// <summary>
+        /// Retrieves the count of documents in a specific collection associated with the post.
+        /// </summary>
+        /// <param name="cName">Name of the collection to retrieve the count for.</param>
+        /// <returns>A task representing the asynchronous operation, returning the count of documents in the collection.</returns>
         public Task GetCollectionCount(string cName)
         {
             return fbd.GetCollectionCount(Path + "/" + cName);
         }
 
+        /// <summary>
+        /// Adds a new comment to the post.
+        /// </summary>
+        /// <param name="description">Description/content of the comment.</param>
+        /// <param name="creator">User who created the comment.</param>
         public void AddComment(string description, User creator)
         {
             Comment comment = new Comment(description, creator, Path);
@@ -87,14 +124,22 @@ namespace Discussit
             comment.Id = commentId;
             creator.UpdateArrayField(General.FIELD_USER_COMMENTS, comment.Path);
             IncrementComments(1);
-
         }
 
+        /// <summary>
+        /// Retrieves comments associated with the post.
+        /// </summary>
+        /// <returns>A task representing the asynchronous operation, returning the comments associated with the post.</returns>
         public Task GetComments()
         {
             return Comments.GetComments();
         }
 
+        /// <summary>
+        /// Removes a comment from the post.
+        /// </summary>
+        /// <param name="commentID">ID of the comment to be removed.</param>
+        /// <param name="member">Member attempting to remove the comment.</param>
         public void RemoveComment(string commentID, Member member)
         {
             Comment comment = Comments.GetCommentById(commentID);
@@ -109,6 +154,9 @@ namespace Discussit
             }
         }
 
+        /// <summary>
+        /// Deletes the post from the community.
+        /// </summary>
         public void DeletePost()
         {
             if (CommunityPath != null)
@@ -117,11 +165,20 @@ namespace Discussit
             }
         }
 
+        /// <summary>
+        /// Converts the post object to its Json representation.
+        /// </summary>
+        /// <returns>Json representation of the post.</returns>
         public string GetJson()
         {
             return JsonConvert.SerializeObject(this);
         }
 
+        /// <summary>
+        /// Deserializes Json string to create a post object.
+        /// </summary>
+        /// <param name="json">Json representation of the post.</param>
+        /// <returns>Post object created from the Json string.</returns>
         public static Post GetPostJson(string json)
         {
             return JsonConvert.DeserializeObject<Post>(json);
