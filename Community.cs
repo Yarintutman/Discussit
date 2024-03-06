@@ -140,6 +140,19 @@ namespace Discussit
         }
 
         /// <summary>
+        /// Updates a post in the community
+        /// </summary>
+        /// <param name="post">The post to edit.</param>
+        /// <returns>The added post.</returns>
+        public void UpdatePost(Post post)
+        {
+            Dictionary<string, Java.Lang.Object> fields = new Dictionary<string, Java.Lang.Object>();
+            fields.Add(General.FIELD_POST_TITLE, post.Title);
+            fields.Add(General.FIELD_POST_DESCRIPTION, post.Description);
+            fbd.UpdateDocument(post.CommunityPath + "/" + General.POSTS_COLLECTION, post.Id, fields);
+        }
+
+        /// <summary>
         /// Adds a member to the community.
         /// </summary>
         /// <param name="user">The user to add as a member.</param>
@@ -197,6 +210,7 @@ namespace Discussit
                     post.DeletePost();
                     Posts.RemovePost(post);
                     fbd.IncrementField(General.COMMUNITIES_COLLECTION, Id, General.FIELD_POST_COUNT, -1);
+                    fbd.RemoveFromArray(General.USERS_COLLECTION, post.CreatorUID, General.FIELD_USER_POSTS, post.Id);
                     PostCount--;
                 } 
             }

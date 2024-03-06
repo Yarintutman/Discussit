@@ -84,5 +84,7 @@
   <string name="Posts">Posts</string>
   <string name="Comments">Comments</string>
   <string name="joinCommunityToToCreatePost">In order to create a post you must join the community</string>
+  <string name="PostEdit">Only the creator of the post can edit it</string>
+  <string name="CommentEdit">Only the creator of the comment can edit it</string>
   <string name="memberDemote">Member is already the lowest rank</string>
 </resources>

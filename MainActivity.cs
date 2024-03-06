@@ -231,31 +231,18 @@ namespace Discussit
             TextView tvAppName = FindViewById<TextView>(Resource.Id.tvAppName);
             TextView tvSlogan = FindViewById<TextView>(Resource.Id.tvSlogan);
             string text = Resources.GetString(Resource.String.app_name);
-            try
+            Thread.Sleep(300);
+            for (int i = 0; i <= text.Length; i++)
             {
-                Thread.Sleep(300);
-                for (int i = 0; i <= text.Length; i++)
-                {
-                    RunOnUiThread(() => { tvAppName.Text = text[..i]; });
-                    Thread.Sleep(90);
-                }
+                RunOnUiThread(() => { tvAppName.Text = text[..i]; });
                 Thread.Sleep(500);
-                text = Resources.GetString(Resource.String.Slogan);
-                for (int i = 0; i <= text.Length; i++)
-                {
-                    RunOnUiThread(() => { tvSlogan.Text = text[..i]; });
-                    Thread.Sleep(90);
-                }
             }
-            catch
+            Thread.Sleep(500);
+            text = Resources.GetString(Resource.String.Slogan);
+            for (int i = 0; i <= text.Length; i++)
             {
-                RunOnUiThread(() =>
-                {
-                    TextView appName = FindViewById<TextView>(Resource.Id.tvAppName);
-                    TextView Slogan = FindViewById<TextView>(Resource.Id.tvSlogan);
-                    appName.Text = Resources.GetString(Resource.String.app_name);
-                    Slogan.Text = Resources.GetString(Resource.String.Slogan);
-                });
+                RunOnUiThread(() => { tvSlogan.Text = text[..i]; });
+                Thread.Sleep(500);
             }
         }
 

@@ -2,6 +2,7 @@
 using Android.Runtime;
 using Firebase.Auth;
 using Firebase.Firestore;
+using Firebase.Firestore.Auth;
 using Java.Util;
 using Newtonsoft.Json;
 using System.Linq;
@@ -181,6 +182,31 @@ namespace Discussit
             ManagingCommunities = General.JavaListToType<string>((JavaList)document.Get(General.FIELD_USER_MANAGING_COMMUNITIES));
             Posts = General.JavaListToType<string>((JavaList)document.Get(General.FIELD_USER_POSTS));
             Comments = General.JavaListToType<string>((JavaList)document.Get(General.FIELD_USER_COMMENTS));
+        }
+
+        public Task GetDocumentInList(string listType)
+        {
+            Task tskGetList = null;
+            switch (listType)
+            {
+                case General.FIELD_USER_COMMUNITIES:
+                    tskGetList = fbd.GetDocumentsInList(General.COMMUNITIES_COLLECTION,
+                                           General.JavaListToIListWithCut(Communities, "/"));
+                    break;
+                case General.FIELD_USER_MANAGING_COMMUNITIES:
+                    tskGetList = fbd.GetDocumentsInList(General.COMMUNITIES_COLLECTION,
+                                           General.JavaListToIListWithCut(ManagingCommunities, "/"));
+                    break;
+                case General.FIELD_USER_POSTS:
+                    tskGetList = fbd.GetDocumentsInList(General.COMMUNITIES_COLLECTION,
+                                           General.JavaListToIListWithCut(Posts, "/"));
+                    break;
+                case General.FIELD_USER_COMMENTS:
+                    tskGetList = fbd.GetDocumentsInList(General.COMMUNITIES_COLLECTION,
+                                           General.JavaListToIListWithCut(Comments, "/"));
+                    break;
+            }
+            return tskGetList;
         }
 
         /// <summary>

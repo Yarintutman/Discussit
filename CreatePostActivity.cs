@@ -20,6 +20,7 @@ namespace Discussit
     {
         User user;
         Community community;
+        Post post;
         ImageButton ibtnBack, ibtnLogo;
         EditText etPostTitle, etPostDescription;
         Button btnCreatePost;
@@ -44,6 +45,7 @@ namespace Discussit
         {
             user = User.GetUserJson(Intent.GetStringExtra(General.KEY_USER));
             community = Community.GetCommunityJson(Intent.GetStringExtra(General.KEY_COMMUNITY));
+            post = Post.GetPostJson(Intent.GetStringExtra(General.KEY_POST));
         }
 
         /// <summary>
@@ -63,6 +65,11 @@ namespace Discussit
             ibtnBack.SetOnClickListener(this);
             ibtnLogo.SetOnClickListener(this);
             btnCreatePost.SetOnClickListener(this);
+            if (post != null)
+            {
+                tvCommunityName.Text = post.CreatorName;
+                tvCommunityDescription.Text= post.Description;
+            }
         }
 
         /// <summary>
@@ -115,7 +122,10 @@ namespace Discussit
         /// </summary>
         private void CreatePost()
         {
-            Post post = community.AddPost(etPostTitle.Text, etPostDescription.Text, user);
+            if (post != null)
+                post = community.AddPost(etPostTitle.Text, etPostDescription.Text, user);
+            else
+                community.UpdatePost(post);
             ViewPost(post);
         }
 

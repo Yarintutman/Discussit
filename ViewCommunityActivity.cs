@@ -306,10 +306,29 @@ namespace Discussit
         public override bool OnContextItemSelected(Android.Views.IMenuItem item)
         {
             if (item.ItemId == Resource.Id.itemDelete)
-                
+            {
+
+            }
             else if (item.ItemId == Resource.Id.itemEdit)
-                
+            {
+                if (currentPost.CreatorUID == user.Id)
+                    OpenPostForEdit(currentPost);
+                else
+                    Toast.MakeText(this, Resources.GetString(Resource.String.PostEdit), ToastLength.Short).Show();
+            }
             return base.OnContextItemSelected(item);
+        }
+
+        /// <summary>
+        /// Opens CreatePost activity to edit the selected post
+        /// </summary>
+        /// <param name="post">The post to edit</param>
+        private void OpenPostForEdit(Post post)
+        {
+            Intent intent = new Intent(this, typeof(CreatePostActivity));
+            intent.PutExtra(General.KEY_USER, Intent.GetStringExtra(General.KEY_USER));
+            intent.PutExtra(General.KEY_POST, post.GetJson());
+            StartActivityForResult(intent, 0);
         }
 
         /// <summary>

@@ -141,10 +141,11 @@ namespace Discussit
             currentDialog = Resources.GetString(Resource.String.Communities);
             tvSortBy = dialogViewCommunities.FindViewById<TextView>(Resource.Id.tvSortBy);
             SetSorting(Resources.GetString(Resource.String.sortDate));
-            FbData fbd = new FbData();
             if (user.Communities.Size() != 0)
-                tskGetCommunities = fbd.GetDocumentsInList(General.COMMUNITIES_COLLECTION,
-                                           General.JavaListToIListWithCut(user.Communities, "/")).AddOnCompleteListener(this);
+            {
+                tskGetCommunities = user.GetDocumentInList(General.FIELD_USER_COMMUNITIES);
+                tskGetCommunities?.AddOnCompleteListener(this);
+            }
         }
 
         /// <summary>
@@ -161,10 +162,11 @@ namespace Discussit
             currentDialog = Resources.GetString(Resource.String.ManagedCommunities);
             tvSortBy = dialogViewManagedCommunities.FindViewById<TextView>(Resource.Id.tvSortBy);
             SetSorting(Resources.GetString(Resource.String.sortDate));
-            FbData fbd = new FbData();
             if (user.ManagingCommunities.Size() != 0)
-                tskGetManagedCommunities = fbd.GetDocumentsInList(General.COMMUNITIES_COLLECTION,
-                                           General.JavaListToIListWithCut(user.ManagingCommunities, "/")).AddOnCompleteListener(this);
+            {
+                tskGetManagedCommunities = user.GetDocumentInList(General.FIELD_USER_MANAGING_COMMUNITIES);
+                tskGetManagedCommunities?.AddOnCompleteListener(this);
+            }
         }
 
         /// <summary>
@@ -181,10 +183,11 @@ namespace Discussit
             currentDialog = Resources.GetString(Resource.String.Posts);
             tvSortBy = dialogViewPosts.FindViewById<TextView>(Resource.Id.tvSortBy);
             SetSorting(Resources.GetString(Resource.String.sortDate));
-            FbData fbd = new FbData();
             if (user.Posts.Size() != 0)
-                tskGetPosts = fbd.GetDocumentsInList(General.POSTS_COLLECTION,
-                                           General.JavaListToIListWithCut(user.Posts, '/' + General.POSTS_COLLECTION)).AddOnCompleteListener(this);
+            {
+                tskGetPosts = user.GetDocumentInList(General.FIELD_USER_POSTS);
+                tskGetPosts?.AddOnCompleteListener(this);
+            }
         }
 
         /// <summary>
