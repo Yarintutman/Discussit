@@ -21,7 +21,6 @@ namespace Discussit
         public const string KEY_POST = "post";
         public const string KEY_COMMENT = "comment";
         public const string KEY_IS_COMMENT_RECURSIVE = "Is recursive";
-        public const string KEY_GUEST = "Is guest";
         public const string FIELD_USERNAME = "Username";
         public const string FIELD_USER_COMMUNITIES = "Communities";
         public const string FIELD_USER_MANAGING_COMMUNITIES = "Managing Communities";

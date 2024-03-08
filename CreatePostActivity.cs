@@ -137,6 +137,7 @@ namespace Discussit
         {
             Intent intent = new Intent(this, typeof(ViewPostActivity));
             intent.PutExtra(General.KEY_USER, user.GetJson());
+            intent.PutExtra(General.KEY_COMMUNITY, community.GetJson());
             intent.PutExtra(General.KEY_POST, post.GetJson());
             StartActivity(intent);
             Finish();

@@ -120,7 +120,7 @@ namespace Discussit
             else
             {
                 comment.AddComment(etCommentDescription.Text, user);
-                post.IncrementComments(+1);
+                post.IncrementComments(1);
             }
             Finish();
         }

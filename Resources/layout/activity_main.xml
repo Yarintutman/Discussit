@@ -135,7 +135,7 @@
             android:layout_marginBottom="@dimen/Main_marginBottom"/>
         <Button
             android:id="@+id/btnEnter"
-            android:layout_width="@dimen/Main_buttonWidth"
+            android:layout_width="wrap_content"
             android:layout_height="@dimen/Main_buttonHeight"
             android:textSize="@dimen/Main_buttonTextSize"
             android:text="@string/Login"

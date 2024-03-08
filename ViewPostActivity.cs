@@ -17,12 +17,16 @@ namespace Discussit
     public class ViewPostActivity : AppCompatActivity, View.IOnClickListener, AdapterView.IOnItemClickListener, AdapterView.IOnItemLongClickListener, IEventListener, IOnCompleteListener
     {
         User user;
+        Community community;
         Post post;
+        Comment currentComment;
         Comments comments;
+        Members members;
         ImageButton ibtnBack, ibtnLogo, ibtnProfile;
         TextView tvSortBy;
         Button btnNewComment;
-        Task tskGetComments;
+        Task tskGetComments, tskGetMemebers;
+        bool isInCommunity;
 
         /// <summary>
         /// Called when the activity is starting.
@@ -44,8 +48,11 @@ namespace Discussit
         {
             user = User.GetUserJson(Intent.GetStringExtra(General.KEY_USER));
             post = Post.GetPostJson(Intent.GetStringExtra(General.KEY_POST));
+            community = Community.GetCommunityJson(Intent.GetStringExtra(General.KEY_COMMUNITY));
             post.CreateComments(this);
+            community.CreateMembers(this);
             comments = post.Comments;
+            members = community.Members;
         }
 
         /// <summary>
@@ -77,6 +84,10 @@ namespace Discussit
             SetSorting(Resources.GetString(Resource.String.sortDate));
         }
 
+        private void CheckMembership()
+        {
+            isInCommunity = members.HasMember(user.Id);
+        }
 
         /// <summary>
         /// Sets the sorting text view with the specified sorting criteria.
@@ -174,6 +185,42 @@ namespace Discussit
         }
 
         /// <summary>
+        /// Called when creating a context menu for list view items.
+        /// </summary>
+        /// <param name="menu">The context menu that is being built.</param>
+        /// <param name="v">The view for which the context menu is being created.</param>
+        /// <param name="menuInfo">Extra information about the item for which the context menu should be shown.</param>
+        public override void OnCreateContextMenu(Android.Views.IContextMenu menu, Android.Views.View v, Android.Views.IContextMenuContextMenuInfo menuInfo)
+        {
+            AdapterView.AdapterContextMenuInfo info = menuInfo as AdapterView.AdapterContextMenuInfo;
+            if (info != null)
+            {
+                int position = info.Position;
+                currentComment = comments[position];
+                Member userAsMember = members.GetMemberByUID(user.Id);
+                if (userAsMember != null && members.HasMember(user.Id))
+                {
+                    MenuInflater.Inflate(Resource.Menu.menu_createComment, menu);
+                    base.OnCreateContextMenu(menu, v, menuInfo);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Called when a context menu item is selected.
+        /// </summary>
+        /// <param name="item">The selected menu item.</param>
+        /// <returns>True if the item selection was handled, otherwise false.</returns>
+        public override bool OnContextItemSelected(Android.Views.IMenuItem item)
+        {
+            if (item.ItemId == Resource.Id.itemCreateComment)
+            {
+                OpenCreateCommentActivity(currentComment);
+            }
+            return base.OnContextItemSelected(item);
+        }
+
+        /// <summary>
         /// Handles click events.
         /// </summary>
         /// <param name="v">The view that was clicked.</param>
@@ -186,7 +233,10 @@ namespace Discussit
             else if (v == ibtnProfile)
                 ViewProfile();
             else if (v == btnNewComment)
-                OpenCreateCommentActivity();
+                if (isInCommunity)
+                    OpenCreateCommentActivity();
+                else
+                    Toast.MakeText(this, Resources.GetString(Resource.String.joinCommunityToToCreateComment), ToastLength.Short).Show();
         }
 
         /// <summary>
@@ -201,6 +251,12 @@ namespace Discussit
                 {
                     QuerySnapshot qs = (QuerySnapshot)task.Result;
                     comments.AddComments(qs.Documents);
+                }
+                else if (task == tskGetMemebers)
+                {
+                    QuerySnapshot qs = (QuerySnapshot)task.Result;
+                    members.AddMembers(qs.Documents);
+                    CheckMembership();
                 }
             }
         }

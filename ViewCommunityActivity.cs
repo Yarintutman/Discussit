@@ -96,13 +96,13 @@ namespace Discussit
         /// <summary>
         /// Checks the membership status of the user in the community and updates the UI accordingly.
         /// </summary>
-        private void CheckMembership()
-        {
-            if (members.HasMember(user.Id))
-                btnJoinCommunity.Visibility = ViewStates.Gone;
-            else
-                btnJoinCommunity.Visibility = ViewStates.Visible;
-        }
+            private void CheckMembership()
+            {
+                if (members.HasMember(user.Id))
+                    btnJoinCommunity.Visibility = ViewStates.Gone;
+                else
+                    btnJoinCommunity.Visibility = ViewStates.Visible;
+            }
 
         /// <summary>
         /// Sets the sorting text view with the specified sorting criteria.
@@ -208,7 +208,7 @@ namespace Discussit
             Intent intent = new Intent(this, typeof(ViewPostActivity));
             intent.PutExtra(General.KEY_USER, Intent.GetStringExtra(General.KEY_USER));
             intent.PutExtra(General.KEY_POST, post.GetJson());
-            intent.PutExtra(General.KEY_GUEST, !members.HasMember(user.Id));
+            intent.PutExtra(General.KEY_COMMUNITY, community.GetJson());
             StartActivityForResult(intent, 0);
         }
 
@@ -307,7 +307,7 @@ namespace Discussit
         {
             if (item.ItemId == Resource.Id.itemDelete)
             {
-
+                community.RemovePost(currentPost.Id, members.GetMemberByUID(user.Id));
             }
             else if (item.ItemId == Resource.Id.itemEdit)
             {
@@ -326,8 +326,9 @@ namespace Discussit
         private void OpenPostForEdit(Post post)
         {
             Intent intent = new Intent(this, typeof(CreatePostActivity));
-            intent.PutExtra(General.KEY_USER, Intent.GetStringExtra(General.KEY_USER));
+            intent.PutExtra(General.KEY_USER, user.GetJson());
             intent.PutExtra(General.KEY_POST, post.GetJson());
+            intent.PutExtra(General.KEY_COMMUNITY, community.GetJson());
             StartActivityForResult(intent, 0);
         }
 
