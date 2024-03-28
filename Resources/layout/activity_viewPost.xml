@@ -66,24 +66,19 @@
         android:textColor="@color/textColor"
         android:layout_marginLeft="@dimen/marginLeft"
         android:layout_marginRight="@dimen/marginRight"/>
-    <TextView
-        android:id="@+id/tvSortBy"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/clickable"
-        android:text="@string/sortBy"
-        android:layout_marginLeft="@dimen/marginLeft"
-        android:layout_marginTop="@dimen/Post_marginTop"/>
     <HorizontalScrollView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_weight="1"
+        android:overScrollMode="always"
+        android:scrollbarStyle="outsideOverlay"
         android:layout_marginLeft="@dimen/marginLeft"
-        android:layout_marginRight="@dimen/marginRight">
+        android:layout_marginRight="@dimen/marginRight"
+        android:layout_marginBottom="@dimen/marginBottom">
         <ListView
             android:id="@+id/lvComments"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"/>
+            android:layout_height="wrap_content"/>
     </HorizontalScrollView>
     <Button
         android:id="@+id/btnNewComment"

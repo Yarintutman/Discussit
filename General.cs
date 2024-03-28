@@ -2,6 +2,7 @@
 using Android.Runtime;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace Discussit
 {
@@ -20,7 +21,6 @@ namespace Discussit
         public const string KEY_COMMUNITY = "community";
         public const string KEY_POST = "post";
         public const string KEY_COMMENT = "comment";
-        public const string KEY_IS_COMMENT_RECURSIVE = "Is recursive";
         public const string FIELD_USERNAME = "Username";
         public const string FIELD_USER_COMMUNITIES = "Communities";
         public const string FIELD_USER_MANAGING_COMMUNITIES = "Managing Communities";
@@ -31,15 +31,15 @@ namespace Discussit
         public const string FIELD_COMMUNITY_DESCRIPTION = "Community Description";
         public const string FIELD_POST_CREATOR_UID = "UID";
         public const string FIELD_POST_CREATOR_NAME = "CreatorName";
-        public const string FIELD_POST_TITLE = "Community Name";
-        public const string FIELD_POST_DESCRIPTION = "Community Description";
+        public const string FIELD_POST_TITLE = "Post Title";
+        public const string FIELD_POST_DESCRIPTION = "Post Description";
         public const string FIELD_COMMENT_CREATOR_NAME = "CreatorName";
         public const string FIELD_COMMENT_CREATOR_UID = "UID";
-        public const string FIELD_COMMENT_TITLE = "Community Name";
-        public const string FIELD_COMMENT_DESCRIPTION = "Community Description";
+        public const string FIELD_COMMENT_DESCRIPTION = "Comment Description";
         public const string FIELD_MEMBER_COUNT = "Members Count";
         public const string FIELD_POST_COUNT = "Posts Count";
         public const string FIELD_COMMENT_COUNT = "Comments Count";
+        public const string FIELD_HAS_COMMENTS = "Has Comments";
         public const string FIELD_UID = "UserID";
         public const string FIELD_MEMBER_TYPE = "Member Type";
         public const string USERS_COLLECTION = "Users";
@@ -47,6 +47,7 @@ namespace Discussit
         public const string POSTS_COLLECTION = "Posts";
         public const string COMMENTS_COLLECTION = "Comments";
         public const string MEMBERS_COLLECTION = "Members";
+        public const int SUB_COMMENT_PADDING = 20;
 
         /// <summary>
         /// Converts a Bitmap image to a byte array.
@@ -112,6 +113,29 @@ namespace Discussit
         public static string RemoveFromString(string cutAfter, string str)
         {
             return str.Remove(0, str.LastIndexOf(cutAfter));
+        }
+
+        /// <summary>
+        /// Splits a given string every given char to a list that contains all the parts of the string
+        /// </summary>
+        /// <param name="str">The string to cut</param>
+        /// <param name="cutAt">The char to cut at</param>
+        /// <returns>The List representing the string</returns>
+        public static List<string> StringToList(string str, char cutAt)
+        {
+            return str.Split(cutAt).ToList();
+        } 
+
+        /// <summary>
+        /// Counts the shows of an object in a list
+        /// </summary>
+        /// <typeparam name="T">The object type</typeparam>
+        /// <param name="lst">The list to count form</param>
+        /// <param name="Appearance">The object to count</param>
+        /// <returns>Amount of appearances of the object in the list</returns>
+        public static int AppearanceCount<T>(List<T> lst, T Appearance)
+        {
+            return lst.Count(current => current.Equals(Appearance));
         }
     }
 }

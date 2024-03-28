@@ -1,14 +1,9 @@
 ﻿using Android.App;
 using Android.Content;
 using Android.OS;
-using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using AndroidX.AppCompat.App;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Discussit
 {
@@ -45,7 +40,9 @@ namespace Discussit
         {
             user = User.GetUserJson(Intent.GetStringExtra(General.KEY_USER));
             community = Community.GetCommunityJson(Intent.GetStringExtra(General.KEY_COMMUNITY));
-            post = Post.GetPostJson(Intent.GetStringExtra(General.KEY_POST));
+            string postJson = Intent.GetStringExtra(General.KEY_POST);
+            if (postJson != null)
+                post = Post.GetPostJson(postJson);
         }
 
         /// <summary>
@@ -67,8 +64,9 @@ namespace Discussit
             btnCreatePost.SetOnClickListener(this);
             if (post != null)
             {
-                tvCommunityName.Text = post.CreatorName;
-                tvCommunityDescription.Text= post.Description;
+                etPostTitle.Text = post.Title;
+                etPostDescription.Text= post.Description;
+                btnCreatePost.Text = Resources.GetString(Resource.String.updatePost);
             }
         }
 
@@ -122,10 +120,10 @@ namespace Discussit
         /// </summary>
         private void CreatePost()
         {
-            if (post != null)
+            if (post == null)
                 post = community.AddPost(etPostTitle.Text, etPostDescription.Text, user);
             else
-                community.UpdatePost(post);
+                community.UpdatePost(post, etPostTitle.Text, etPostDescription.Text);
             ViewPost(post);
         }
 

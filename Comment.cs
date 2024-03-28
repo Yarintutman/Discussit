@@ -3,6 +3,7 @@ using Android.Gms.Tasks;
 using Java.Util;
 using Newtonsoft.Json;
 using System;
+using System.ComponentModel.Design;
 
 namespace Discussit
 {
@@ -19,7 +20,10 @@ namespace Discussit
         public string ParentPath { get; set; }
         [JsonIgnore]
         public Comments Comments { get; set; }
+        public bool HasComments { get; set; }
         public DateTime CreationDate { get; set; }
+        [JsonIgnore]
+        public bool HideComments { get; set; }
 
         /// <summary>
         /// Constructor to create a new comment.
@@ -35,6 +39,8 @@ namespace Discussit
             CreatorName = creator.Username;
             ParentPath = parentPath;
             CreationDate = DateTime.Now;
+            HasComments = false;
+            HideComments = true;
         }
 
         /// <summary>
@@ -59,6 +65,7 @@ namespace Discussit
                 hm.Put(General.FIELD_COMMENT_CREATOR_UID, CreatorUID);
                 hm.Put(General.FIELD_COMMENT_DESCRIPTION, Description);
                 hm.Put(General.FIELD_DATE, fbd.DateTimeToFirestoreTimestamp(CreationDate));
+                hm.Put(General.FIELD_HAS_COMMENTS, HasComments);
                 return hm;
             }
         }
@@ -94,6 +101,11 @@ namespace Discussit
             Comment comment = new Comment(description, creator, Path);
             fbd.SetDocument(Path + "/" + General.COMMENTS_COLLECTION, string.Empty, out string commentId, comment.HashMap);
             comment.Id = commentId;
+            if (!HasComments)
+            {
+                HasComments = true;
+                fbd.UpdateField(ParentPath + "/" + General.COMMENTS_COLLECTION, Id, General.FIELD_HAS_COMMENTS, HasComments);
+            }
         }
 
         /// <summary>
@@ -110,6 +122,11 @@ namespace Discussit
                 {
                     comment.DeleteComment();
                     Comments.RemoveComment(comment);
+                    if (Comments.CommentsCount == 0)
+                    {
+                        HasComments = false;
+                        fbd.UpdateField(ParentPath + "/" + General.COMMENTS_COLLECTION, Id, General.FIELD_HAS_COMMENTS, HasComments);
+                    }
                 }
             }
         }

@@ -143,9 +143,13 @@ namespace Discussit
         /// Updates a post in the community
         /// </summary>
         /// <param name="post">The post to edit.</param>
+        /// <param name="title">The title of the post.</param>
+        /// <param name="description">The description of the post.</param>
         /// <returns>The added post.</returns>
-        public void UpdatePost(Post post)
+        public void UpdatePost(Post post, string title, string description)
         {
+            post.Title = title;
+            post.Description = description;
             Dictionary<string, Java.Lang.Object> fields = new Dictionary<string, Java.Lang.Object>();
             fields.Add(General.FIELD_POST_TITLE, post.Title);
             fields.Add(General.FIELD_POST_DESCRIPTION, post.Description);
@@ -210,7 +214,7 @@ namespace Discussit
                     post.DeletePost();
                     Posts.RemovePost(post);
                     fbd.IncrementField(General.COMMUNITIES_COLLECTION, Id, General.FIELD_POST_COUNT, -1);
-                    fbd.RemoveFromArray(General.USERS_COLLECTION, post.CreatorUID, General.FIELD_USER_POSTS, post.Id);
+                    fbd.RemoveFromArray(General.USERS_COLLECTION, post.CreatorUID, General.FIELD_USER_POSTS, post.Path);
                     PostCount--;
                 } 
             }

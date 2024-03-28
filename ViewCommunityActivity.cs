@@ -24,7 +24,7 @@ namespace Discussit
         Members members;
         ImageButton ibtnBack, ibtnLogo, ibtnProfile, ibtnSearch;
         TextView tvCommunityName, tvDescription, tvMemberCount, tvSortBy;
-        Button btnViewDescription, btnNewPost, btnJoinCommunity;
+        Button btnNewPost, btnJoinCommunity;
         EditText etSearchBar;
         Task tskGetPosts, tskGetMemebers;
         Post currentPost;
@@ -68,7 +68,6 @@ namespace Discussit
             tvDescription = FindViewById<TextView>(Resource.Id.tvDescription);
             tvMemberCount = FindViewById<TextView>(Resource.Id.tvMemberCount);
             tvSortBy = FindViewById<TextView>(Resource.Id.tvSortBy);
-            btnViewDescription = FindViewById<Button>(Resource.Id.btnViewDescription);
             btnNewPost = FindViewById<Button>(Resource.Id.btnNewPost);
             btnJoinCommunity = FindViewById<Button>(Resource.Id.btnJoinCommunity);
             etSearchBar = FindViewById<EditText>(Resource.Id.etSearchBar);
@@ -82,7 +81,6 @@ namespace Discussit
             ibtnLogo.SetOnClickListener(this);
             ibtnProfile.SetOnClickListener(this);
             ibtnSearch.SetOnClickListener(this);
-            btnViewDescription.SetOnClickListener(this);
             btnNewPost.SetOnClickListener(this);
             btnJoinCommunity.SetOnClickListener(this);
             tvSortBy.SetOnClickListener(this);
@@ -96,13 +94,13 @@ namespace Discussit
         /// <summary>
         /// Checks the membership status of the user in the community and updates the UI accordingly.
         /// </summary>
-            private void CheckMembership()
-            {
-                if (members.HasMember(user.Id))
-                    btnJoinCommunity.Visibility = ViewStates.Gone;
-                else
-                    btnJoinCommunity.Visibility = ViewStates.Visible;
-            }
+        private void CheckMembership()
+        {
+            if (members.HasMember(user.Id))
+                btnJoinCommunity.Visibility = ViewStates.Gone;
+            else
+                btnJoinCommunity.Visibility = ViewStates.Visible;
+        }
 
         /// <summary>
         /// Sets the sorting text view with the specified sorting criteria.

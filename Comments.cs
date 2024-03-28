@@ -1,6 +1,7 @@
 ﻿using Android.App;
 using Android.Gms.Tasks;
 using Firebase.Firestore;
+using Javax.Crypto;
 using System.Collections.Generic;
 
 namespace Discussit
@@ -67,7 +68,6 @@ namespace Discussit
         /// <param name="documents">The list of Firestore documents representing comments.</param>
         internal void AddComments(IList<DocumentSnapshot> documents)
         {
-            CommentAdapter.Clear(); 
             Comment comment;
             foreach (DocumentSnapshot document in documents)
             {
@@ -77,11 +77,38 @@ namespace Discussit
                     Description = document.GetString(General.FIELD_COMMENT_DESCRIPTION),
                     CreatorName = document.GetString(General.FIELD_COMMENT_CREATOR_NAME),
                     CreatorUID = document.GetString(General.FIELD_COMMENT_CREATOR_UID),
+                    HasComments = (bool)(document.GetBoolean(General.FIELD_HAS_COMMENTS)),
                     ParentPath = Path,
                     CreationDate = fbd.FirestoreTimestampToDateTime(document.GetTimestamp(General.FIELD_DATE))
                 };
-                CommentAdapter.AddComment(comment); 
+                CommentAdapter.ReplaceComment(comment); 
             }
+            CommentAdapter.SortByPath();
+        }
+
+        /// <summary>
+        /// Adds comments from the provided list of Firestore documents to the comment adapter.
+        /// </summary>
+        /// <param name="documents">The list of Firestore documents representing comments.</param>
+        /// <param name="parentComment">The parent comment for the subComments.</param>
+        internal void AddSubComments(IList<DocumentSnapshot> documents, Comment parentComment)
+        {
+            Comment comment;
+            foreach (DocumentSnapshot document in documents)
+            {
+                comment = new Comment
+                {
+                    Id = document.Id,
+                    Description = document.GetString(General.FIELD_COMMENT_DESCRIPTION),
+                    CreatorName = document.GetString(General.FIELD_COMMENT_CREATOR_NAME),
+                    CreatorUID = document.GetString(General.FIELD_COMMENT_CREATOR_UID),
+                    HasComments = (bool)(document.GetBoolean(General.FIELD_HAS_COMMENTS)),
+                    ParentPath = parentComment.Path,
+                    CreationDate = fbd.FirestoreTimestampToDateTime(document.GetTimestamp(General.FIELD_DATE))
+                };
+                CommentAdapter.ReplaceComment(comment);
+            }
+            CommentAdapter.SortByPath();
         }
 
         /// <summary>
@@ -110,6 +137,16 @@ namespace Discussit
         public Comment GetCommentById(string Id)
         {
             return CommentAdapter.GetCommentById(Id);
+        }
+
+        public void RemoveRecursiveComments(Comment comment)
+        {
+            CommentAdapter.RemoveRecursiveComments(comment);
+        }
+
+        public void ShowOpenComments()
+        {
+            CommentAdapter.ShowOpenComments();
         }
     }
 }

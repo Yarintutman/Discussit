@@ -6,26 +6,22 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using AndroidX.AppCompat.App;
-using AndroidX.AppCompat.Widget;
-using AndroidX.Core.Util;
 using Firebase.Firestore;
-using System;
 
 namespace Discussit
 {
     [Activity(Label = "ViewPostActivity")]
-    public class ViewPostActivity : AppCompatActivity, View.IOnClickListener, AdapterView.IOnItemClickListener, AdapterView.IOnItemLongClickListener, IEventListener, IOnCompleteListener
+    public class ViewPostActivity : AppCompatActivity, View.IOnClickListener, AdapterView.IOnItemClickListener, IEventListener, IOnCompleteListener
     {
         User user;
         Community community;
         Post post;
-        Comment currentComment;
+        Comment currentComment, recursiveComment;
         Comments comments;
         Members members;
         ImageButton ibtnBack, ibtnLogo, ibtnProfile;
-        TextView tvSortBy;
         Button btnNewComment;
-        Task tskGetComments, tskGetMemebers;
+        Task tskGetComments, tskGetMemebers, tskGetRecursiveComments;
         bool isInCommunity;
 
         /// <summary>
@@ -67,35 +63,22 @@ namespace Discussit
             ibtnBack = FindViewById<ImageButton>(Resource.Id.ibtnBack);
             ibtnLogo = FindViewById<ImageButton>(Resource.Id.ibtnLogo);
             ibtnProfile = FindViewById<ImageButton>(Resource.Id.ibtnProfile);
-            tvSortBy = FindViewById<TextView>(Resource.Id.tvSortBy);
             btnNewComment = FindViewById<Button>(Resource.Id.btnNewComment);
             tvPostCreator.Text = post.CreatorName;
             tvPostTitle.Text = post.Title;
             tvPostDescription.Text = post.Description;
             lvComments.Adapter = comments.CommentAdapter;
             lvComments.OnItemClickListener = this;
-            lvComments.OnItemLongClickListener = this;
-            comments.AddSnapshotListener(this);
             ibtnBack.SetOnClickListener(this);
             ibtnLogo.SetOnClickListener(this);
             ibtnProfile.SetOnClickListener(this);
             btnNewComment.SetOnClickListener(this);
-            tvSortBy.SetOnClickListener(this);
-            SetSorting(Resources.GetString(Resource.String.sortDate));
+            RegisterForContextMenu(lvComments);
         }
 
         private void CheckMembership()
         {
             isInCommunity = members.HasMember(user.Id);
-        }
-
-        /// <summary>
-        /// Sets the sorting text view with the specified sorting criteria.
-        /// </summary>
-        /// <param name="sortBy">The sorting criteria to display.</param>
-        public void SetSorting(string sortBy)
-        {
-            tvSortBy.Text = Resources.GetString(Resource.String.sortBy) + " " + sortBy;
         }
 
         /// <summary>
@@ -138,7 +121,6 @@ namespace Discussit
         {
             Intent intent = new Intent(this, typeof(CreateCommentActivity));
             intent.PutExtra(General.KEY_USER, user.GetJson());
-            intent.PutExtra(General.KEY_IS_COMMENT_RECURSIVE, false);
             intent.PutExtra(General.KEY_POST, post.GetJson());
             StartActivityForResult(intent, 0);
         }
@@ -151,7 +133,6 @@ namespace Discussit
         {
             Intent intent = new Intent(this, typeof(CreateCommentActivity));
             intent.PutExtra(General.KEY_USER, user.GetJson());
-            intent.PutExtra(General.KEY_IS_COMMENT_RECURSIVE, true);
             intent.PutExtra(General.KEY_POST, post.GetJson());
             intent.PutExtra(General.KEY_COMMENT, comment.GetJson());
             StartActivityForResult(intent, 0);
@@ -163,6 +144,14 @@ namespace Discussit
         private void GetComments()
         {
             tskGetComments = post.GetComments().AddOnCompleteListener(this);
+        }
+
+        /// <summary>
+        /// Retrieves members associated with the community.
+        /// </summary>
+        private void GetMembers()
+        {
+            tskGetMemebers = community.GetMembers().AddOnCompleteListener(this);
         }
 
         /// <summary>
@@ -197,8 +186,7 @@ namespace Discussit
             {
                 int position = info.Position;
                 currentComment = comments[position];
-                Member userAsMember = members.GetMemberByUID(user.Id);
-                if (userAsMember != null && members.HasMember(user.Id))
+                if (isInCommunity)
                 {
                     MenuInflater.Inflate(Resource.Menu.menu_createComment, menu);
                     base.OnCreateContextMenu(menu, v, menuInfo);
@@ -251,12 +239,18 @@ namespace Discussit
                 {
                     QuerySnapshot qs = (QuerySnapshot)task.Result;
                     comments.AddComments(qs.Documents);
+                    comments.ShowOpenComments();
                 }
                 else if (task == tskGetMemebers)
                 {
                     QuerySnapshot qs = (QuerySnapshot)task.Result;
                     members.AddMembers(qs.Documents);
                     CheckMembership();
+                }
+                else if (task == tskGetRecursiveComments)
+                {
+                    QuerySnapshot qs = (QuerySnapshot)task.Result;
+                    comments.AddSubComments(qs.Documents, recursiveComment);
                 }
             }
         }
@@ -268,6 +262,12 @@ namespace Discussit
         /// <param name="error"Not in use.</param>
         public void OnEvent(Java.Lang.Object obj, FirebaseFirestoreException error)
         {
+            /*QuerySnapshot querySnapshot = (QuerySnapshot)obj;
+            if (querySnapshot.Documents.Count != 0 && querySnapshot.Documents[0].Id.Contains(General.MEMBERS_COLLECTION))
+                GetMembers();
+            else
+                GetComments();*/
+            GetMembers();
             GetComments();
         }
 
@@ -280,22 +280,22 @@ namespace Discussit
         /// <param name="id">The row id of the item that was clicked.</param>
         public void OnItemClick(AdapterView parent, View view, int position, long id)
         {
-            //call recursiveComments
-            //GetRecursiveComments();
-        }
-
-        /// <summary>
-        /// Handles the event of long-clicking an item in the list of comments.
-        /// </summary>
-        /// <param name="parent">The AdapterView where the click happened.</param>
-        /// <param name="view">The view within the AdapterView that was clicked.</param>
-        /// <param name="position">The position of the view in the adapter.</param>
-        /// <param name="id">The row id of the item that was clicked.</param>
-        /// <returns>True</returns>
-        public bool OnItemLongClick(AdapterView parent, View view, int position, long id)
-        {
-            //call create recursive comment after popping menu
-            return true;
+            TextView tvViewComments = view.FindViewById<TextView>(Resource.Id.tvViewComments);
+            recursiveComment = comments[position];
+            recursiveComment.CreateComments(this);
+            if (tvViewComments.Visibility != ViewStates.Gone) 
+            { 
+                if (tvViewComments.Text == Resources.GetString(Resource.String.ShowComments))
+                {
+                    recursiveComment.HideComments = true;
+                    tskGetRecursiveComments = recursiveComment.GetComments().AddOnCompleteListener(this);
+                }
+                else
+                {
+                    recursiveComment.HideComments = false;
+                    comments.RemoveRecursiveComments(recursiveComment);
+                }
+            }
         }
 
         /// <summary>
@@ -318,6 +318,8 @@ namespace Discussit
         {
             base.OnResume();
             comments.AddSnapshotListener(this);
+            members.AddSnapshotListener(this);
+            comments.CommentAdapter.NotifyDataSetChanged();
         }
 
         /// <summary>
@@ -327,6 +329,7 @@ namespace Discussit
         {
             base.OnPause();
             comments.RemoveSnapshotListener();
+            members.RemoveSnapshotListener();
         }
     }
 }

@@ -46,8 +46,9 @@ namespace Discussit
         {
             user = User.GetUserJson(Intent.GetStringExtra(General.KEY_USER));
             post = Post.GetPostJson(Intent.GetStringExtra(General.KEY_POST));
-            if (Intent.GetBooleanExtra(General.KEY_IS_COMMENT_RECURSIVE, false) == true ) 
-                comment = Comment.GetCommentJson(Intent.GetStringExtra(General.KEY_COMMENT));
+            string commentJson = Intent.GetStringExtra(General.KEY_COMMENT);
+            if (commentJson != null)
+                comment = Comment.GetCommentJson(commentJson);
         }
 
         /// <summary>
@@ -56,16 +57,21 @@ namespace Discussit
         private void InitViews()
         {
             TextView tvPostTitle = FindViewById<TextView>(Resource.Id.tvPostTitle);
-            TextView tvPostDescription = FindViewById<TextView>(Resource.Id.tvPostDescription);
+            TextView tvDescription = FindViewById<TextView>(Resource.Id.tvDescription);
             ibtnBack = FindViewById<ImageButton>(Resource.Id.ibtnBack);
             ibtnLogo = FindViewById<ImageButton>(Resource.Id.ibtnLogo);
             etCommentDescription = FindViewById<EditText>(Resource.Id.etCommentDescription);
             btnCreateComment = FindViewById<Button>(Resource.Id.btnCreateComment);
-            tvPostTitle.Text = post.Title;
-            tvPostDescription.Text = post.Description;
             ibtnBack.SetOnClickListener(this);
             ibtnLogo.SetOnClickListener(this);
             btnCreateComment.SetOnClickListener(this);
+            if (comment == null)
+            {
+                tvPostTitle.Text = post.Title;
+                tvDescription.Text = post.Description;
+            }
+            else
+                tvDescription.Text = comment.Description;
         }
 
         /// <summary>

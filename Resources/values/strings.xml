@@ -88,4 +88,7 @@
   <string name="PostEdit">Only the creator of the post can edit it</string>
   <string name="CommentEdit">Only the creator of the comment can edit it</string>
   <string name="memberDemote">Member is already the lowest rank</string>
+  <string name="updatePost">Update Post</string>
+  <string name="ShowComments">Show Comments</string>
+  <string name="HideComments">Hide Comments</string>
 </resources>

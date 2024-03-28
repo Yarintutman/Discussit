@@ -25,6 +25,7 @@ namespace Discussit
         TextView tvLoginState, tvNewUser;
         CheckBox chkRemember;
         Task tskRegister, tskLogin, tskRememberLogin, tskSetFbUser, tskGetUser;
+        Thread animationThread;
 
         /// <summary>
         /// Method called when the activity is first created.
@@ -234,15 +235,15 @@ namespace Discussit
             Thread.Sleep(300);
             for (int i = 0; i <= text.Length; i++)
             {
-                RunOnUiThread(() => { tvAppName.Text = text[..i]; });
-                Thread.Sleep(500);
+                RunOnUiThread(() => { tvAppName.Text = text[..(Math.Min(text.Length, i))]; });
+                Thread.Sleep(90);
             }
-            Thread.Sleep(500);
+            Thread.Sleep(150);
             text = Resources.GetString(Resource.String.Slogan);
             for (int i = 0; i <= text.Length; i++)
             {
-                RunOnUiThread(() => { tvSlogan.Text = text[..i]; });
-                Thread.Sleep(500);
+                RunOnUiThread(() => { tvSlogan.Text = text[..(Math.Min(text.Length, i))]; });
+                Thread.Sleep(90);
             }
         }
 
@@ -255,8 +256,8 @@ namespace Discussit
             if (!user.IsRegistered)
             {
                 ThreadStart ts = new ThreadStart(Anim);
-                Thread t = new Thread(ts);
-                t.Start();
+                animationThread = new Thread(ts);
+                animationThread.Start();
             }
         }
 
@@ -266,6 +267,8 @@ namespace Discussit
         protected override void OnPause()
         {
             base.OnPause();
+            if (animationThread != null && animationThread.ThreadState == ThreadState.Running)
+                animationThread.Abort();
             TextView tvAppName = FindViewById<TextView>(Resource.Id.tvAppName);
             TextView tvSlogan = FindViewById<TextView>(Resource.Id.tvSlogan);
             tvAppName.Text = string.Empty;
