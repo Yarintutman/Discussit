@@ -63,16 +63,32 @@
             android:textColorHint="@color/hintColor"
             android:textColor="@color/textColor"
             android:backgroundTint="@color/clickable"/>
-        <Button
-            android:id="@+id/btnManageMembers"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/manageMembers"
-            android:textAllCaps="false"
-            android:textSize="@dimen/ManageCommunity_buttonTextSize"
-            android:textColor="@color/clickable"
-            android:background="@android:color/transparent"/>
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/tvMemberCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/textColor"
+                android:layout_marginRight="@dimen/Member_marginRight"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/members"
+                android:textColor="@color/textColor"
+                android:gravity="center_vertical"/>
+        </LinearLayout>
+        <ListView
+            android:id="@+id/lvMembers"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dialog_marginLeft"
+            android:layout_marginRight="@dimen/dialog_marginRight"
+            android:layout_marginBottom="@dimen/dialog_marginBottom"/>
     </LinearLayout>
     <Button
         android:id="@+id/btnSaveChanges"
@@ -82,7 +98,7 @@
         android:textAllCaps="false"
         android:textSize="@dimen/ManageCommunity_buttonTextSize"
         android:textColor="@color/clickable"
-        android:background="@android:color/transparent"
+        android:background="@drawable/shape"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="@dimen/marginBottom"/>
 </LinearLayout>

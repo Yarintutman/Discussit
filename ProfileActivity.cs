@@ -12,6 +12,9 @@ using System.Collections.Generic;
 
 namespace Discussit
 {
+    /// <summary>
+    /// Represents the user profile activity, allowing users to view and manage their profile information.
+    /// </summary>
     [Activity(Label = "ProfileActivity")]
     public class ProfileActivity : AppCompatActivity, View.IOnClickListener, IOnCompleteListener, AdapterView.IOnItemClickListener
     {
@@ -26,6 +29,10 @@ namespace Discussit
         CommunityAdapter comments;
         string currentDialog;
 
+        /// <summary>
+        /// Initializes the activity when created.
+        /// </summary>
+        /// <param name="savedInstanceState">Not in use</param>
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -35,11 +42,17 @@ namespace Discussit
             InitViews();
         }
 
+        /// <summary>
+        /// Initializes the objects used in the activity.
+        /// </summary>
         private void InitObjects()
         {
             user = User.GetUserJson(Intent.GetStringExtra(General.KEY_USER));
         }
 
+        /// <summary>
+        /// Initializes the views used in the activity.
+        /// </summary>
         private void InitViews()
         {
             ibtnPicture = FindViewById<ImageButton>(Resource.Id.ibtnPicture);
@@ -62,11 +75,18 @@ namespace Discussit
             btnSettings.SetOnClickListener(this);
         }
 
+        /// <summary>
+        /// Sets the sorting criteria for the displayed data.
+        /// </summary>
+        /// <param name="sortBy">The sorting format.</param>
         public void SetSorting(string sortBy)
         {
             tvSortBy.Text = Resources.GetString(Resource.String.sortBy) + " " + sortBy;
         }
 
+        /// <summary>
+        /// Returns to the previous activity.
+        /// </summary>
         public void Back()
         {
             Intent intent = new Intent();
@@ -75,6 +95,9 @@ namespace Discussit
             Finish();
         }
 
+        /// <summary>
+        /// Disables the default back button behavior and invokes the custom back method.
+        /// </summary>
 #pragma warning disable CS0672 // Member overrides obsolete member
         public override void OnBackPressed()
         {
@@ -82,7 +105,9 @@ namespace Discussit
         }
 #pragma warning restore CS0672 // Member overrides obsolete member
 
-
+        /// <summary>
+        /// Logs the user out of the application, returning him to the login/register activity
+        /// </summary>
         private void Logout()
         {
             SpData spd = new SpData(General.SP_FILE_NAME);
@@ -92,6 +117,9 @@ namespace Discussit
             Finish();
         }
 
+        /// <summary>
+        /// Navigates to the settings activity.
+        /// </summary>
         private void ViewSettings()
         {
             Intent intent = new Intent(this, typeof(SettingsActivity));
@@ -99,7 +127,9 @@ namespace Discussit
             StartActivityForResult(intent, 0);
         }
 
-
+        /// <summary>
+        /// Displays a dialog to select and view communities.
+        /// </summary>
         private void ViewCommunities()
         {
             dialogViewCommunities = new Dialog(this);
@@ -111,12 +141,16 @@ namespace Discussit
             currentDialog = Resources.GetString(Resource.String.Communities);
             tvSortBy = dialogViewCommunities.FindViewById<TextView>(Resource.Id.tvSortBy);
             SetSorting(Resources.GetString(Resource.String.sortDate));
-            FbData fbd = new FbData();
             if (user.Communities.Size() != 0)
-                tskGetCommunities = fbd.GetDocumentsInList(General.COMMUNITIES_COLLECTION,
-                                           General.JavaListToIListWithCut(user.Communities, "/")).AddOnCompleteListener(this);
+            {
+                tskGetCommunities = user.GetDocumentInList(General.FIELD_USER_COMMUNITIES);
+                tskGetCommunities?.AddOnCompleteListener(this);
+            }
         }
 
+        /// <summary>
+        /// Displays a dialog to select and manage the communities managed by the user.
+        /// </summary>
         private void ViewManagedCommunities()
         {
             dialogViewManagedCommunities = new Dialog(this);
@@ -128,12 +162,16 @@ namespace Discussit
             currentDialog = Resources.GetString(Resource.String.ManagedCommunities);
             tvSortBy = dialogViewManagedCommunities.FindViewById<TextView>(Resource.Id.tvSortBy);
             SetSorting(Resources.GetString(Resource.String.sortDate));
-            FbData fbd = new FbData();
             if (user.ManagingCommunities.Size() != 0)
-                tskGetManagedCommunities = fbd.GetDocumentsInList(General.COMMUNITIES_COLLECTION,
-                                           General.JavaListToIListWithCut(user.ManagingCommunities, "/")).AddOnCompleteListener(this);
+            {
+                tskGetManagedCommunities = user.GetDocumentInList(General.FIELD_USER_MANAGING_COMMUNITIES);
+                tskGetManagedCommunities?.AddOnCompleteListener(this);
+            }
         }
 
+        /// <summary>
+        /// Displays a dialog to select and view posts.
+        /// </summary>
         private void ViewPosts()
         {
             dialogViewPosts = new Dialog(this);
@@ -145,12 +183,17 @@ namespace Discussit
             currentDialog = Resources.GetString(Resource.String.Posts);
             tvSortBy = dialogViewPosts.FindViewById<TextView>(Resource.Id.tvSortBy);
             SetSorting(Resources.GetString(Resource.String.sortDate));
-            FbData fbd = new FbData();
             if (user.Posts.Size() != 0)
-                tskGetPosts = fbd.GetDocumentsInList(General.POSTS_COLLECTION,
-                                           General.JavaListToIListWithCut(user.Posts, '/' + General.POSTS_COLLECTION)).AddOnCompleteListener(this);
+            {
+                tskGetPosts = user.GetDocumentInList(General.FIELD_USER_POSTS);
+                tskGetPosts?.AddOnCompleteListener(this);
+            }
         }
 
+        /// <summary>
+        /// Sets the managed communities in the dialog view based on the provided documents.
+        /// </summary>
+        /// <param name="documents">Documents representing the managed communities.</param>
         private void SetManagedCommunities(IList<DocumentSnapshot> documents)
         {
             managedCommunities = new CommunityAdapter(dialogViewManagedCommunities.Context);
@@ -160,6 +203,10 @@ namespace Discussit
             lvCommunities.OnItemClickListener = this;
         }
 
+        /// <summary>
+        /// Sets the communities in the dialog view based on the provided documents.
+        /// </summary>
+        /// <param name="documents">Documents representing the communities.</param>
         private void SetCommunities(IList<DocumentSnapshot> documents)
         {
             communities = new CommunityAdapter(dialogViewCommunities.Context);
@@ -169,6 +216,10 @@ namespace Discussit
             lvCommunities.OnItemClickListener = this;
         }
 
+        /// <summary>
+        /// Sets the posts in the dialog view based on the provided documents.
+        /// </summary>
+        /// <param name="documents">Documents representing the posts.</param>
         private void SetPosts(IList<DocumentSnapshot> documents)
         {
             posts = new PostAdapter(dialogViewPosts.Context);
@@ -178,6 +229,10 @@ namespace Discussit
             lvPosts.OnItemClickListener = this;
         }
 
+        /// <summary>
+        /// Handles click events for various UI elements.
+        /// </summary>
+        /// <param name="v">The view that was clicked.</param>
         public void OnClick(View v)
         {
             if (v == ibtnBack)
@@ -206,6 +261,10 @@ namespace Discussit
             }
         }
 
+        /// <summary>
+        /// Handles task completion events.
+        /// </summary>
+        /// <param name="task">The completed task.</param>
         public void OnComplete(Task task)
         {
             if (task.IsComplete)
@@ -223,6 +282,10 @@ namespace Discussit
             }
         }
 
+        /// <summary>
+        /// Navigates to the activity to view a post.
+        /// </summary>
+        /// <param name="post">The post to view.</param>
         private void ViewPost(Post post)
         {
             Intent intent = new Intent(this, typeof(ViewPostActivity));
@@ -232,6 +295,10 @@ namespace Discussit
             dialogViewPosts.Cancel();
         }
 
+        /// <summary>
+        /// Navigates to the activity to view a community.
+        /// </summary>
+        /// <param name="community">The community to view.</param>
         private void ViewCommunity(Community community)
         {
             Intent intent = new Intent(this, typeof(ViewCommunityActivity));
@@ -241,6 +308,10 @@ namespace Discussit
             dialogViewCommunities.Cancel();
         }
 
+        /// <summary>
+        /// Navigates to the activity to manage a community.
+        /// </summary>
+        /// <param name="community">The community to manage.</param>
         private void ManageCommunity(Community community)
         {
             Intent intent = new Intent(this, typeof(ManageCommunityActivity));
@@ -250,6 +321,13 @@ namespace Discussit
             dialogViewManagedCommunities.Cancel();
         }
 
+        /// <summary>
+        /// Handles item click events in the list views.
+        /// </summary>
+        /// <param name="parent">Not in use</param>
+        /// <param name="view">The view within the AdapterView that was clicked.</param>
+        /// <param name="position">The position of the view in the adapter.</param>
+        /// <param name="id">The row id of the item that was clicked.</param>
         public void OnItemClick(AdapterView parent, View view, int position, long id)
         {
             if (currentDialog == Resources.GetString(Resource.String.ManagedCommunities))
@@ -262,7 +340,12 @@ namespace Discussit
                 //TBD
         }
 
-
+        /// <summary>
+        /// Handles the result of an activity.
+        /// </summary>
+        /// <param name="requestCode">Not in use</param>
+        /// <param name="resultCode">The integer result code returned by the child activity.</param>
+        /// <param name="data">An Intent, which can return result data to the caller.</param>
         protected override void OnActivityResult(int requestCode, [GeneratedEnum] Result resultCode, Intent data)
         {
             if (resultCode == Result.Ok)

@@ -51,7 +51,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/changeName"
                 android:textAllCaps="false"
-                android:background="@android:color/transparent"
+                android:background="@drawable/shape"
                 android:layout_marginRight="@dimen/marginRight"
                 android:textColor="@color/clickable"/>
         </LinearLayout>
@@ -67,7 +67,7 @@
                 android:textAllCaps="false"
                 android:layout_centerHorizontal="true"
                 android:textColor="@color/clickable"
-                android:background="@android:color/transparent"/>
+                android:background="@drawable/shape"/>
             <LinearLayout
                 android:id="@+id/llResetPassword"
                 android:layout_width="match_parent"
@@ -92,7 +92,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/resetPassword"
                     android:textAllCaps="false"
-                    android:background="@android:color/transparent"
+                    android:background="@drawable/shape"
                     android:textColor="@color/clickable"/>
             </LinearLayout>
         </RelativeLayout>
@@ -110,7 +110,7 @@
         android:textAllCaps="false"
         android:textSize="@dimen/Settigns_buttonTextSize"
         android:textColor="@color/clickable"
-        android:background="@android:color/transparent"
+        android:background="@drawable/shape"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="@dimen/marginBottom"/>
 </LinearLayout>

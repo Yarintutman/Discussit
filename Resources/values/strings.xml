@@ -73,6 +73,7 @@
   <string name="edit">Edit</string>
   <string name="delete">delete</string>
   <string name="remove">Remove</string>
+  <string name="transferOwner">Transfer ownership</string>
   <string name="ban">Ban</string>
   <string name="promote">Promote</string>
   <string name="demote">Demote</string>
@@ -83,4 +84,11 @@
   <string name="Posts">Posts</string>
   <string name="Comments">Comments</string>
   <string name="joinCommunityToToCreatePost">In order to create a post you must join the community</string>
+  <string name="joinCommunityToToCreateComment">In order to create a comment you must join the community</string>
+  <string name="PostEdit">Only the creator of the post can edit it</string>
+  <string name="CommentEdit">Only the creator of the comment can edit it</string>
+  <string name="memberDemote">Member is already the lowest rank</string>
+  <string name="updatePost">Update Post</string>
+  <string name="ShowComments">Show Comments</string>
+  <string name="HideComments">Hide Comments</string>
 </resources>

@@ -32,7 +32,7 @@
         android:layout_marginLeft="@dimen/marginLeft"
         android:layout_marginRight="@dimen/marginRight"/>
     <TextView
-        android:id="@+id/tvPostDescription"
+        android:id="@+id/tvDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/textColor"
@@ -69,7 +69,7 @@
         android:textAllCaps="false"
         android:layout_gravity="center_horizontal"
         android:textSize="@dimen/CreateComment_buttonTextSize"
-        android:background="@android:color/transparent"
+        android:background="@drawable/shape"
         android:textColor="@color/clickable"
         android:text="@string/CreateComment"
         android:layout_marginBottom="@dimen/marginBottom"/>
