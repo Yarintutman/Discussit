@@ -7,8 +7,10 @@ using Android.Views;
 using Android.Widget;
 using AndroidX.Core.Util;
 using Firebase.Firestore.Core;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using static Android.Icu.Text.ListFormatter;
 using View = Android.Views.View;
 
 namespace Discussit
@@ -19,7 +21,8 @@ namespace Discussit
     internal class CommentAdapter : BaseAdapter<Comment>
     {
         private readonly Context context; 
-        private List<Comment> lstComments; 
+        private List<Comment> lstComments;
+        private int CommentWidth;
         /// <summary>
         /// Initializes a new instance of the CommentAdapter class.
         /// </summary>
@@ -79,12 +82,20 @@ namespace Discussit
             int leftPaddingDp = General.SUB_COMMENT_PADDING * (General.AppearanceCount<string>(
                                 General.StringToList(comment.Path, '/'),
                                 General.COMMENTS_COLLECTION) - 1);
-            int leftPaddingPx = (int)TypedValue.ApplyDimension(ComplexUnitType.Dip, leftPaddingDp, context.Resources.DisplayMetrics);
+            int leftPaddingPx = (int)TypedValue.ApplyDimension(ComplexUnitType.Dip,
+                                leftPaddingDp, context.Resources.DisplayMetrics);
             v.SetPadding(leftPaddingPx, v.PaddingTop, v.PaddingRight, v.PaddingBottom);
+            if (position == 0)
+            {
+
+                CommentWidth = (int)TypedValue.ApplyDimension(ComplexUnitType.Dip,
+                               General.SUB_COMMENT_PADDING, context.Resources.DisplayMetrics) *
+                               (LowestSuncommentCount() - 1);
+            }
             LinearLayout llComment = v.FindViewById<LinearLayout>(Resource.Id.llComment);
-            ViewGroup.LayoutParams llParams = llComment.LayoutParameters;
-            llParams.Width += leftPaddingDp;
-            llComment.LayoutParameters = llParams;
+            ViewGroup.LayoutParams layoutParams = llComment.LayoutParameters;
+            layoutParams.Width += CommentWidth;
+            llComment.LayoutParameters = layoutParams;
             return v;
         }
 
@@ -138,22 +149,42 @@ namespace Discussit
             return lstComments.FirstOrDefault(Comment => Id == Comment.Id);
         }
 
+        /// <summary>
+        /// Sorts the list by the path of the comments
+        /// </summary>
         public void SortByPath()
         {
             lstComments = lstComments.OrderBy(comment => comment.Path).ToList();
             NotifyDataSetChanged();
         }
 
-        public void RemoveRecursiveComments(Comment comment)
+        /// <summary>
+        /// Removes all of the subcomments of the comment from the adapter
+        /// </summary>
+        /// <param name="comment">The comment to remove subcomments from</param>
+        public void RemoveSubcomments(Comment comment)
         {
             lstComments.RemoveAll(current => current.Path.Contains(comment.Path) && current.Path != comment.Path);
             NotifyDataSetChanged();
         }
 
+        /// <summary>
+        /// Returns the count of parent comments of the lowest subcomment in the hierarchy
+        /// </summary>
+        public int LowestSuncommentCount()
+        {
+            return lstComments.Max(comment => General.AppearanceCount<string>(
+                                   General.StringToList(comment.Path, '/'),
+                                   General.COMMENTS_COLLECTION));
+        }
+
+        /// <summary>
+        /// Shows the open Subcomments button in all of the comments that have subcomments
+        /// </summary>
         public void ShowOpenComments()
         {
-            List<Comment> lstHasRecursive = lstComments.Where(comment => lstComments.Any(current => comment.Path == current.ParentPath)).ToList();
-            foreach (Comment comment in lstHasRecursive)
+            List<Comment> lstHasSubcomments= lstComments.Where(comment => lstComments.Any(current => comment.Path == current.ParentPath)).ToList();
+            foreach (Comment comment in lstHasSubcomments)
             {
                 comment.HasComments = true;
                 comment.HideComments = true;

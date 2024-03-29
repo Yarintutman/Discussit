@@ -293,7 +293,7 @@ namespace Discussit
                 else
                 {
                     recursiveComment.HideComments = false;
-                    comments.RemoveRecursiveComments(recursiveComment);
+                    comments.RemoveSubcomments(recursiveComment);
                 }
             }
         }

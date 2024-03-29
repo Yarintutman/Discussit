@@ -2,10 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/llComment"
     android:orientation="vertical"
-    android:layout_width="40dp"
+    android:layout_width="@dimen/Comment_width"
     android:layout_height="wrap_content"
     android:background="@android:color/transparent"
-    android:layout_marginLeft="@dimen/Comment_marginLeft">
+    android:layout_marginLeft="@dimen/Comment_marginLeft"
+    android:layout_marginRight="@dimen/Comment_marginRight">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -13,7 +14,7 @@
         android:gravity="center_vertical"
         android:layout_marginTop="@dimen/Comment_marginTop">
         <ImageView
-            android:id="@+id/ivUserPicture"
+            android:id="@+id/ivCreatorPicture"
             android:layout_width="@dimen/Comment_profileWidth"
             android:layout_height="@dimen/Comment_profileHeight"
             android:background="@drawable/profilepicture"
@@ -22,22 +23,20 @@
             android:id="@+id/tvCommentCreator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/textColor"
-            android:layout_marginRight="@dimen/Comment_marginRight"/>
+            android:textColor="@color/textColor"/>
     </LinearLayout>
     <TextView
         android:id="@+id/tvCommentDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/clickable"
-        android:textSize="@dimen/Comment_nameSize"
-        android:layout_marginBottom="@dimen/Comment_marginBottom"
-        android:layout_marginRight="@dimen/Comment_marginRight"/>
+        android:textSize="@dimen/Comment_nameSize"/>
     <TextView
         android:id="@+id/tvViewComments"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/ShowComments"
+        android:layout_marginTop="@dimen/Comment_marginTop"
         android:layout_marginBottom="@dimen/Comment_marginBottom"
         android:textColor="@color/clickable"
         android:visibility="gone"/>
