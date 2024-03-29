@@ -89,4 +89,6 @@
   <dimen name="dialog_closeHeight">30dp</dimen>
   <dimen name="dialog_textSize">20sp</dimen>
   <dimen name="dialog_buttonMargin">40dp</dimen>
+  <dimen name="tts_Width">25dp</dimen>
+  <dimen name="tts_Height">25dp</dimen>
 </resources>

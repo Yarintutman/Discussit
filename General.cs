@@ -50,18 +50,6 @@ namespace Discussit
         public const int SUB_COMMENT_PADDING = 20;
 
         /// <summary>
-        /// Converts a Bitmap image to a byte array.
-        /// </summary>
-        /// <param name="bitmap">The Bitmap image to convert.</param>
-        /// <returns>A byte array representing the Bitmap image.</returns>
-        public static byte[] BitmapToByteArray(Bitmap bitmap)
-        {
-            MemoryStream ms = new MemoryStream();
-            bitmap.Compress(Bitmap.CompressFormat.Png, 100, ms);
-            return ms.ToArray();
-        }
-
-        /// <summary>
         /// Converts a JavaList to a typed JavaList.
         /// </summary>
         /// <typeparam name="T">The type of elements in the resulting JavaList.</typeparam>

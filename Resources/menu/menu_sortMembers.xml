@@ -1,10 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-  <item android:id="@+id/sortByRank"
-    android:title="@string/sortRank"/>
-  <item android:id="@+id/sortByActivity"
-    android:title="@string/sortActivity"/>
-  <item android:id="@+id/sortByName"
-    android:title="@string/sortByName"/>
+  <item android:id="@+id/itemSortByRank"
+    android:title="@string/sortbyRank"/>
+  <item android:id="@+id/itemSortByJoinDate"
+    android:title="@string/sortbyJoinDate"/>
+  <item android:id="@+id/itemSortbyName"
+    android:title="@string/sortbyName"/>
 </menu>
-

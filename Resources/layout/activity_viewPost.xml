@@ -59,13 +59,27 @@
         android:textSize="@dimen/ViewPost_postNameTextSize"
         android:layout_marginLeft="@dimen/marginLeft"
         android:layout_marginRight="@dimen/marginRight"/>
-    <TextView
-        android:id="@+id/tvPostDescription"
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/textColor"
         android:layout_marginLeft="@dimen/marginLeft"
-        android:layout_marginRight="@dimen/marginRight"/>
+        android:layout_marginRight="@dimen/marginRight">
+        <TextView
+            android:id="@+id/tvPostDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/textColor"
+            android:layout_marginRight="@dimen/marginRight"
+            android:layout_weight="1"/>
+        <ImageButton
+            android:id="@+id/ibtnTts"
+            android:layout_width="@dimen/tts_Width"
+            android:layout_height="@dimen/tts_Height"
+            android:contentDescription="@string/tts"
+            android:background="@drawable/tts"
+            android:layout_toRightOf="@id/tvPostDescription"/>
+    </LinearLayout>
     <HorizontalScrollView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"

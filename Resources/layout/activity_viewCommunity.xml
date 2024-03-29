@@ -111,7 +111,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/clickable"
-        android:text="@string/sortBy"
+        android:text="@string/sortby"
         android:layout_marginLeft="@dimen/marginLeft"/>
     <ListView
         android:id="@+id/lvPosts"

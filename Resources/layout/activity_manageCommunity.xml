@@ -82,6 +82,12 @@
                 android:textColor="@color/textColor"
                 android:gravity="center_vertical"/>
         </LinearLayout>
+        <TextView
+        android:id="@+id/tvSortBy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/clickable"
+        android:text="@string/sortby"/>
         <ListView
             android:id="@+id/lvMembers"
             android:layout_width="match_parent"

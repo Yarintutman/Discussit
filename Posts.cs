@@ -105,5 +105,29 @@ namespace Discussit
         {
             return PostAdapter.GetPostById(Id);
         }
+
+        /// <summary>
+        /// Sorts the adapter by the latest posts
+        /// </summary>
+        public void SortByLatest()
+        {
+            PostAdapter.SortByLatest();
+        }
+
+        /// <summary>
+        /// Sorts the adapter by the oldest posts
+        /// </summary>
+        public void SortByOldest()
+        {
+            PostAdapter.SortByOldest();
+        }
+
+        /// <summary>
+        /// Sorts the adapter by the amount of comments
+        /// </summary>
+        public void SortByComments()
+        {
+            PostAdapter.SortByComments();
+        }
     }
 }

@@ -2,6 +2,7 @@
 using Android.Content;
 using Android.Views;
 using Android.Widget;
+using Java.Lang.Reflect;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -13,7 +14,7 @@ namespace Discussit
     internal class MemberAdapter : BaseAdapter<Member>
     {
         private readonly Context context;
-        private readonly List<Member> lstMembers;
+        private List<Member> lstMembers;
 
         /// <summary>
         /// Initializes a new instance of the MemberAdapter class with the specified context.
@@ -109,6 +110,36 @@ namespace Discussit
         public bool HasMember(string UID)
         {
             return lstMembers.Contains(GetMemberByUID(UID));
+        }
+
+        /// <summary>
+        /// Sorts the list by member's rank
+        /// </summary>
+        public void SortByRank()
+        {
+            List<Member> lstTempMembers = lstMembers.Where(member => member is Leader).ToList();
+            lstTempMembers.AddRange(lstMembers.Where(member => member is Admin && !(member is Leader)).ToList());
+            lstTempMembers.AddRange(lstMembers.Where(member => !(member is Admin)).ToList());
+            lstMembers = lstTempMembers;
+            NotifyDataSetChanged();
+        }
+
+        /// <summary>
+        /// Sorts the list by member's join date
+        /// </summary>
+        public void SortByJoinDate()
+        {
+            lstMembers = lstMembers.OrderBy(member => member.JoinDate).ToList();
+            NotifyDataSetChanged();
+        }
+
+        /// <summary>
+        /// Sorts the list by name
+        /// </summary>
+        public void SortByName()
+        {
+            lstMembers = lstMembers.OrderByDescending(member => member.Name).ToList();
+            NotifyDataSetChanged();
         }
     }
 }

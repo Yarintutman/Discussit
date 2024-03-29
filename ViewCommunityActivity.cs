@@ -1,5 +1,6 @@
 ﻿using Android.App;
 using Android.Content;
+using Android.Content.Res;
 using Android.Gms.Tasks;
 using Android.OS;
 using Android.Runtime;
@@ -8,6 +9,7 @@ using Android.Widget;
 using AndroidX.AppCompat.App;
 using Firebase.Firestore;
 using Java.Lang;
+using System.Globalization;
 using System.Threading;
 
 namespace Discussit
@@ -28,6 +30,7 @@ namespace Discussit
         EditText etSearchBar;
         Task tskGetPosts, tskGetMemebers;
         Post currentPost;
+        string sort;
 
         /// <summary>
         /// Called when the activity is starting.
@@ -74,7 +77,6 @@ namespace Discussit
             ListView lvPosts = FindViewById<ListView>(Resource.Id.lvPosts);
             lvPosts.Adapter = posts.PostAdapter;
             lvPosts.OnItemClickListener = this;
-            RegisterForContextMenu(lvPosts);
             posts.AddSnapshotListener(this);
             members.AddSnapshotListener(this);
             ibtnBack.SetOnClickListener(this);
@@ -83,12 +85,13 @@ namespace Discussit
             ibtnSearch.SetOnClickListener(this);
             btnNewPost.SetOnClickListener(this);
             btnJoinCommunity.SetOnClickListener(this);
-            tvSortBy.SetOnClickListener(this);
-            SetSorting(Resources.GetString(Resource.String.sortDate));
             tvCommunityName.Text = community.Name;
             tvDescription.Text = community.Description;
             tvMemberCount.Text = community.MemberCount.ToString();
+            RegisterForContextMenu(tvSortBy);
             RegisterForContextMenu(lvPosts);
+            sort = Resources.GetString(Resource.String.sortbyComments);
+            SetSorting(sort);
         }
 
         /// <summary>
@@ -106,9 +109,29 @@ namespace Discussit
         /// Sets the sorting text view with the specified sorting criteria.
         /// </summary>
         /// <param name="sortBy">The sorting criteria to display.</param>
-        public void SetSorting(string sortBy)
+        private void SetSorting(string sortBy)
         {
-            tvSortBy.Text = Resources.GetString(Resource.String.sortBy) + " " + sortBy;
+            if (sortBy == Resources.GetString(Resource.String.sortbyNew))
+                sort = sortBy;
+            else if (sortBy == Resources.GetString(Resource.String.sortbyOld))
+                sort = sortBy;
+            else if (sortBy == Resources.GetString(Resource.String.sortbyComments))
+                sort = sortBy;
+            tvSortBy.Text = Resources.GetString(Resource.String.sortby) + " " + sort;
+            SortPosts();
+        }
+
+        /// <summary>
+        /// Sort the posts by the saved sorting format
+        /// </summary>
+        private void SortPosts()
+        {
+            if (sort == Resources.GetString(Resource.String.sortbyNew))
+                posts.SortByLatest();
+            else if (sort == Resources.GetString(Resource.String.sortbyOld))
+                posts.SortByOldest();
+            else if (sort == Resources.GetString(Resource.String.sortbyComments))
+                posts.SortByComments();
         }
 
         /// <summary>
@@ -263,6 +286,7 @@ namespace Discussit
                 {
                     QuerySnapshot qs = (QuerySnapshot)task.Result;
                     posts.AddPosts(qs.Documents);
+                    SortPosts();
                 }
                 else if (task == tskGetMemebers) 
                 {
@@ -275,25 +299,32 @@ namespace Discussit
         }
 
         /// <summary>
-        /// Called when creating a context menu for list view items.
+        /// Called when creating a context menu for a view.
         /// </summary>
         /// <param name="menu">The context menu that is being built.</param>
         /// <param name="v">The view for which the context menu is being created.</param>
         /// <param name="menuInfo">Extra information about the item for which the context menu should be shown.</param>
         public override void OnCreateContextMenu(Android.Views.IContextMenu menu, Android.Views.View v, Android.Views.IContextMenuContextMenuInfo menuInfo)
         {
-            AdapterView.AdapterContextMenuInfo info = menuInfo as AdapterView.AdapterContextMenuInfo;
-            if (info != null)
+            if (v == tvSortBy)
             {
-                int position = info.Position;
-                currentPost = posts[position];
-                Member userAsMember = members.GetMemberByUID(user.Id);
-                if (userAsMember != null && members.HasMember(user.Id) && (userAsMember is Admin || userAsMember.UserID == currentPost.CreatorUID)) 
+                MenuInflater.Inflate(Resource.Menu.menu_sortPosts, menu);
+            }
+            else
+            {
+                AdapterView.AdapterContextMenuInfo info = menuInfo as AdapterView.AdapterContextMenuInfo;
+                if (info != null)
                 {
-                    MenuInflater.Inflate(Resource.Menu.menu_manageItem, menu);
-                    base.OnCreateContextMenu(menu, v, menuInfo);
+                    int position = info.Position;
+                    currentPost = posts[position];
+                    Member userAsMember = members.GetMemberByUID(user.Id);
+                    if (userAsMember != null && members.HasMember(user.Id) && (userAsMember is Admin || userAsMember.UserID == currentPost.CreatorUID))
+                    {
+                        MenuInflater.Inflate(Resource.Menu.menu_manageItem, menu);
+                    }
                 }
             }
+            base.OnCreateContextMenu(menu, v, menuInfo);
         }
 
         /// <summary>
@@ -314,6 +345,12 @@ namespace Discussit
                 else
                     Toast.MakeText(this, Resources.GetString(Resource.String.PostEdit), ToastLength.Short).Show();
             }
+            else if (item.ItemId == Resource.Id.itemSortByNew)
+                SetSorting(Resources.GetString(Resource.String.sortbyNew));
+            else if (item.ItemId == Resource.Id.itemSortByOld)
+                SetSorting(Resources.GetString(Resource.String.sortbyOld));
+            else if (item.ItemId == Resource.Id.itemSortbyComments)
+                SetSorting(Resources.GetString(Resource.String.sortbyComments));
             return base.OnContextItemSelected(item);
         }
 

@@ -13,7 +13,7 @@ namespace Discussit
     internal class PostAdapter : BaseAdapter<Post>
     {
         private readonly Context context;
-        private readonly List<Post> lstPosts;
+        private List<Post> lstPosts;
 
         /// <summary>
         /// Initializes a new instance of the PostAdapter class.
@@ -118,6 +118,33 @@ namespace Discussit
         public Post GetPostById(string Id)
         {
             return lstPosts.FirstOrDefault(Post => Id == Post.Id);
+        }
+
+        /// <summary>
+        /// Sorts the list by the latest posts
+        /// </summary>
+        public void SortByLatest()
+        {
+            lstPosts = lstPosts.OrderByDescending(post => post.CreationDate).ToList();
+            NotifyDataSetChanged();
+        }
+
+        /// <summary>
+        /// Sorts the list by the oldest posts
+        /// </summary>
+        public void SortByOldest()
+        {
+            lstPosts = lstPosts.OrderBy(post => post.CreationDate).ToList();
+            NotifyDataSetChanged();
+        }
+
+        /// <summary>
+        /// Sorts the list by the amount of comments
+        /// </summary>
+        public void SortByComments()
+        {
+            lstPosts = lstPosts.OrderByDescending(post => post.CommentCount).ToList();
+            NotifyDataSetChanged();
         }
     }
 }

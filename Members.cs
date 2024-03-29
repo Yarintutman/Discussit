@@ -220,5 +220,29 @@ namespace Discussit
         {
             return MemberAdapter.HasMember(UID);
         }
+
+        /// <summary>
+        /// Sorts the adapter by member's rank
+        /// </summary>
+        public void SortByRank()
+        {
+            MemberAdapter.SortByRank();
+        }
+
+        /// <summary>
+        /// Sorts the adapter by member's join date
+        /// </summary>
+        public void SortByJoinDate()
+        {
+            MemberAdapter.SortByJoinDate();
+        }
+
+        /// <summary>
+        /// Sorts the adapter by name
+        /// </summary>
+        public void SortByName()
+        {
+            MemberAdapter.SortByName();
+        }
     }
 }

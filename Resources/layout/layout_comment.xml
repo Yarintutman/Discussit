@@ -29,7 +29,7 @@
         android:id="@+id/tvCommentDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/clickable"
+        android:textColor="@color/textColor"
         android:textSize="@dimen/Comment_nameSize"/>
     <TextView
         android:id="@+id/tvViewComments"

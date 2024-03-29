@@ -1,9 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-  <item android:id="@+id/sortByMemberCount"
-    android:title="@string/sortMembers"/>
-  <item android:id="@+id/sortByActivity"
-    android:title="@string/sortActivity"/>
-  <item android:id="@+id/sortByName"
-    android:title="@string/sortByName"/>
+  <item android:id="@id/itemSortByNew "
+    android:title="@string/sortbyNew"/>
+  <item android:id="@+id/itemSortByOld"
+    android:title="@string/sortbyOld"/>
+  <item android:id="@+id/itemSortByMember"
+    android:title="@string/sortbyMembers"/>
+  <item android:id="@+id/itemSortbyPosts"
+    android:title="@string/sortbyPosts"/>
 </menu>

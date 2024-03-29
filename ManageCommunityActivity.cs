@@ -9,6 +9,7 @@ using AndroidX.AppCompat.App;
 using AndroidX.Core.Util;
 using Firebase.Firestore;
 using Firebase.Firestore.Auth;
+using Java.Lang;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,10 +28,11 @@ namespace Discussit
         ImageButton ibtnLogo, ibtnBack;
         EditText etCommunityName, etCommunityDescription;
         Button btnSaveChanges;
-        TextView tvMemberCount;
+        TextView tvMemberCount, tvSortBy;
         Members members;
         Task tskGetMembers;
         Member userAsMember, currentMember;
+        string sort;
 
         /// <summary>
         /// Called when the activity is first created.
@@ -65,6 +67,7 @@ namespace Discussit
             etCommunityDescription = FindViewById<EditText>(Resource.Id.etCommunityDescription);
             ListView lvMembers = FindViewById<ListView>(Resource.Id.lvMembers);
             tvMemberCount = FindViewById<TextView>(Resource.Id.tvMemberCount);
+            tvSortBy = FindViewById<TextView>(Resource.Id.tvSortBy);
             btnSaveChanges = FindViewById<Button>(Resource.Id.btnSaveChanges);
             ibtnLogo.SetOnClickListener(this);
             ibtnBack.SetOnClickListener(this);
@@ -74,8 +77,40 @@ namespace Discussit
             community.CreateMembers(this);
             members = community.Members;
             lvMembers.Adapter = members.MemberAdapter;
-            RegisterForContextMenu(lvMembers);
             members.AddSnapshotListener(this);
+            RegisterForContextMenu(tvSortBy);
+            RegisterForContextMenu(lvMembers);
+            sort = Resources.GetString(Resource.String.sortbyRank);
+            SetSorting(sort);
+        }
+
+        /// <summary>
+        /// Sets the sorting text view with the specified sorting criteria.
+        /// </summary>
+        /// <param name="sortBy">The sorting criteria to display.</param>
+        private void SetSorting(string sortBy)
+        {
+            if (sortBy == Resources.GetString(Resource.String.sortbyRank))
+                sort = sortBy;
+            else if (sort == Resources.GetString(Resource.String.sortbyJoinDate))
+                sort = sortBy;
+            else if (sortBy == Resources.GetString(Resource.String.sortbyName))
+                sort = sortBy;
+            tvSortBy.Text = Resources.GetString(Resource.String.sortby) + " " + sort;
+            SortMembers();
+        }
+
+        /// <summary>
+        /// Sort the members by the saved sorting format
+        /// </summary>
+        private void SortMembers()
+        {
+            if (sort == Resources.GetString(Resource.String.sortbyRank))
+                members.SortByRank();
+            else if (sort == Resources.GetString(Resource.String.sortbyJoinDate))
+                members.SortByJoinDate();
+            else if (sort == Resources.GetString(Resource.String.sortbyName))
+                members.SortByName();
         }
 
         /// <summary>
@@ -192,6 +227,7 @@ namespace Discussit
                     QuerySnapshot qs = (QuerySnapshot)task.Result;
                     members.AddMembers(qs.Documents);
                     tvMemberCount.Text = members.MemberCount.ToString();
+                    SortMembers();
                 }
             }
         }
@@ -207,25 +243,32 @@ namespace Discussit
         }
 
         /// <summary>
-        /// Called when creating a context menu for list view items.
+        /// Called when creating a context menu for a view.
         /// </summary>
         /// <param name="menu">The context menu that is being built.</param>
         /// <param name="v">The view for which the context menu is being created.</param>
         /// <param name="menuInfo">Extra information about the item for which the context menu should be shown.</param>
         public override void OnCreateContextMenu(Android.Views.IContextMenu menu, Android.Views.View v, Android.Views.IContextMenuContextMenuInfo menuInfo)
         {
-            AdapterView.AdapterContextMenuInfo info = menuInfo as AdapterView.AdapterContextMenuInfo;
-            if (info != null)
+            if (v == tvSortBy)
             {
-                int position = info.Position;
-                currentMember = members[position];
-                userAsMember = members.GetMemberByUID(user.Id);
-                if (userAsMember!= null && userAsMember.IsHigherRank(currentMember) && userAsMember != currentMember)
+                MenuInflater.Inflate(Resource.Menu.menu_sortMembers, menu);
+            }
+            else
+            {
+                AdapterView.AdapterContextMenuInfo info = menuInfo as AdapterView.AdapterContextMenuInfo;
+                if (info != null)
                 {
-                    MenuInflater.Inflate(Resource.Menu.menu_manageMember, menu);
-                    base.OnCreateContextMenu(menu, v, menuInfo);
+                    int position = info.Position;
+                    currentMember = members[position];
+                    userAsMember = members.GetMemberByUID(user.Id);
+                    if (userAsMember!= null && userAsMember.IsHigherRank(currentMember) && userAsMember != currentMember)
+                    {
+                        MenuInflater.Inflate(Resource.Menu.menu_manageMember, menu);
+                    }
                 }
             }
+            base.OnCreateContextMenu(menu, v, menuInfo);
         }
 
         /// <summary>
@@ -239,6 +282,12 @@ namespace Discussit
                 Promote();
             else if (item.ItemId == Resource.Id.itemDemote)
                 Demote();
+            else if (item.ItemId == Resource.Id.itemSortByRank)
+                SetSorting(Resources.GetString(Resource.String.sortbyRank));
+            else if (item.ItemId == Resource.Id.itemSortByJoinDate)
+                SetSorting(Resources.GetString(Resource.String.sortbyJoinDate));
+            else if (item.ItemId == Resource.Id.itemSortbyName)
+                SetSorting(Resources.GetString(Resource.String.sortbyName));
             return base.OnContextItemSelected(item);
         }
 

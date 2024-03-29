@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-  <item android:id="@+id/sortByDate"
-    android:title="@string/sortDate"/>
-  <item android:id="@+id/sortByLikes"
-    android:title="@string/sortLikes"/>
-  <item android:id="@+id/sortByName"
-    android:title="@string/sortByName"/>
+  <item android:id="@+id/itemSortByNew"
+    android:title="@string/sortbyNew"/>
+  <item android:id="@+id/itemSortByOld"
+    android:title="@string/sortbyOld"/>
+  <item android:id="@+id/itemSortbyComments"
+    android:title="@string/sortbyComments"/>
 </menu>

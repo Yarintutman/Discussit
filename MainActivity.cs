@@ -67,7 +67,11 @@ namespace Discussit
         {
             user = new User();
             if (user.IsRegistered)
+            {
                 tskRememberLogin = user.Login().AddOnCompleteListener(this);
+                btnEnter = FindViewById<Button>(Resource.Id.btnEnter);
+                btnEnter.Enabled = false;
+            }
         }
 
         /// <summary>
@@ -101,6 +105,7 @@ namespace Discussit
                         tskRegister = user.Register().AddOnCompleteListener(this);
                     else
                         tskLogin = user.Login().AddOnCompleteListener(this);
+                    btnEnter.Enabled = false;
                 }
                 else
                     Toast.MakeText(this, Resources.GetString(Resource.String.InvalidFields), ToastLength.Long).Show();
@@ -129,9 +134,7 @@ namespace Discussit
             if (task.IsSuccessful)
             {
                 if (task == tskRegister)
-                {
                     tskSetFbUser = user.SetFbUser().AddOnCompleteListener(this);
-                }
                 else
                 {
                     if (task == tskLogin)
@@ -147,9 +150,7 @@ namespace Discussit
                         GetUser();
                     }
                     else if (task == tskRememberLogin)
-                    {
                         GetUser();
-                    }
                     else if (task == tskGetUser)
                     {
                         DocumentSnapshot ds = (DocumentSnapshot)task.Result;
@@ -159,7 +160,10 @@ namespace Discussit
                 }
             }
             else if (task != tskRememberLogin)
+            {
                 Toast.MakeText(this, task.Exception.Message, ToastLength.Long).Show();
+                btnEnter.Enabled = true;
+            }
             else
                 user.Forget();
         }

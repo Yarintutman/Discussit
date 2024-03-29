@@ -85,5 +85,38 @@ namespace Discussit
         {
             return fbd.GetCollection(General.COMMUNITIES_COLLECTION);
         }
+
+        /// <summary>
+        /// Sorts the adapter by the latest Communities
+        /// </summary>
+        public void SortByLatest()
+        {
+            CommunityAdapter.SortByLatest();
+        }
+
+        /// <summary>
+        /// Sorts the adapter by the oldest Communities
+        /// </summary>
+        public void SortByOldest()
+        {
+            CommunityAdapter.SortByOldest();
+
+        }
+
+        /// <summary>
+        /// Sorts the adapter by the amount of posts
+        /// </summary>
+        public void SortByPosts()
+        {
+            CommunityAdapter.SortByPosts();
+        }
+
+        /// <summary>
+        /// Sorts the adapter by the amount of members
+        /// </summary>
+        public void SortByMembers()
+        {
+            CommunityAdapter.SortByMembers();
+        }
     }
 }

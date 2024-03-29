@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Android.Content;
 using Android.App;
 using Firebase.Firestore;
+using System.Linq;
 
 namespace Discussit
 {
@@ -14,7 +15,7 @@ namespace Discussit
     internal class CommunityAdapter : BaseAdapter<Community>
     {
         private readonly Context context;
-        private readonly List<Community> lstCommunities;
+        private List<Community> lstCommunities;
 
         /// <summary>
         /// Adapter for displaying a list of communities in a ListView.
@@ -98,6 +99,42 @@ namespace Discussit
         public void Clear()
         {
             lstCommunities.Clear();
+            NotifyDataSetChanged();
+        }
+
+        /// <summary>
+        /// Sorts the list by the latest Communities
+        /// </summary>
+        public void SortByLatest()
+        {
+            lstCommunities = lstCommunities.OrderByDescending(communities => communities.CreationDate).ToList();
+            NotifyDataSetChanged();
+        }
+
+        /// <summary>
+        /// Sorts the list by the oldest Communities
+        /// </summary>
+        public void SortByOldest()
+        {
+            lstCommunities = lstCommunities.OrderBy(communities => communities.CreationDate).ToList();
+            NotifyDataSetChanged();
+        }
+
+        /// <summary>
+        /// Sorts the list by the amount of posts
+        /// </summary>
+        public void SortByPosts()
+        {
+            lstCommunities = lstCommunities.OrderByDescending(communities => communities.PostCount).ToList();
+            NotifyDataSetChanged();
+        }
+
+        /// <summary>
+        /// Sorts the list by the amount of members
+        /// </summary>
+        public void SortByMembers()
+        {
+            lstCommunities = lstCommunities.OrderByDescending(communities => communities.MemberCount).ToList();
             NotifyDataSetChanged();
         }
     }

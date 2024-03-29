@@ -21,7 +21,6 @@ namespace Discussit
         User user;
         ImageButton ibtnPicture, ibtnBack, ibtnLogout, ibtnCloseDialog;
         Button btnViewCommunities, btnViewPosts, btnViewComments, btnManageCommunities, btnSettings;
-        TextView tvSortBy;
         Dialog dialogViewCommunities, dialogViewPosts, dialogViewComments, dialogViewManagedCommunities;
         Task tskGetCommunities, tskGetPosts, tskGetComments, tskGetManagedCommunities;
         CommunityAdapter communities, managedCommunities;
@@ -73,15 +72,6 @@ namespace Discussit
             btnViewComments.SetOnClickListener(this);
             btnManageCommunities.SetOnClickListener(this);
             btnSettings.SetOnClickListener(this);
-        }
-
-        /// <summary>
-        /// Sets the sorting criteria for the displayed data.
-        /// </summary>
-        /// <param name="sortBy">The sorting format.</param>
-        public void SetSorting(string sortBy)
-        {
-            tvSortBy.Text = Resources.GetString(Resource.String.sortBy) + " " + sortBy;
         }
 
         /// <summary>
@@ -139,8 +129,6 @@ namespace Discussit
             ibtnCloseDialog = dialogViewCommunities.FindViewById<ImageButton>(Resource.Id.ibtnCloseDialog);
             ibtnCloseDialog.SetOnClickListener(this);
             currentDialog = Resources.GetString(Resource.String.Communities);
-            tvSortBy = dialogViewCommunities.FindViewById<TextView>(Resource.Id.tvSortBy);
-            SetSorting(Resources.GetString(Resource.String.sortDate));
             if (user.Communities.Size() != 0)
             {
                 tskGetCommunities = user.GetDocumentInList(General.FIELD_USER_COMMUNITIES);
@@ -160,8 +148,6 @@ namespace Discussit
             ibtnCloseDialog = dialogViewManagedCommunities.FindViewById<ImageButton>(Resource.Id.ibtnCloseDialog);
             ibtnCloseDialog.SetOnClickListener(this);
             currentDialog = Resources.GetString(Resource.String.ManagedCommunities);
-            tvSortBy = dialogViewManagedCommunities.FindViewById<TextView>(Resource.Id.tvSortBy);
-            SetSorting(Resources.GetString(Resource.String.sortDate));
             if (user.ManagingCommunities.Size() != 0)
             {
                 tskGetManagedCommunities = user.GetDocumentInList(General.FIELD_USER_MANAGING_COMMUNITIES);
@@ -181,8 +167,6 @@ namespace Discussit
             ibtnCloseDialog = dialogViewPosts.FindViewById<ImageButton>(Resource.Id.ibtnCloseDialog);
             ibtnCloseDialog.SetOnClickListener(this);
             currentDialog = Resources.GetString(Resource.String.Posts);
-            tvSortBy = dialogViewPosts.FindViewById<TextView>(Resource.Id.tvSortBy);
-            SetSorting(Resources.GetString(Resource.String.sortDate));
             if (user.Posts.Size() != 0)
             {
                 tskGetPosts = user.GetDocumentInList(General.FIELD_USER_POSTS);

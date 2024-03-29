@@ -25,6 +25,7 @@ namespace Discussit
         TextView tvSortBy;
         Communities communities;
         Task tskGetCommunities;
+        string sort;
 
         /// <summary>
         /// Called when the activity is starting.
@@ -65,18 +66,44 @@ namespace Discussit
             ibtnProfile.SetOnClickListener(this);
             ibtnSearch.SetOnClickListener(this);
             btnNewCommunity.SetOnClickListener(this);
-            tvSortBy.SetOnClickListener(this);
-            SetSorting(Resources.GetString(Resource.String.sortDate));
+            RegisterForContextMenu(lvCommunities);
+            RegisterForContextMenu(tvSortBy);
+            sort = Resources.GetString(Resource.String.sortbyPosts);
+            SetSorting(sort);
         }
 
 
         /// <summary>
-        /// Sets the sorting text.
+        /// Sets the sorting text view with the specified sorting criteria.
         /// </summary>
-        /// <param name="sortBy">The sorting format.</param>
-        public void SetSorting(string sortBy)
+        /// <param name="sortBy">The sorting criteria to display.</param>
+        private void SetSorting(string sortBy)
         {
-            tvSortBy.Text = Resources.GetString(Resource.String.sortBy) + " " + sortBy;
+            if (sortBy == Resources.GetString(Resource.String.sortbyNew))
+                sort = sortBy;
+            else if (sortBy == Resources.GetString(Resource.String.sortbyOld))
+                sort = sortBy;
+            else if (sortBy == Resources.GetString(Resource.String.sortbyPosts))
+                sort = sortBy;
+            else if (sortBy == Resources.GetString(Resource.String.sortbyMembers))
+                sort = sortBy;
+            tvSortBy.Text = Resources.GetString(Resource.String.sortby) + " " + sort;
+            SortCommunities();
+        }
+
+        /// <summary>
+        /// Sort the communities by the saved sorting format
+        /// </summary>
+        private void SortCommunities()
+        {
+            if (sort == Resources.GetString(Resource.String.sortbyNew))
+                communities.SortByLatest();
+            else if (sort == Resources.GetString(Resource.String.sortbyOld))
+                communities.SortByOldest();
+            else if (sort == Resources.GetString(Resource.String.sortbyPosts))
+                communities.SortByPosts();
+            else if (sort == Resources.GetString(Resource.String.sortbyMembers))
+                communities.SortByMembers();
         }
 
         /// <summary>
@@ -184,8 +211,56 @@ namespace Discussit
                 {
                     QuerySnapshot qs = (QuerySnapshot)task.Result;
                     communities.AddCommunities(qs.Documents);
+                    SortCommunities();
                 }
             }
+        }
+
+        /// <summary>
+        /// Called when creating a context menu for a view.
+        /// </summary>
+        /// <param name="menu">The context menu that is being built.</param>
+        /// <param name="v">The view for which the context menu is being created.</param>
+        /// <param name="menuInfo">Extra information about the item for which the context menu should be shown.</param>
+        public override void OnCreateContextMenu(Android.Views.IContextMenu menu, Android.Views.View v, Android.Views.IContextMenuContextMenuInfo menuInfo)
+        {
+            if (v == tvSortBy)
+            {
+                MenuInflater.Inflate(Resource.Menu.menu_sortCommunities, menu);
+            }
+            else
+            {
+                AdapterView.AdapterContextMenuInfo info = menuInfo as AdapterView.AdapterContextMenuInfo;
+                if (info != null)
+                {
+                    /*int position = info.Position;
+                    currentPost = posts[position];
+                    Member userAsMember = members.GetMemberByUID(user.Id);
+                    if (userAsMember != null && members.HasMember(user.Id) && (userAsMember is Admin || userAsMember.UserID == currentPost.CreatorUID))
+                    {
+                        MenuInflater.Inflate(Resource.Menu.menu_manageItem, menu);
+                    }*/
+                }
+            }
+            base.OnCreateContextMenu(menu, v, menuInfo);
+        }
+
+        /// <summary>
+        /// Called when a context menu item is selected.
+        /// </summary>
+        /// <param name="item">The selected menu item.</param>
+        /// <returns>True if the item selection was handled, otherwise false.</returns>
+        public override bool OnContextItemSelected(Android.Views.IMenuItem item)
+        {
+            if (item.ItemId == Resource.Id.itemSortByNew)
+                SetSorting(Resources.GetString(Resource.String.sortbyNew));
+            else if (item.ItemId == Resource.Id.itemSortByOld)
+                SetSorting(Resources.GetString(Resource.String.sortbyOld));
+            else if (item.ItemId == Resource.Id.itemSortbyPosts)
+                SetSorting(Resources.GetString(Resource.String.sortbyPosts));
+            else if (item.ItemId == Resource.Id.itemSortByMember)
+                SetSorting(Resources.GetString(Resource.String.sortbyMembers));
+            return base.OnContextItemSelected(item);
         }
 
         /// <summary>

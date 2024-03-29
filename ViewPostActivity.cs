@@ -1,17 +1,20 @@
 ﻿using Android.App;
 using Android.Content;
 using Android.Gms.Tasks;
+using Android.Graphics;
 using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using AndroidX.AppCompat.App;
 using Firebase.Firestore;
+using System;
+using Android.Speech.Tts;
 
 namespace Discussit
 {
     [Activity(Label = "ViewPostActivity")]
-    public class ViewPostActivity : AppCompatActivity, View.IOnClickListener, AdapterView.IOnItemClickListener, IEventListener, IOnCompleteListener
+    public class ViewPostActivity : AppCompatActivity, View.IOnClickListener, AdapterView.IOnItemClickListener, IEventListener, IOnCompleteListener, TextToSpeech.IOnInitListener
     {
         User user;
         Community community;
@@ -19,9 +22,10 @@ namespace Discussit
         Comment currentComment, recursiveComment;
         Comments comments;
         Members members;
-        ImageButton ibtnBack, ibtnLogo, ibtnProfile;
+        ImageButton ibtnBack, ibtnLogo, ibtnProfile, ibtnTts;
         Button btnNewComment;
         Task tskGetComments, tskGetMemebers, tskGetRecursiveComments;
+        TextToSpeech tts;
         bool isInCommunity;
 
         /// <summary>
@@ -49,6 +53,8 @@ namespace Discussit
             community.CreateMembers(this);
             comments = post.Comments;
             members = community.Members;
+            tts = new TextToSpeech(this, this);
+            tts.SetPitch(1);
         }
 
         /// <summary>
@@ -63,6 +69,7 @@ namespace Discussit
             ibtnBack = FindViewById<ImageButton>(Resource.Id.ibtnBack);
             ibtnLogo = FindViewById<ImageButton>(Resource.Id.ibtnLogo);
             ibtnProfile = FindViewById<ImageButton>(Resource.Id.ibtnProfile);
+            ibtnTts = FindViewById<ImageButton>(Resource.Id.ibtnTts);
             btnNewComment = FindViewById<Button>(Resource.Id.btnNewComment);
             tvPostCreator.Text = post.CreatorName;
             tvPostTitle.Text = post.Title;
@@ -72,6 +79,7 @@ namespace Discussit
             ibtnBack.SetOnClickListener(this);
             ibtnLogo.SetOnClickListener(this);
             ibtnProfile.SetOnClickListener(this);
+            ibtnTts.SetOnClickListener(this);
             btnNewComment.SetOnClickListener(this);
             RegisterForContextMenu(lvComments);
         }
@@ -209,6 +217,14 @@ namespace Discussit
         }
 
         /// <summary>
+        /// Playes tts of the post's description
+        /// </summary>
+        private void PostTextToSpeach()
+        {
+            tts.Speak(post.Description, QueueMode.Flush, null, null);
+        }
+
+        /// <summary>
         /// Handles click events.
         /// </summary>
         /// <param name="v">The view that was clicked.</param>
@@ -220,6 +236,8 @@ namespace Discussit
                 Back();
             else if (v == ibtnProfile)
                 ViewProfile();
+            else if (v == ibtnTts)
+                PostTextToSpeach();
             else if (v == btnNewComment)
                 if (isInCommunity)
                     OpenCreateCommentActivity();
@@ -330,6 +348,9 @@ namespace Discussit
             base.OnPause();
             comments.RemoveSnapshotListener();
             members.RemoveSnapshotListener();
+            tts.Stop();
         }
+
+        public void OnInit([GeneratedEnum] OperationResult status) { }
     }
 }

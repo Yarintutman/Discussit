@@ -304,19 +304,6 @@ namespace Discussit
         }
 
         /// <summary>
-        /// Uploads an image to Firebase Storage.
-        /// </summary>
-        /// <param name="fbImagePath">The path in Firebase Storage where the image will be stored.</param>
-        /// <param name="bitmap">The Bitmap image to upload.</param>
-        /// <returns>An UploadTask representing the asynchronous upload operation.</returns>
-        public UploadTask SaveImage(string fbImagePath, Bitmap bitmap)
-        {
-            StorageReference storageReference = FirebaseStorage.Instance.GetReference(fbImagePath);
-            Byte[] imgBytes = General.BitmapToByteArray(bitmap);
-            return storageReference.PutBytes(imgBytes);
-        }
-
-        /// <summary>
         /// Retrieves the download URL for a file stored in Firebase Storage.
         /// </summary>
         /// <param name="fbImagePath">The path to the file in Firebase Storage.</param>
