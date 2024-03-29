@@ -87,7 +87,6 @@ namespace Discussit
             v.SetPadding(leftPaddingPx, v.PaddingTop, v.PaddingRight, v.PaddingBottom);
             if (position == 0)
             {
-
                 CommentWidth = (int)TypedValue.ApplyDimension(ComplexUnitType.Dip,
                                General.SUB_COMMENT_PADDING, context.Resources.DisplayMetrics) *
                                (LowestSuncommentCount() - 1);
