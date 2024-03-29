@@ -139,11 +139,18 @@ namespace Discussit
             return CommentAdapter.GetCommentById(Id);
         }
 
-        public void RemoveRecursiveComments(Comment comment)
+        /// <summary>
+        /// Removes all of the subcomments of the comment from the adapter
+        /// </summary>
+        /// <param name="comment">The comment to remove subcomments from</param>
+        public void RemoveSubcomments(Comment comment)
         {
-            CommentAdapter.RemoveRecursiveComments(comment);
+            CommentAdapter.RemoveSubcomments(comment);
         }
 
+        /// <summary>
+        /// Shows the open Subcomments button in all of the comments that have subcomments
+        /// </summary>
         public void ShowOpenComments()
         {
             CommentAdapter.ShowOpenComments();
