@@ -1,16 +1,10 @@
-﻿using Android;
-using Android.App;
+﻿using Android.App;
 using Android.Content;
-using Android.Content.Res;
 using Android.Util;
 using Android.Views;
 using Android.Widget;
-using AndroidX.Core.Util;
-using Firebase.Firestore.Core;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using static Android.Icu.Text.ListFormatter;
 using View = Android.Views.View;
 
 namespace Discussit
@@ -89,7 +83,7 @@ namespace Discussit
             {
                 CommentWidth = (int)TypedValue.ApplyDimension(ComplexUnitType.Dip,
                                General.SUB_COMMENT_PADDING, context.Resources.DisplayMetrics) *
-                               (LowestSuncommentCount() - 1);
+                               (LowestSubcommentCount() - 1);
             }
             LinearLayout llComment = v.FindViewById<LinearLayout>(Resource.Id.llComment);
             ViewGroup.LayoutParams layoutParams = llComment.LayoutParameters;
@@ -170,7 +164,7 @@ namespace Discussit
         /// <summary>
         /// Returns the count of parent comments of the lowest subcomment in the hierarchy
         /// </summary>
-        public int LowestSuncommentCount()
+        public int LowestSubcommentCount()
         {
             return lstComments.Max(comment => General.AppearanceCount<string>(
                                    General.StringToList(comment.Path, '/'),
@@ -182,7 +176,8 @@ namespace Discussit
         /// </summary>
         public void ShowOpenComments()
         {
-            List<Comment> lstHasSubcomments= lstComments.Where(comment => lstComments.Any(current => comment.Path == current.ParentPath)).ToList();
+            List<Comment> lstHasSubcomments= lstComments.Where(comment => 
+                                             lstComments.Any(current => comment.Path == current.ParentPath)).ToList();
             foreach (Comment comment in lstHasSubcomments)
             {
                 comment.HasComments = true;

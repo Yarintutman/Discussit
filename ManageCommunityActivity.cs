@@ -2,18 +2,10 @@
 using Android.Content;
 using Android.Gms.Tasks;
 using Android.OS;
-using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using AndroidX.AppCompat.App;
-using AndroidX.Core.Util;
 using Firebase.Firestore;
-using Firebase.Firestore.Auth;
-using Java.Lang;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Discussit
 {
@@ -92,7 +84,7 @@ namespace Discussit
         {
             if (sortBy == Resources.GetString(Resource.String.sortbyRank))
                 sort = sortBy;
-            else if (sort == Resources.GetString(Resource.String.sortbyJoinDate))
+            else if (sortBy == Resources.GetString(Resource.String.sortbyJoinDate))
                 sort = sortBy;
             else if (sortBy == Resources.GetString(Resource.String.sortbyName))
                 sort = sortBy;
