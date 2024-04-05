@@ -12,7 +12,6 @@
         android:layout_marginTop="@dimen/dialog_marginTop"
         android:layout_marginLeft="@dimen/dialog_marginLeft"
         android:layout_marginRight="@dimen/dialog_marginRight"
-        android:text="@string/confirmLogout"
         android:textSize="@dimen/dialog_textSize"
         android:textColor="@color/textColor"
         android:layout_weight="1"/>

@@ -281,6 +281,19 @@ namespace Discussit
         }
 
         /// <summary>
+        /// Removes a List of elements from an array field in a Firestore document.
+        /// </summary>
+        /// <param name="cName">The name of the Firestore collection containing the document.</param>
+        /// <param name="docId">The ID of the document containing the array field.</param>
+        /// <param name="fName">The name of the array field to update.</param>
+        /// <param name="fValue">The List of elements to remove from the array.</param>
+        /// <returns>A Task representing the asynchronous operation of updating the document.</returns>
+        public Task RemoveElementsFromArray(string cName, string docId, string fName, List<Java.Lang.Object> fValue)
+        {
+            return firestore.Collection(cName).Document(docId).Update(fName, FieldValue.ArrayRemove(fValue.ToArray()));
+        }
+
+        /// <summary>
         /// Adds a listener to a Firestore collection to receive real-time updates.
         /// </summary>
         /// <param name="activity">The activity where the listener is added.</param>

@@ -4371,10 +4371,10 @@ namespace Discussit
 			public const int itemEdit = 2131230893;
 			
 			// aapt resource value: 0x7F0800AE
-			public const int itemPromote = 2131230894;
+			public const int itemKick = 2131230894;
 			
 			// aapt resource value: 0x7F0800AF
-			public const int itemRemove = 2131230895;
+			public const int itemPromote = 2131230895;
 			
 			// aapt resource value: 0x7F0800B5
 			public const int itemSortbyComments = 2131230901;
@@ -5175,7 +5175,7 @@ namespace Discussit
 			public const int design_text_input_password_icon = 2131427382;
 			
 			// aapt resource value: 0x7F0B0037
-			public const int dialog_logout = 2131427383;
+			public const int dialog_confirm = 2131427383;
 			
 			// aapt resource value: 0x7F0B0038
 			public const int dialog_manageMembers = 2131427384;
@@ -5551,10 +5551,19 @@ namespace Discussit
 			public const int confirm = 2131689573;
 			
 			// aapt resource value: 0x7F0F0066
-			public const int confirmLogout = 2131689574;
+			public const int confirmKickMember = 2131689574;
 			
 			// aapt resource value: 0x7F0F0067
-			public const int copy_toast_msg = 2131689575;
+			public const int confirmLogout = 2131689575;
+			
+			// aapt resource value: 0x7F0F0068
+			public const int confirmPromoteAdmin = 2131689576;
+			
+			// aapt resource value: 0x7F0F0069
+			public const int confirmTransferOwner = 2131689577;
+			
+			// aapt resource value: 0x7F0F006A
+			public const int copy_toast_msg = 2131689578;
 			
 			// aapt resource value: 0x7F0F0007
 			public const int CreateComment = 2131689479;
@@ -5565,77 +5574,77 @@ namespace Discussit
 			// aapt resource value: 0x7F0F0009
 			public const int CreatePost = 2131689481;
 			
-			// aapt resource value: 0x7F0F0068
-			public const int delete = 2131689576;
+			// aapt resource value: 0x7F0F006B
+			public const int delete = 2131689579;
 			
-			// aapt resource value: 0x7F0F0069
-			public const int demote = 2131689577;
+			// aapt resource value: 0x7F0F006C
+			public const int demote = 2131689580;
 			
-			// aapt resource value: 0x7F0F006A
-			public const int edit = 2131689578;
+			// aapt resource value: 0x7F0F006D
+			public const int edit = 2131689581;
 			
 			// aapt resource value: 0x7F0F000A
 			public const int Email = 2131689482;
 			
-			// aapt resource value: 0x7F0F006B
-			public const int enterCommentDescription = 2131689579;
-			
-			// aapt resource value: 0x7F0F0070
-			public const int entercommunityDescription = 2131689584;
-			
-			// aapt resource value: 0x7F0F006C
-			public const int enterCommunityName = 2131689580;
-			
-			// aapt resource value: 0x7F0F006D
-			public const int enterEmail = 2131689581;
-			
 			// aapt resource value: 0x7F0F006E
-			public const int enterPostDescription = 2131689582;
-			
-			// aapt resource value: 0x7F0F006F
-			public const int enterPostTitle = 2131689583;
-			
-			// aapt resource value: 0x7F0F0071
-			public const int fab_transformation_scrim_behavior = 2131689585;
-			
-			// aapt resource value: 0x7F0F0072
-			public const int fab_transformation_sheet_behavior = 2131689586;
+			public const int enterCommentDescription = 2131689582;
 			
 			// aapt resource value: 0x7F0F0073
-			public const int fallback_menu_item_copy_link = 2131689587;
+			public const int entercommunityDescription = 2131689587;
+			
+			// aapt resource value: 0x7F0F006F
+			public const int enterCommunityName = 2131689583;
+			
+			// aapt resource value: 0x7F0F0070
+			public const int enterEmail = 2131689584;
+			
+			// aapt resource value: 0x7F0F0071
+			public const int enterPostDescription = 2131689585;
+			
+			// aapt resource value: 0x7F0F0072
+			public const int enterPostTitle = 2131689586;
 			
 			// aapt resource value: 0x7F0F0074
-			public const int fallback_menu_item_open_in_browser = 2131689588;
+			public const int fab_transformation_scrim_behavior = 2131689588;
 			
 			// aapt resource value: 0x7F0F0075
-			public const int fallback_menu_item_share_link = 2131689589;
+			public const int fab_transformation_sheet_behavior = 2131689589;
 			
 			// aapt resource value: 0x7F0F0076
-			public const int fcm_fallback_notification_channel_label = 2131689590;
+			public const int fallback_menu_item_copy_link = 2131689590;
 			
 			// aapt resource value: 0x7F0F0077
-			public const int gcm_defaultSenderId = 2131689591;
+			public const int fallback_menu_item_open_in_browser = 2131689591;
 			
 			// aapt resource value: 0x7F0F0078
-			public const int google_api_key = 2131689592;
+			public const int fallback_menu_item_share_link = 2131689592;
 			
 			// aapt resource value: 0x7F0F0079
-			public const int google_app_id = 2131689593;
+			public const int fcm_fallback_notification_channel_label = 2131689593;
 			
 			// aapt resource value: 0x7F0F007A
-			public const int google_crash_reporting_api_key = 2131689594;
+			public const int gcm_defaultSenderId = 2131689594;
 			
 			// aapt resource value: 0x7F0F007B
-			public const int google_storage_bucket = 2131689595;
+			public const int google_api_key = 2131689595;
+			
+			// aapt resource value: 0x7F0F007C
+			public const int google_app_id = 2131689596;
+			
+			// aapt resource value: 0x7F0F007D
+			public const int google_crash_reporting_api_key = 2131689597;
+			
+			// aapt resource value: 0x7F0F007E
+			public const int google_storage_bucket = 2131689598;
 			
 			// aapt resource value: 0x7F0F000B
 			public const int HideComments = 2131689483;
 			
-			// aapt resource value: 0x7F0F007C
-			public const int hideDescription = 2131689596;
+			// aapt resource value: 0x7F0F007F
+			public const int hideDescription = 2131689599;
 			
-			// aapt resource value: 0x7F0F007D
-			public const int hide_bottom_view_on_scroll_behavior = 2131689597;
+			// aapt resource value: 0x7F0F0080
+			public const int hide_bottom_view_on_scroll_behavior = 2131689600;
 			
 			// aapt resource value: 0x7F0F000C
 			public const int HintEmail = 2131689484;
@@ -5658,74 +5667,77 @@ namespace Discussit
 			// aapt resource value: 0x7F0F0012
 			public const int JoinCommunity = 2131689490;
 			
-			// aapt resource value: 0x7F0F007E
-			public const int joinCommunityToToCreateComment = 2131689598;
+			// aapt resource value: 0x7F0F0081
+			public const int joinCommunityToToCreateComment = 2131689601;
 			
-			// aapt resource value: 0x7F0F007F
-			public const int joinCommunityToToCreatePost = 2131689599;
+			// aapt resource value: 0x7F0F0082
+			public const int joinCommunityToToCreatePost = 2131689602;
 			
-			// aapt resource value: 0x7F0F0080
-			public const int leader = 2131689600;
+			// aapt resource value: 0x7F0F0083
+			public const int kick = 2131689603;
+			
+			// aapt resource value: 0x7F0F0084
+			public const int leader = 2131689604;
 			
 			// aapt resource value: 0x7F0F0013
 			public const int Login = 2131689491;
 			
-			// aapt resource value: 0x7F0F0081
-			public const int logo = 2131689601;
+			// aapt resource value: 0x7F0F0085
+			public const int logo = 2131689605;
 			
-			// aapt resource value: 0x7F0F0082
-			public const int logout = 2131689602;
+			// aapt resource value: 0x7F0F0086
+			public const int logout = 2131689606;
 			
-			// aapt resource value: 0x7F0F0083
-			public const int manageCommunities = 2131689603;
+			// aapt resource value: 0x7F0F0087
+			public const int manageCommunities = 2131689607;
 			
 			// aapt resource value: 0x7F0F0014
 			public const int ManagedCommunities = 2131689492;
 			
-			// aapt resource value: 0x7F0F0084
-			public const int manageMembers = 2131689604;
+			// aapt resource value: 0x7F0F0088
+			public const int manageMembers = 2131689608;
 			
-			// aapt resource value: 0x7F0F0085
-			public const int member = 2131689605;
+			// aapt resource value: 0x7F0F0089
+			public const int member = 2131689609;
 			
-			// aapt resource value: 0x7F0F0086
-			public const int memberDemote = 2131689606;
+			// aapt resource value: 0x7F0F008A
+			public const int memberDemote = 2131689610;
 			
-			// aapt resource value: 0x7F0F0087
-			public const int members = 2131689607;
+			// aapt resource value: 0x7F0F008B
+			public const int members = 2131689611;
 			
 			// aapt resource value: 0x7F0F0015
 			public const int MemberSearchHint = 2131689493;
 			
-			// aapt resource value: 0x7F0F0088
-			public const int mtrl_chip_close_icon_content_description = 2131689608;
+			// aapt resource value: 0x7F0F008C
+			public const int mtrl_chip_close_icon_content_description = 2131689612;
 			
 			// aapt resource value: 0x7F0F0016
 			public const int NewUser = 2131689494;
 			
-			// aapt resource value: 0x7F0F0089
-			public const int openResetPassword = 2131689609;
+			// aapt resource value: 0x7F0F008D
+			public const int openResetPassword = 2131689613;
 			
 			// aapt resource value: 0x7F0F0017
 			public const int Password = 2131689495;
 			
-			// aapt resource value: 0x7F0F008A
-			public const int passwordEmail = 2131689610;
-			
-			// aapt resource value: 0x7F0F008B
-			public const int password_toggle_content_description = 2131689611;
-			
-			// aapt resource value: 0x7F0F008C
-			public const int path_password_eye = 2131689612;
-			
-			// aapt resource value: 0x7F0F008D
-			public const int path_password_eye_mask_strike_through = 2131689613;
-			
 			// aapt resource value: 0x7F0F008E
-			public const int path_password_eye_mask_visible = 2131689614;
+			public const int passwordEmail = 2131689614;
 			
 			// aapt resource value: 0x7F0F008F
-			public const int path_password_strike_through = 2131689615;
+			public const int password_toggle_content_description = 2131689615;
+			
+			// aapt resource value: 0x7F0F0090
+			public const int path_password_eye = 2131689616;
+			
+			// aapt resource value: 0x7F0F0091
+			public const int path_password_eye_mask_strike_through = 2131689617;
+			
+			// aapt resource value: 0x7F0F0092
+			public const int path_password_eye_mask_visible = 2131689618;
+			
+			// aapt resource value: 0x7F0F0093
+			public const int path_password_strike_through = 2131689619;
 			
 			// aapt resource value: 0x7F0F0018
 			public const int PostDescription = 2131689496;
@@ -5742,17 +5754,17 @@ namespace Discussit
 			// aapt resource value: 0x7F0F001B
 			public const int PostTitle = 2131689499;
 			
-			// aapt resource value: 0x7F0F0090
-			public const int profile = 2131689616;
+			// aapt resource value: 0x7F0F0094
+			public const int profile = 2131689620;
 			
-			// aapt resource value: 0x7F0F0091
-			public const int project_id = 2131689617;
+			// aapt resource value: 0x7F0F0095
+			public const int project_id = 2131689621;
 			
-			// aapt resource value: 0x7F0F0092
-			public const int promote = 2131689618;
+			// aapt resource value: 0x7F0F0096
+			public const int promote = 2131689622;
 			
-			// aapt resource value: 0x7F0F0093
-			public const int recursiveComment = 2131689619;
+			// aapt resource value: 0x7F0F0097
+			public const int recursiveComment = 2131689623;
 			
 			// aapt resource value: 0x7F0F001D
 			public const int Register = 2131689501;
@@ -5760,92 +5772,89 @@ namespace Discussit
 			// aapt resource value: 0x7F0F001E
 			public const int Remember = 2131689502;
 			
-			// aapt resource value: 0x7F0F0094
-			public const int remove = 2131689620;
-			
-			// aapt resource value: 0x7F0F0095
-			public const int resetPassword = 2131689621;
-			
-			// aapt resource value: 0x7F0F0096
-			public const int save = 2131689622;
-			
-			// aapt resource value: 0x7F0F0097
-			public const int search = 2131689623;
-			
 			// aapt resource value: 0x7F0F0098
-			public const int search_menu_title = 2131689624;
+			public const int resetPassword = 2131689624;
 			
 			// aapt resource value: 0x7F0F0099
-			public const int sendAgain = 2131689625;
+			public const int save = 2131689625;
 			
 			// aapt resource value: 0x7F0F009A
-			public const int sendResetPasswordEmail = 2131689626;
+			public const int search = 2131689626;
 			
 			// aapt resource value: 0x7F0F009B
-			public const int settings = 2131689627;
+			public const int search_menu_title = 2131689627;
+			
+			// aapt resource value: 0x7F0F009C
+			public const int sendAgain = 2131689628;
+			
+			// aapt resource value: 0x7F0F009D
+			public const int sendResetPasswordEmail = 2131689629;
+			
+			// aapt resource value: 0x7F0F009E
+			public const int settings = 2131689630;
 			
 			// aapt resource value: 0x7F0F001F
 			public const int ShowComments = 2131689503;
 			
-			// aapt resource value: 0x7F0F009C
-			public const int showDescription = 2131689628;
+			// aapt resource value: 0x7F0F009F
+			public const int showDescription = 2131689631;
 			
 			// aapt resource value: 0x7F0F0020
 			public const int Slogan = 2131689504;
 			
-			// aapt resource value: 0x7F0F009D
-			public const int sortby = 2131689629;
-			
-			// aapt resource value: 0x7F0F009E
-			public const int sortbyComments = 2131689630;
-			
-			// aapt resource value: 0x7F0F009F
-			public const int sortbyJoinDate = 2131689631;
-			
 			// aapt resource value: 0x7F0F00A0
-			public const int sortbyMembers = 2131689632;
+			public const int sortby = 2131689632;
 			
 			// aapt resource value: 0x7F0F00A1
-			public const int sortbyName = 2131689633;
+			public const int sortbyComments = 2131689633;
 			
 			// aapt resource value: 0x7F0F00A2
-			public const int sortbyNew = 2131689634;
+			public const int sortbyJoinDate = 2131689634;
 			
 			// aapt resource value: 0x7F0F00A3
-			public const int sortbyOld = 2131689635;
+			public const int sortbyMembers = 2131689635;
 			
 			// aapt resource value: 0x7F0F00A4
-			public const int sortbyPosts = 2131689636;
+			public const int sortbyName = 2131689636;
 			
 			// aapt resource value: 0x7F0F00A5
-			public const int sortbyRank = 2131689637;
+			public const int sortbyNew = 2131689637;
 			
 			// aapt resource value: 0x7F0F00A6
-			public const int status_bar_notification_info_overflow = 2131689638;
+			public const int sortbyOld = 2131689638;
 			
 			// aapt resource value: 0x7F0F00A7
-			public const int transferOwner = 2131689639;
+			public const int sortbyPosts = 2131689639;
 			
 			// aapt resource value: 0x7F0F00A8
-			public const int tts = 2131689640;
+			public const int sortbyRank = 2131689640;
 			
 			// aapt resource value: 0x7F0F00A9
-			public const int updatePost = 2131689641;
+			public const int status_bar_notification_info_overflow = 2131689641;
+			
+			// aapt resource value: 0x7F0F00AA
+			public const int transferOwner = 2131689642;
+			
+			// aapt resource value: 0x7F0F00AB
+			public const int tts = 2131689643;
+			
+			// aapt resource value: 0x7F0F00AC
+			public const int updatePost = 2131689644;
 			
 			// aapt resource value: 0x7F0F0021
 			public const int Username = 2131689505;
 			
-			// aapt resource value: 0x7F0F00AA
-			public const int viewComments = 2131689642;
-			
-			// aapt resource value: 0x7F0F00AB
-			public const int viewCommunities = 2131689643;
-			
-			// aapt resource value: 0x7F0F00AC
-			public const int viewPosts = 2131689644;
-			
 			// aapt resource value: 0x7F0F00AD
-			public const int wrongEmail = 2131689645;
+			public const int viewComments = 2131689645;
+			
+			// aapt resource value: 0x7F0F00AE
+			public const int viewCommunities = 2131689646;
+			
+			// aapt resource value: 0x7F0F00AF
+			public const int viewPosts = 2131689647;
+			
+			// aapt resource value: 0x7F0F00B0
+			public const int wrongEmail = 2131689648;
 			
 			static String()
 			{

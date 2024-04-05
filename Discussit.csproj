@@ -246,7 +246,7 @@
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout\dialog_logout.xml">
+    <AndroidResource Include="Resources\layout\dialog_confirm.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

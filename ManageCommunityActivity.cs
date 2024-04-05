@@ -6,6 +6,7 @@ using Android.Views;
 using Android.Widget;
 using AndroidX.AppCompat.App;
 using Firebase.Firestore;
+using System;
 
 namespace Discussit
 {
@@ -15,15 +16,16 @@ namespace Discussit
     [Activity(Label = "ManageCommunityActivity")]
     public class ManageCommunityActivity : AppCompatActivity, View.IOnClickListener, IOnCompleteListener, IEventListener
     {
-        User user;
+        User user, currentMemberAsUser;
         Community community;
         ImageButton ibtnLogo, ibtnBack;
         EditText etCommunityName, etCommunityDescription;
         Button btnSaveChanges;
         TextView tvMemberCount, tvSortBy;
         Members members;
-        Task tskGetMembers;
+        Task tskGetMembers, tskGetMemberAsUser;
         Member userAsMember, currentMember;
+        Dialog currentDialog;
         string sort;
 
         /// <summary>
@@ -221,6 +223,12 @@ namespace Discussit
                     tvMemberCount.Text = members.MemberCount.ToString();
                     SortMembers();
                 }
+                else if (task == tskGetMemberAsUser)
+                {
+                    DocumentSnapshot ds = (DocumentSnapshot)task.Result;
+                    currentMemberAsUser.SetUser(ds);
+                    KickMember();
+                }
             }
         }
 
@@ -256,6 +264,8 @@ namespace Discussit
                     userAsMember = members.GetMemberByUID(user.Id);
                     if (userAsMember!= null && userAsMember.IsHigherRank(currentMember) && userAsMember != currentMember)
                     {
+                        if (userAsMember is Leader)
+                            menu.Add(Resources.GetString(Resource.String.transferOwner));
                         MenuInflater.Inflate(Resource.Menu.menu_manageMember, menu);
                     }
                 }
@@ -274,6 +284,10 @@ namespace Discussit
                 Promote();
             else if (item.ItemId == Resource.Id.itemDemote)
                 Demote();
+            else if (item.TitleFormatted.ToString() == Resources.GetString(Resource.String.transferOwner))
+                ConfirmTransferOwner(Resources.GetString(Resource.String.confirmTransferOwner));
+            else if (item.ItemId == Resource.Id.itemKick)
+                ConfirmKickMember();
             else if (item.ItemId == Resource.Id.itemSortByRank)
                 SetSorting(Resources.GetString(Resource.String.sortbyRank));
             else if (item.ItemId == Resource.Id.itemSortByJoinDate)
@@ -284,12 +298,46 @@ namespace Discussit
         }
 
         /// <summary>
-        /// Displays a confirmation dialog before transferring ownership.
+        /// Displays a confirmation dialog for kicking a member.
         /// </summary>
-        private void ConfirmTransferOwner()
+        private void ConfirmKickMember()
         {
-            //dialog confirmation to be added
-            members.TransferLeader((Leader)userAsMember, currentMember);
+            currentDialog = new Dialog(this);
+            currentDialog.SetContentView(Resource.Layout.dialog_confirm);
+            TextView tvDialogTitle = currentDialog.FindViewById<TextView>(Resource.Id.tvTitle);
+            Button btnConfirm = currentDialog.FindViewById<Button>(Resource.Id.btnConfirm);
+            Button btnCancel = currentDialog.FindViewById<Button>(Resource.Id.btnCancel);
+            tvDialogTitle.Text = Resources.GetString(Resource.String.confirmKickMember) + " " + currentMember.Name + "?";
+            btnConfirm.Click += new EventHandler(GetUser);
+            btnConfirm.Click += new EventHandler(CancelDialog);
+            btnCancel.Click += new EventHandler(CancelDialog);
+            currentDialog.Show();
+        }
+
+        /// <summary>
+        /// Displays a confirmation dialog for transferring ownership.
+        /// </summary>
+        /// <param name="dialogText">The text to be displayed in the dialog.</param>
+        private void ConfirmTransferOwner(string dialogText)
+        {
+            currentDialog = new Dialog(this);
+            currentDialog.SetContentView(Resource.Layout.dialog_confirm);
+            TextView tvDialogTitle = currentDialog.FindViewById<TextView>(Resource.Id.tvTitle);
+            Button btnConfirm = currentDialog.FindViewById<Button>(Resource.Id.btnConfirm);
+            Button btnCancel = currentDialog.FindViewById<Button>(Resource.Id.btnCancel);
+            tvDialogTitle.Text = dialogText + " " + currentMember.Name + "?";
+            btnConfirm.Click += new EventHandler(TransferOwner);
+            btnConfirm.Click += new EventHandler(CancelDialog);
+            btnCancel.Click += new EventHandler(CancelDialog);
+            currentDialog.Show();
+        }
+
+        /// <summary>
+        /// Displays a confirmation dialog for promoting a admin.
+        /// </summary>
+        private void ConfirmPromoteAdmin()
+        {
+            ConfirmTransferOwner(Resources.GetString(Resource.String.confirmPromoteAdmin));
         }
 
         /// <summary>
@@ -298,7 +346,7 @@ namespace Discussit
         private void Promote()
         {
             if (currentMember is Admin)
-                ConfirmTransferOwner();
+                ConfirmPromoteAdmin();
             else
                 members.Promote(currentMember);
         }
@@ -312,6 +360,45 @@ namespace Discussit
                 members.Demote((Admin)currentMember);
             else
                 Toast.MakeText(this, Resources.GetString(Resource.String.memberDemote), ToastLength.Short).Show();
+        }
+
+        /// <summary>
+        /// Transfers ownership to another member.
+        /// </summary>
+        /// <param name="sender">The object that raised the event.</param>
+        /// <param name="e">The event data.</param>
+        public void TransferOwner(object sender, EventArgs e)
+        {
+            members.TransferLeader((Leader)userAsMember, currentMember);
+        }
+
+        /// <summary>
+        /// Kick a member from the community
+        /// </summary>
+        /// <param name="sender">The object that raised the event.</param>
+        /// <param name="e">The event data.</param>
+        public void GetUser(object sender, EventArgs e)
+        {
+            currentMemberAsUser = new User(currentMember.UserID);
+            tskGetMemberAsUser = currentMemberAsUser.GetUserData(currentMember.Id).AddOnCompleteListener(this);
+        }
+
+        /// <summary>
+        /// Kick a member from the community
+        /// </summary>
+        public void KickMember()
+        {
+            community.KickUser(currentMemberAsUser);
+        }
+
+        /// <summary>
+        /// Cancels the current dialog.
+        /// </summary>
+        /// <param name="sender">The object that raised the event.</param>
+        /// <param name="e">The event data.</param>
+        public void CancelDialog(object sender, EventArgs e)
+        {
+            currentDialog.Cancel();
         }
     }
 }

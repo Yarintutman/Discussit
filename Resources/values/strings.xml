@@ -71,11 +71,14 @@
   <string name="manageMembers">Manage Members</string>
   <string name="close">Close Dialog</string>
   <string name="confirmLogout">Are you sure you want to log out?</string>
-  <string name="confirm">Confirm</string>
-  <string name="cancel">Cancel</string>
+  <string name="confirmPromoteAdmin">Promoting this member will result in your transfer of ownership. \nAre you sure you want to transfer your ownership to</string>
+  <string name="confirmTransferOwner">Are you sure you want to transfer your ownership to</string>
+  <string name="confirmKickMember">Are you sure you want to kick </string>
+  <string name="confirm">Yes</string>
+  <string name="cancel">No</string>
   <string name="edit">Edit</string>
   <string name="delete">delete</string>
-  <string name="remove">Remove</string>
+  <string name="kick">Kick</string>
   <string name="transferOwner">Transfer ownership</string>
   <string name="ban">Ban</string>
   <string name="promote">Promote</string>

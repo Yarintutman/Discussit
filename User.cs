@@ -1,10 +1,11 @@
 ﻿using Android.Gms.Tasks;
 using Android.Runtime;
-using Firebase.Auth;
 using Firebase.Firestore;
-using Firebase.Firestore.Auth;
+using Java.Lang;
 using Java.Util;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Discussit
@@ -14,7 +15,14 @@ namespace Discussit
     /// </summary>
     internal class User
     {
-        public string Id => fbd.GetUserId();
+        public string id;
+        public string Id
+        {
+            get
+            {
+                return id != null? id : fbd.GetUserId();
+            }
+        }
         public string Username { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
@@ -32,6 +40,7 @@ namespace Discussit
         /// </summary>
         public User()
         {
+            id = null;
             fbd = new FbData();
             spd = new SpData(General.SP_FILE_NAME);
             Communities = new JavaList<string>();
@@ -45,6 +54,16 @@ namespace Discussit
                 Username = spd.GetString(General.KEY_USERNAME, string.Empty);
                 Password = spd.GetString(General.KEY_PASSWORD, string.Empty);
             }
+        }
+
+        public User(string id)
+        {
+            this.id = id;
+            fbd = new FbData();
+            Communities = new JavaList<string>();
+            ManagingCommunities = new JavaList<string>();
+            Posts = new JavaList<string>();
+            Comments = new JavaList<string>();
         }
 
         /// <summary>
@@ -140,6 +159,37 @@ namespace Discussit
         }
 
         /// <summary>
+        /// Removes the specified list of values from the array field in the user's data and locally.
+        /// </summary>
+        /// <param name="FName">The name of the field.</param>
+        /// <param name="value">The list of values to remove from the field.</param>
+        public void RemoveArrayFields(string FName, List<string> value)
+        {
+            if (value != null && value.Count > 0)
+            {
+                List<Java.Lang.Object> lst = new List<Java.Lang.Object>();
+                foreach (string str in value)
+                    lst.Add(str);
+                fbd.RemoveElementsFromArray(General.USERS_COLLECTION, Id, FName, lst);
+                switch (FName)
+                {
+                    case General.FIELD_USER_COMMUNITIES:
+                        Communities.Remove(value);
+                        break;
+                    case General.FIELD_USER_MANAGING_COMMUNITIES:
+                        ManagingCommunities.Remove(value);
+                        break;
+                    case General.FIELD_USER_POSTS:
+                        Posts.Remove(value);
+                        break;
+                    case General.FIELD_USER_COMMENTS:
+                        Comments.Remove(value);
+                        break;
+                }
+            }
+        }
+
+        /// <summary>
         /// Forgets the user's registration status and disables fast login to the application
         /// </summary>
         public void Forget()
@@ -154,6 +204,16 @@ namespace Discussit
         public Task GetUserData()
         {
             return fbd.GetDocument(General.USERS_COLLECTION, Id);
+        }
+
+        /// <summary>
+        /// Retrieves user data from the Firebase database.
+        /// </summary>
+        /// <param name="Uid">The id of the user to retrieve</param>
+        /// <returns>A task representing the asynchronous operation.</returns>
+        public Task GetUserData(string Uid)
+        {
+            return fbd.GetDocument(General.USERS_COLLECTION, Uid);
         }
 
         /// <summary>

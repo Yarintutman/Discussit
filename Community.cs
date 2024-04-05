@@ -1,6 +1,7 @@
 ﻿using Android.App;
 using Android.Content;
 using Android.Gms.Tasks;
+using Android.Icu.Text;
 using Android.Runtime;
 using Android.Util;
 using AndroidX.Annotations;
@@ -10,6 +11,7 @@ using Newtonsoft.Json.Bson;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace Discussit
 {
@@ -178,20 +180,24 @@ namespace Discussit
         }
 
         /// <summary>
-        /// Removes a member from the community.
+        /// Kicks a user from the community.
         /// </summary>
-        /// <param name="UserID">The ID of the user to remove.</param>
+        /// <param name="user">The user to remove.</param>
         /// <returns>A task representing the asynchronous operation.</returns>
-        public Task RemoveMember(string UserID)
+        public Task KickUser(User user)
         {
             Task NewLeader = null;
-            Member member = Members.GetMemberByUID(UserID);
+            Member member = Members.GetMemberByUID(user.Id);
             if (member != null)
             {
                 member.LeaveCommunity();
                 MemberCount--;
                 fbd.IncrementField(General.COMMUNITIES_COLLECTION, Id, General.FIELD_MEMBER_COUNT, -1);
                 Members.RemoveMember(member);
+                user.RemoveArrayFields(General.FIELD_USER_COMMENTS, user.Comments.Where<string>(str => str.Contains(Id)).ToList());
+                user.RemoveArrayFields(General.FIELD_USER_POSTS, user.Posts.Where<string>(str => str.Contains(Id)).ToList());
+                user.RemoveArrayFields(General.FIELD_USER_COMMUNITIES, user.Communities.Where<string>(str => str.Contains(Id)).ToList());
+                user.RemoveArrayFields(General.FIELD_USER_MANAGING_COMMUNITIES, user.ManagingCommunities.Where<string>(str => str.Contains(Id)).ToList());
                 if (member.GetType() == typeof(Leader))
                     NewLeader = fbd.GetHighestValue(CollectionPath + "/" + General.MEMBERS_COLLECTION, General.FIELD_MEMBER_TYPE,
                                                     Application.Context.Resources.GetString(Resource.String.leader), General.FIELD_DATE, 1);

@@ -58,9 +58,12 @@ namespace Discussit
         public static JavaList<T> JavaListToType<T>(JavaList jl)
         {
             JavaList<T> newList = new JavaList<T>();
-            for (int i = 0; i < jl.Count; i++)
+            if (jl != null)
             {
-                newList.Add((T)jl[i]);
+                for (int i = 0; i < jl.Count; i++)
+                {
+                    newList.Add((T)jl[i]);
+                }
             }
             return newList;
         }
