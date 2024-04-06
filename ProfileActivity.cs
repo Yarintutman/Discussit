@@ -19,13 +19,15 @@ namespace Discussit
     public class ProfileActivity : AppCompatActivity, View.IOnClickListener, IOnCompleteListener, AdapterView.IOnItemClickListener
     {
         User user;
-        ImageButton ibtnPicture, ibtnBack, ibtnLogout, ibtnCloseDialog;
+        ImageButton ibtnPicture, ibtnBack, ibtnLogout, ibtnCloseDialog, ibtnSearch, ibtnClearSearch;
+        EditText etSearchBar;
         Button btnViewCommunities, btnViewPosts, btnViewComments, btnManageCommunities, btnSettings;
         Dialog dialogViewCommunities, dialogViewPosts, dialogViewComments, dialogViewManagedCommunities;
         Task tskGetCommunities, tskGetPosts, tskGetComments, tskGetManagedCommunities;
         CommunityAdapter communities, managedCommunities;
         PostAdapter posts;
-        CommunityAdapter comments;
+        CommentAdapter comments;
+        Dialog logoutDialog;
         string currentDialog;
 
         /// <summary>
@@ -98,13 +100,73 @@ namespace Discussit
         /// <summary>
         /// Logs the user out of the application, returning him to the login/register activity
         /// </summary>
-        private void Logout()
+        /// <param name="sender">The object that raised the event.</param>
+        /// <param name="e">The event data.</param>
+        private void Logout(object sender, EventArgs e)
         {
             SpData spd = new SpData(General.SP_FILE_NAME);
             spd.PutBool(General.KEY_REGISTERED, false);
             Intent intent = new Intent(this, typeof(MainActivity));
             StartActivityForResult(intent, 0);
             Finish();
+        }
+
+        /// <summary>
+        /// Cancels the logout dialog.
+        /// </summary>
+        /// <param name="sender">The object that raised the event.</param>
+        /// <param name="e">The event data.</param>
+        public void CancelDialog(object sender, EventArgs e)
+        {
+            logoutDialog.Cancel();
+        }
+
+        /// <summary>
+        /// Displays a confirmation dialog for logging out of the application
+        /// </summary>
+        private void ConfirmLogout()
+        {
+            logoutDialog = new Dialog(this);
+            logoutDialog.SetContentView(Resource.Layout.dialog_confirm);
+            TextView tvDialogTitle = logoutDialog.FindViewById<TextView>(Resource.Id.tvTitle);
+            Button btnConfirm = logoutDialog.FindViewById<Button>(Resource.Id.btnConfirm);
+            Button btnCancel = logoutDialog.FindViewById<Button>(Resource.Id.btnCancel);
+            tvDialogTitle.Text = Resources.GetString(Resource.String.confirmLogout);
+            btnConfirm.Click += new EventHandler(Logout);
+            btnCancel.Click += new EventHandler(CancelDialog);
+            logoutDialog.Show();
+        }
+
+        /// <summary>
+        /// Clears the search bar, hides the clear search button, and clears the search results in the corresponding list.
+        /// </summary>
+        private void ClearSearch()
+        {
+            etSearchBar.Text = "";
+            ibtnClearSearch.Visibility = ViewStates.Gone;
+            if (currentDialog == Resources.GetString(Resource.String.ManagedCommunities))
+                managedCommunities.ClearSearch();
+            else if (currentDialog == Resources.GetString(Resource.String.Communities))
+                communities.ClearSearch();
+        }
+
+        /// <summary>
+        /// Initiates a search based on the text entered in the search bar. Updates the search results in the corresponding list accordingly.
+        /// </summary>
+        private void Search()
+        {
+            if (etSearchBar.Text != "")
+            {
+                if (currentDialog == Resources.GetString(Resource.String.ManagedCommunities))
+                    managedCommunities.Search(etSearchBar.Text);
+                else if (currentDialog == Resources.GetString(Resource.String.Communities))
+                    communities.Search(etSearchBar.Text);
+                ibtnClearSearch.Visibility = ViewStates.Visible; 
+            }
+            else
+            {
+                ClearSearch();
+            }
         }
 
         /// <summary>
@@ -126,8 +188,13 @@ namespace Discussit
             dialogViewCommunities.SetContentView(Resource.Layout.dialog_selectCommunity);
             dialogViewCommunities.Show();
             dialogViewCommunities.SetCancelable(true);
+            etSearchBar = dialogViewCommunities.FindViewById<EditText>(Resource.Id.etSearchBar);
             ibtnCloseDialog = dialogViewCommunities.FindViewById<ImageButton>(Resource.Id.ibtnCloseDialog);
+            ibtnSearch = dialogViewCommunities.FindViewById<ImageButton>(Resource.Id.ibtnSearch);
+            ibtnClearSearch = dialogViewCommunities.FindViewById<ImageButton>(Resource.Id.ibtnClearSearchBar);
             ibtnCloseDialog.SetOnClickListener(this);
+            ibtnSearch.SetOnClickListener(this);
+            ibtnClearSearch.SetOnClickListener(this);
             currentDialog = Resources.GetString(Resource.String.Communities);
             if (user.Communities.Size() != 0)
             {
@@ -145,8 +212,13 @@ namespace Discussit
             dialogViewManagedCommunities.SetContentView(Resource.Layout.dialog_selectCommunity);
             dialogViewManagedCommunities.Show();
             dialogViewManagedCommunities.SetCancelable(true);
+            etSearchBar = dialogViewManagedCommunities.FindViewById<EditText>(Resource.Id.etSearchBar);
             ibtnCloseDialog = dialogViewManagedCommunities.FindViewById<ImageButton>(Resource.Id.ibtnCloseDialog);
+            ibtnSearch = dialogViewManagedCommunities.FindViewById<ImageButton>(Resource.Id.ibtnSearch);
+            ibtnClearSearch = dialogViewManagedCommunities.FindViewById<ImageButton>(Resource.Id.ibtnClearSearchBar);
             ibtnCloseDialog.SetOnClickListener(this);
+            ibtnSearch.SetOnClickListener(this);
+            ibtnClearSearch.SetOnClickListener(this);
             currentDialog = Resources.GetString(Resource.String.ManagedCommunities);
             if (user.ManagingCommunities.Size() != 0)
             {
@@ -158,21 +230,26 @@ namespace Discussit
         /// <summary>
         /// Displays a dialog to select and view posts.
         /// </summary>
-        private void ViewPosts()
+        /*private void ViewPosts()
         {
             dialogViewPosts = new Dialog(this);
             dialogViewPosts.SetContentView(Resource.Layout.dialog_selectPost);
             dialogViewPosts.Show();
             dialogViewPosts.SetCancelable(true);
+            etSearchBar = dialogViewPosts.FindViewById<EditText>(Resource.Id.etSearchBar);
             ibtnCloseDialog = dialogViewPosts.FindViewById<ImageButton>(Resource.Id.ibtnCloseDialog);
+            ibtnSearch = dialogViewPosts.FindViewById<ImageButton>(Resource.Id.ibtnSearch);
+            ibtnClearSearch = dialogViewPosts.FindViewById<ImageButton>(Resource.Id.ibtnClearSearchBar);
             ibtnCloseDialog.SetOnClickListener(this);
+            ibtnSearch.SetOnClickListener(this);
+            ibtnClearSearch.SetOnClickListener(this);
             currentDialog = Resources.GetString(Resource.String.Posts);
             if (user.Posts.Size() != 0)
             {
                 tskGetPosts = user.GetDocumentInList(General.FIELD_USER_POSTS);
                 tskGetPosts?.AddOnCompleteListener(this);
             }
-        }
+        }*/
 
         /// <summary>
         /// Sets the managed communities in the dialog view based on the provided documents.
@@ -214,6 +291,21 @@ namespace Discussit
         }
 
         /// <summary>
+        /// CLoses the current open dialog
+        /// </summary>
+        private void CloseDialog()
+        {
+            if (currentDialog == Resources.GetString(Resource.String.ManagedCommunities))
+                dialogViewManagedCommunities.Cancel();
+            else if (currentDialog == Resources.GetString(Resource.String.Communities))
+                dialogViewCommunities.Cancel();
+            else if (currentDialog == Resources.GetString(Resource.String.Posts))
+                dialogViewPosts.Cancel();
+            else if (currentDialog == Resources.GetString(Resource.String.Comments))
+                dialogViewComments.Cancel();
+        }
+
+        /// <summary>
         /// Handles click events for various UI elements.
         /// </summary>
         /// <param name="v">The view that was clicked.</param>
@@ -222,7 +314,7 @@ namespace Discussit
             if (v == ibtnBack)
                 Back();
             else if (v == ibtnLogout)
-                Logout();
+                ConfirmLogout();
             else if (v == btnSettings)
                 ViewSettings();
             else if (v == btnManageCommunities)
@@ -233,16 +325,11 @@ namespace Discussit
             //ViewPosts();
             else if (v == btnViewComments) { }
             else if (v == ibtnCloseDialog)
-            {
-                if (currentDialog == Resources.GetString(Resource.String.ManagedCommunities))
-                    dialogViewManagedCommunities.Cancel();
-                else if (currentDialog == Resources.GetString(Resource.String.Communities))
-                    dialogViewCommunities.Cancel();
-                else if (currentDialog == Resources.GetString(Resource.String.Posts))
-                    dialogViewPosts.Cancel();
-                else if (currentDialog == Resources.GetString(Resource.String.Comments))
-                    dialogViewComments.Cancel();
-            }
+                CloseDialog();
+            else if (v == ibtnSearch)
+                Search();
+            else if (v == ibtnClearSearch)
+                ClearSearch();
         }
 
         /// <summary>

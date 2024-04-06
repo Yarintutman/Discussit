@@ -69,6 +69,21 @@ namespace Discussit
         }
 
         /// <summary>
+        /// Converts a List to a JavaList.
+        /// </summary>
+        /// <param name="jl">The List to convert.</param>
+        /// <returns>The given List as a JavaList</returns>
+        public static JavaList<Java.Lang.Object> ListToJavaList(List<string> jl)
+        {
+            JavaList<Java.Lang.Object> newList = new JavaList<Java.Lang.Object>();
+            for (int i = 0; i < jl.Count; i++)
+            {
+                newList.Add(jl[i]);
+            }
+            return newList;
+        }
+
+        /// <summary>
         /// Converts a JavaList of strings to a IList of Java.Lang.Object with specified string cutting.
         /// </summary>
         /// <param name="jl">The JavaList of strings to convert.</param>

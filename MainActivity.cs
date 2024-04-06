@@ -161,7 +161,7 @@ namespace Discussit
             }
             else if (task != tskRememberLogin)
             {
-                Toast.MakeText(this, task.Exception.Message, ToastLength.Long).Show();
+                Toast.MakeText(this, Resources.GetString(Resource.String.wrongEmailOrPassword), ToastLength.Long).Show();
                 btnEnter.Enabled = true;
             }
             else

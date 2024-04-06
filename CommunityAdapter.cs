@@ -6,6 +6,7 @@ using Android.Content;
 using Android.App;
 using Firebase.Firestore;
 using System.Linq;
+using Newtonsoft.Json.Bson;
 
 namespace Discussit
 {
@@ -16,6 +17,7 @@ namespace Discussit
     {
         private readonly Context context;
         private List<Community> lstCommunities;
+        private List<Community> lstSearch;
 
         /// <summary>
         /// Adapter for displaying a list of communities in a ListView.
@@ -24,10 +26,12 @@ namespace Discussit
         {
             this.context = context;
             lstCommunities = new List<Community>();
+            lstSearch = null;
         }
-        public override Community this[int position] => lstCommunities[position];
 
-        public override int Count => lstCommunities.Count;
+        public override Community this[int position] => lstSearch == null ? lstCommunities[position] : lstSearch[position];
+
+        public override int Count => lstSearch == null ? lstCommunities.Count : lstSearch.Count;
 
         /// <summary>
         /// Gets the item ID at the specified position.
@@ -50,7 +54,11 @@ namespace Discussit
         {
             LayoutInflater li = LayoutInflater.From(context);
             View v = li.Inflate(Resource.Layout.layout_community, parent, false);
-            Community community = lstCommunities[position];
+            Community community;
+            if (lstSearch == null)
+                community = lstCommunities[position];
+            else
+                community = lstSearch[position];
             TextView tvCommunityName = v.FindViewById<TextView>(Resource.Id.tvCommunityName);
             TextView tvMemberCount = v.FindViewById<TextView>(Resource.Id.tvMemberCount);
             TextView tvCommunityDescription = v.FindViewById<TextView>(Resource.Id.tvDescription);
@@ -103,11 +111,34 @@ namespace Discussit
         }
 
         /// <summary>
+        /// Searches for communities based on the specified search criteria and updates the search result list.
+        /// </summary>
+        /// <param name="search">The search criteria.</param>
+        public void Search(string search)
+        {
+            lstSearch = lstCommunities.Where(community => community.Name.ToLower().Contains(search.ToLower()) ||
+                                                  community.Description.ToLower().Contains(search.ToLower())).ToList();
+            NotifyDataSetChanged();
+        }
+
+        /// <summary>
+        /// Clears the search result list.
+        /// </summary>
+        public void ClearSearch()
+        {
+            lstSearch = null;
+            NotifyDataSetChanged();
+        }
+
+        /// <summary>
         /// Sorts the list by the latest Communities
         /// </summary>
         public void SortByLatest()
         {
-            lstCommunities = lstCommunities.OrderByDescending(communities => communities.CreationDate).ToList();
+            if (lstSearch == null) 
+                lstCommunities = lstCommunities.OrderByDescending(communities => communities.CreationDate).ToList();
+            else
+                lstSearch = lstSearch.OrderByDescending(communities => communities.CreationDate).ToList();
             NotifyDataSetChanged();
         }
 
@@ -116,7 +147,10 @@ namespace Discussit
         /// </summary>
         public void SortByOldest()
         {
-            lstCommunities = lstCommunities.OrderBy(communities => communities.CreationDate).ToList();
+            if (lstSearch == null)
+                lstCommunities = lstCommunities.OrderBy(communities => communities.CreationDate).ToList();
+            else
+                lstSearch = lstSearch.OrderBy(communities => communities.CreationDate).ToList();
             NotifyDataSetChanged();
         }
 
@@ -125,7 +159,10 @@ namespace Discussit
         /// </summary>
         public void SortByPosts()
         {
-            lstCommunities = lstCommunities.OrderByDescending(communities => communities.PostCount).ToList();
+            if (lstSearch == null)
+                lstCommunities = lstCommunities.OrderByDescending(communities => communities.PostCount).ToList();
+            else
+                lstSearch = lstSearch.OrderByDescending(communities => communities.PostCount).ToList();
             NotifyDataSetChanged();
         }
 
@@ -134,7 +171,10 @@ namespace Discussit
         /// </summary>
         public void SortByMembers()
         {
-            lstCommunities = lstCommunities.OrderByDescending(communities => communities.MemberCount).ToList();
+            if (lstSearch == null)
+                lstCommunities = lstCommunities.OrderByDescending(communities => communities.MemberCount).ToList();
+            else
+                lstSearch = lstSearch.OrderByDescending(communities => communities.MemberCount).ToList();
             NotifyDataSetChanged();
         }
     }

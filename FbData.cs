@@ -84,6 +84,16 @@ namespace Discussit
         }
 
         /// <summary>
+        /// Sends a password reset email to the specified email address.
+        /// </summary>
+        /// <param name="email">The email address associated with the account.</param>
+        /// <returns>A task representing the asynchronous operation, which upon completion, indicates whether the password reset email was sent successfully.</returns>
+        public Task ResetPassword(string email)
+        {
+            return auth.CurrentUser.Email == email? auth.SendPasswordResetEmail(email) : null;
+        }
+
+        /// <summary>
         /// Retrieves the unique identifier (UID) of the currently authenticated user.
         /// </summary>
         /// <returns>A string representing the UID of the currently authenticated user, or an empty string if no user is authenticated.</returns>
@@ -164,6 +174,15 @@ namespace Discussit
             return firestore.Collection(cName).Get();
         }
 
+        /// <summary>
+        /// Retrieves documents from a collection that match the specified field value and returns them in order of the specified field, limited by the specified count.
+        /// </summary>
+        /// <param name="cName">The name of the collection.</param>
+        /// <param name="fNameWhere">The name of the field to filter by.</param>
+        /// <param name="fValue">The value to filter documents by.</param>
+        /// <param name="fNameOrderBy">The name of the field to order documents by.</param>
+        /// <param name="limit">The maximum number of documents to retrieve.</param>
+        /// <returns>A task representing the asynchronous operation, which upon completion, contains the documents that meet the specified criteria.</returns>
         public Task GetHighestValue(string cName, string fNameWhere, Java.Lang.Object fValue, string fNameOrderBy, int limit)
         {
             return firestore.Collection(cName).WhereEqualTo(fNameWhere, fValue).OrderBy(fNameOrderBy).Limit(limit).Get();

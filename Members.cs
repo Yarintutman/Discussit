@@ -222,6 +222,23 @@ namespace Discussit
         }
 
         /// <summary>
+        /// Searches for members based on the specified search criteria.
+        /// </summary>
+        /// <param name="search">The search criteria.</param>
+        public void Search(string search)
+        {
+            MemberAdapter.Search(search);
+        }
+
+        /// <summary>
+        /// Clears the search result.
+        /// </summary>
+        public void ClearSearch()
+        {
+            MemberAdapter.ClearSearch();
+        }
+
+        /// <summary>
         /// Sorts the adapter by member's rank
         /// </summary>
         public void SortByRank()

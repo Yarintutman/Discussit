@@ -107,6 +107,23 @@ namespace Discussit
         }
 
         /// <summary>
+        /// Searches for posts based on the specified search criteria.
+        /// </summary>
+        /// <param name="search">The search criteria.</param>
+        public void Search(string search)
+        {
+            PostAdapter.Search(search);
+        }
+
+        /// <summary>
+        /// Clears the search result.
+        /// </summary>
+        public void ClearSearch()
+        {
+            PostAdapter.ClearSearch();
+        }
+
+        /// <summary>
         /// Sorts the adapter by the latest posts
         /// </summary>
         public void SortByLatest()

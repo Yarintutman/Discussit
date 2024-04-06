@@ -25,36 +25,24 @@
             android:layout_toLeftOf="@id/ibtnProfilePicture"
             android:layout_centerVertical="true"/>
     </RelativeLayout>
+    <RelativeLayout
+        android:layout_marginTop="@dimen/Settigns_marginTop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@id/tvUsername"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/Settigns_nameSize"/>
+    </RelativeLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center"
         android:layout_weight="1">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="@dimen/Settigns_marginTop">
-            <EditText
-                android:id="@+id/etChangeUserName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:inputType="text"
-                android:textColor="@color/hintColor"
-                android:backgroundTint="@color/hintColor"
-                android:layout_marginLeft="@dimen/marginLeft"/>
-            <Button
-                android:id="@+id/btnChangeUserName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/changeName"
-                android:textAllCaps="false"
-                android:background="@drawable/shape"
-                android:layout_marginRight="@dimen/marginRight"
-                android:textColor="@color/clickable"/>
-        </LinearLayout>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -80,14 +68,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textEmailAddress"
-                    android:textColor="@color/clickable"
+                    android:textColor="@color/textColor"
                     android:hint="@string/enterEmail"
                     android:textColorHint="@color/hintColor"
-                    android:backgroundTint="@color/hintColor"
+                    android:backgroundTint="@color/clickable"
                     android:layout_marginLeft="@dimen/marginLeft"
                     android:layout_marginRight="@dimen/marginRight"/>
                 <Button
-                    android:id="@+id/btnConfirmResetPassword"
+                    android:id="@+id/btnEmailVerification"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/resetPassword"
@@ -98,8 +86,10 @@
         </RelativeLayout>
         <TextView
             android:id="@+id/tvEmailResult"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/Settigns_marginLeft"
+            android:layout_marginRight="@dimen/Settigns_marginRight"
             android:textColor="@color/textColor"/>
     </LinearLayout>
     <Button

@@ -24,11 +24,11 @@ namespace Discussit
         Community community;
         Posts posts;
         Members members;
-        ImageButton ibtnBack, ibtnLogo, ibtnProfile, ibtnSearch;
+        ImageButton ibtnBack, ibtnLogo, ibtnProfile, ibtnSearch, ibtnClearSearch;
         TextView tvCommunityName, tvDescription, tvMemberCount, tvSortBy;
         Button btnNewPost, btnJoinCommunity;
         EditText etSearchBar;
-        Task tskGetPosts, tskGetMemebers;
+        Task tskGetPosts, tskGetMemebers, tskGetComments;
         Post currentPost;
         string sort;
 
@@ -67,6 +67,7 @@ namespace Discussit
             ibtnLogo = FindViewById<ImageButton>(Resource.Id.ibtnLogo);
             ibtnProfile = FindViewById<ImageButton>(Resource.Id.ibtnProfile);
             ibtnSearch = FindViewById<ImageButton>(Resource.Id.ibtnSearch);
+            ibtnClearSearch = FindViewById<ImageButton>(Resource.Id.ibtnClearSearchBar);
             tvCommunityName = FindViewById<TextView>(Resource.Id.tvCommunityName);
             tvDescription = FindViewById<TextView>(Resource.Id.tvDescription);
             tvMemberCount = FindViewById<TextView>(Resource.Id.tvMemberCount);
@@ -83,6 +84,7 @@ namespace Discussit
             ibtnLogo.SetOnClickListener(this);
             ibtnProfile.SetOnClickListener(this);
             ibtnSearch.SetOnClickListener(this);
+            ibtnClearSearch.SetOnClickListener(this);
             btnNewPost.SetOnClickListener(this);
             btnJoinCommunity.SetOnClickListener(this);
             tvCommunityName.Text = community.Name;
@@ -132,6 +134,32 @@ namespace Discussit
                 posts.SortByOldest();
             else if (sort == Resources.GetString(Resource.String.sortbyComments))
                 posts.SortByComments();
+        }
+
+        /// <summary>
+        /// Clears the search bar, hides the clear search button, and clears the search results in the posts list.
+        /// </summary>
+        private void ClearSearch()
+        {
+            etSearchBar.Text = "";
+            ibtnClearSearch.Visibility = ViewStates.Gone;
+            posts.ClearSearch();
+        }
+
+        /// <summary>
+        /// Initiates a search based on the text entered in the search bar. Updates the search results in the posts list accordingly.
+        /// </summary>
+        private void Search()
+        {
+            if (etSearchBar.Text != "")
+            {
+                posts.Search(etSearchBar.Text);
+                ibtnClearSearch.Visibility = ViewStates.Visible;
+            }
+            else
+            {
+                ClearSearch();
+            }
         }
 
         /// <summary>
@@ -200,6 +228,10 @@ namespace Discussit
                 Back();
             else if (v == ibtnProfile)
                 ViewProfile();
+            else if (v == ibtnSearch)
+                Search();
+            else if (v == ibtnClearSearch)
+                ClearSearch();
             else if (v == btnNewPost)
             {
                 if (btnJoinCommunity.Visibility == ViewStates.Gone)

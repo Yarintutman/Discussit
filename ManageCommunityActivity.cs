@@ -18,8 +18,8 @@ namespace Discussit
     {
         User user, currentMemberAsUser;
         Community community;
-        ImageButton ibtnLogo, ibtnBack;
-        EditText etCommunityName, etCommunityDescription;
+        ImageButton ibtnLogo, ibtnBack, ibtnSearch, ibtnClearSearch;
+        EditText etCommunityName, etCommunityDescription, etSearchBar;
         Button btnSaveChanges;
         TextView tvMemberCount, tvSortBy;
         Members members;
@@ -57,14 +57,19 @@ namespace Discussit
         {
             ibtnBack = FindViewById<ImageButton>(Resource.Id.ibtnBack);
             ibtnLogo = FindViewById<ImageButton>(Resource.Id.ibtnLogo);
+            ibtnSearch = FindViewById<ImageButton>(Resource.Id.ibtnSearch);
+            ibtnClearSearch = FindViewById<ImageButton>(Resource.Id.ibtnClearSearchBar);
             etCommunityName = FindViewById<EditText>(Resource.Id.etCommunityName);
             etCommunityDescription = FindViewById<EditText>(Resource.Id.etCommunityDescription);
+            etSearchBar = FindViewById<EditText>(Resource.Id.etSearchBar);
             ListView lvMembers = FindViewById<ListView>(Resource.Id.lvMembers);
             tvMemberCount = FindViewById<TextView>(Resource.Id.tvMemberCount);
             tvSortBy = FindViewById<TextView>(Resource.Id.tvSortBy);
             btnSaveChanges = FindViewById<Button>(Resource.Id.btnSaveChanges);
             ibtnLogo.SetOnClickListener(this);
             ibtnBack.SetOnClickListener(this);
+            ibtnSearch.SetOnClickListener(this);
+            ibtnClearSearch.SetOnClickListener(this);
             btnSaveChanges.SetOnClickListener(this);
             etCommunityName.Text = community.Name;
             etCommunityDescription.Text = community.Description;
@@ -105,6 +110,32 @@ namespace Discussit
                 members.SortByJoinDate();
             else if (sort == Resources.GetString(Resource.String.sortbyName))
                 members.SortByName();
+        }
+
+        /// <summary>
+        /// Clears the search bar, hides the clear search button, and clears the search results in the members list.
+        /// </summary>
+        private void ClearSearch()
+        {
+            etSearchBar.Text = "";
+            ibtnClearSearch.Visibility = ViewStates.Gone;
+            members.ClearSearch();
+        }
+
+        /// <summary>
+        /// Initiates a search based on the text entered in the search bar. Updates the search results in the members list accordingly.
+        /// </summary>
+        private void Search()
+        {
+            if (etSearchBar.Text != "")
+            {
+                members.Search(etSearchBar.Text);
+                ibtnClearSearch.Visibility = ViewStates.Visible;
+            }
+            else
+            {
+                ClearSearch();
+            }
         }
 
         /// <summary>
@@ -164,6 +195,7 @@ namespace Discussit
                 etCommunityName.Text = community.Name;
                 etCommunityDescription.Text = community.Description;
                 community.SaveChanges();
+                Toast.MakeText(this, Resources.GetString(Resource.String.savedChanges), ToastLength.Short).Show();
             }
         }
 
@@ -179,6 +211,10 @@ namespace Discussit
                 Back();
             else if (v == btnSaveChanges)
                 Save();
+            else if (v == ibtnSearch)
+                Search();
+            else if (v == ibtnClearSearch)
+                ClearSearch();
         }
 
         /// <summary>
@@ -380,7 +416,7 @@ namespace Discussit
         public void GetUser(object sender, EventArgs e)
         {
             currentMemberAsUser = new User(currentMember.UserID);
-            tskGetMemberAsUser = currentMemberAsUser.GetUserData(currentMember.Id).AddOnCompleteListener(this);
+            tskGetMemberAsUser = currentMemberAsUser.GetUserData().AddOnCompleteListener(this);
         }
 
         /// <summary>

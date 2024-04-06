@@ -4,6 +4,8 @@
   <dimen name="logoHeight">150dp</dimen>
   <dimen name="profilePictureWidth">80dp</dimen>
   <dimen name="profilePictureHeight">80dp</dimen>
+  <dimen name="clearSearchBarbuttonWidth">15dp</dimen>
+  <dimen name="clearSearchBarbuttonHeight">15dp</dimen>
   <dimen name="marginLeft">25dp</dimen>
   <dimen name="marginRight">25dp</dimen>
   <dimen name="marginBottom">20dp</dimen>
@@ -27,8 +29,11 @@
   <dimen name="Profile_btnWidth">220dp</dimen>
   <dimen name="Settigns_profileWidth">120dp</dimen>
   <dimen name="Settigns_profileHeight">120dp</dimen>
+  <dimen name="Settigns_marginLeft">20dp</dimen>
+  <dimen name="Settigns_marginRight">20dp</dimen>
   <dimen name="Settigns_marginTop">20dp</dimen>
   <dimen name="Settigns_buttonTextSize">20sp</dimen>
+  <dimen name="Settigns_nameSize">30sp</dimen>
   <dimen name="Community_memberMarginRight">5dp</dimen>
   <dimen name="Community_marginLeft">5dp</dimen>
   <dimen name="Community_marginRight">5dp</dimen>
@@ -89,6 +94,8 @@
   <dimen name="dialog_closeHeight">30dp</dimen>
   <dimen name="dialog_textSize">15sp</dimen>
   <dimen name="dialog_buttonMargin">40dp</dimen>
+  <dimen name="dialog_clearSearchBarbuttonWidth">12dp</dimen>
+  <dimen name="dialog_clearSearchBarbuttonHeight">12dp</dimen>
   <dimen name="tts_Width">25dp</dimen>
   <dimen name="tts_Height">25dp</dimen>
 </resources>

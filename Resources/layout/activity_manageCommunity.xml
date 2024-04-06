@@ -82,6 +82,37 @@
                 android:textColor="@color/textColor"
                 android:gravity="center_vertical"/>
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageButton
+                android:id="@+id/ibtnClearSearchBar"
+                android:layout_width="@dimen/clearSearchBarbuttonWidth"
+                android:layout_height="@dimen/clearSearchBarbuttonHeight"
+                android:background="@drawable/ClearSearch"
+                android:contentDescription="@string/clearSearch"
+                android:layout_gravity="center_vertical"
+                android:visibility="gone"/>
+            <EditText
+                android:id="@+id/etSearchBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:textSize="@dimen/Hub_searchBarText"
+                android:textColor="@color/textColor"
+                android:hint="@string/MemberSearchHint"
+                android:textColorHint="@color/hintColor"
+                android:backgroundTint="@color/clickable"
+                android:layout_weight="1"/>
+            <ImageButton
+                android:id="@+id/ibtnSearch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/search"
+                android:contentDescription="@string/search"
+                android:layout_gravity="center_vertical"/>
+        </LinearLayout>
         <TextView
         android:id="@+id/tvSortBy"
         android:layout_width="wrap_content"

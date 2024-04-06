@@ -87,6 +87,23 @@ namespace Discussit
         }
 
         /// <summary>
+        /// Searches for communities based on the specified search criteria.
+        /// </summary>
+        /// <param name="search">The search criteria.</param>
+        public void Search(string search)
+        {
+            CommunityAdapter.Search(search);
+        }
+
+        /// <summary>
+        /// Clears the search result.
+        /// </summary>
+        public void ClearSearch()
+        {
+            CommunityAdapter.ClearSearch();
+        }
+
+        /// <summary>
         /// Sorts the adapter by the latest Communities
         /// </summary>
         public void SortByLatest()

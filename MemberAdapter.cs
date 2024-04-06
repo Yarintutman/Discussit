@@ -15,6 +15,7 @@ namespace Discussit
     {
         private readonly Context context;
         private List<Member> lstMembers;
+        private List<Member> lstSearch;
 
         /// <summary>
         /// Initializes a new instance of the MemberAdapter class with the specified context.
@@ -25,9 +26,10 @@ namespace Discussit
             this.context = context;
             lstMembers = new List<Member>();
         }
-        public override Member this[int position] => lstMembers[position];
 
-        public override int Count => lstMembers.Count;
+        public override Member this[int position] => lstSearch == null ? lstMembers[position] : lstSearch[position];
+
+        public override int Count => lstSearch == null ? lstMembers.Count : lstSearch.Count;
 
         /// <summary>
         /// Gets the ID of the member at the specified position.
@@ -50,7 +52,11 @@ namespace Discussit
         {
             LayoutInflater li = LayoutInflater.From(context);
             View v = li.Inflate(Resource.Layout.layout_member, parent, false);
-            Member member = lstMembers[position];
+            Member member;
+            if (lstSearch == null)
+                member = lstMembers[position];
+            else
+                member = lstSearch[position];
             TextView tvName = v.FindViewById<TextView>(Resource.Id.tvMember);
             TextView tvRank = v.FindViewById<TextView>(Resource.Id.tvMemberRank);
             tvName.Text = member.Name;
@@ -110,6 +116,25 @@ namespace Discussit
         public bool HasMember(string UID)
         {
             return lstMembers.Contains(GetMemberByUID(UID));
+        }
+
+        /// <summary>
+        /// Searches for members based on the specified search criteria and updates the search result list.
+        /// </summary>
+        /// <param name="search">The search criteria.</param>
+        public void Search(string search)
+        {
+            lstSearch = lstMembers.Where(member => member.Name.ToLower().Contains(search.ToLower())).ToList();
+            NotifyDataSetChanged();
+        }
+
+        /// <summary>
+        /// Clears the search result list.
+        /// </summary>
+        public void ClearSearch()
+        {
+            lstSearch = null;
+            NotifyDataSetChanged();
         }
 
         /// <summary>

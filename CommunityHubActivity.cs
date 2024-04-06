@@ -9,6 +9,8 @@ using AndroidX.AppCompat.App;
 using AndroidX.Core.Util;
 using Firebase.Firestore;
 using Java.Lang;
+using System.Collections.Generic;
+using System.IO;
 
 namespace Discussit
 {
@@ -19,7 +21,7 @@ namespace Discussit
     public class CommunityHubActivity : AppCompatActivity, View.IOnClickListener, AdapterView.IOnItemClickListener, IEventListener, IOnCompleteListener
     {
         User user;
-        ImageButton ibtnProfile, ibtnSearch;
+        ImageButton ibtnProfile, ibtnSearch, ibtnClearSearch;
         EditText etSearchBar;
         Button btnNewCommunity;
         TextView tvSortBy;
@@ -56,6 +58,7 @@ namespace Discussit
         {
             ibtnProfile = FindViewById<ImageButton>(Resource.Id.ibtnProfile);
             ibtnSearch = FindViewById<ImageButton>(Resource.Id.ibtnSearch);
+            ibtnClearSearch = FindViewById<ImageButton>(Resource.Id.ibtnClearSearchBar);
             btnNewCommunity = FindViewById<Button>(Resource.Id.btnNewCommunity);
             etSearchBar = FindViewById<EditText>(Resource.Id.etSearchBar);
             tvSortBy = FindViewById<TextView>(Resource.Id.tvSortBy);
@@ -65,13 +68,13 @@ namespace Discussit
             communities.AddSnapshotListener(this);
             ibtnProfile.SetOnClickListener(this);
             ibtnSearch.SetOnClickListener(this);
+            ibtnClearSearch.SetOnClickListener(this);
             btnNewCommunity.SetOnClickListener(this);
             RegisterForContextMenu(lvCommunities);
             RegisterForContextMenu(tvSortBy);
             sort = Resources.GetString(Resource.String.sortbyPosts);
             SetSorting(sort);
         }
-
 
         /// <summary>
         /// Sets the sorting text view with the specified sorting criteria.
@@ -107,6 +110,32 @@ namespace Discussit
         }
 
         /// <summary>
+        /// Clears the search bar, hides the clear search button, and clears the search results in the communities list.
+        /// </summary>
+        private void ClearSearch()
+        {
+            etSearchBar.Text = "";
+            ibtnClearSearch.Visibility = ViewStates.Gone;
+            communities.ClearSearch();
+        }
+
+        /// <summary>
+        /// Initiates a search based on the text entered in the search bar. Updates the search results in the communities list accordingly.
+        /// </summary>
+        private void Search()
+        {
+            if (etSearchBar.Text != "")
+            {
+                communities.Search(etSearchBar.Text);
+                ibtnClearSearch.Visibility = ViewStates.Visible;
+            }
+            else
+            {
+                ClearSearch();
+            }
+        }
+
+        /// <summary>
         /// Called when the result of a permission request is received.
         /// </summary>
         /// <param name="requestCode">Not in use</param>
@@ -138,6 +167,10 @@ namespace Discussit
                 ViewProfile();
             else if (v == btnNewCommunity)
                 OpenCreateCommunityActivity();
+            else if (v == ibtnSearch)
+                Search();
+            else if (v == ibtnClearSearch)
+                ClearSearch();
         }
 
         /// <summary>

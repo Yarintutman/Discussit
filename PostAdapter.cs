@@ -14,6 +14,7 @@ namespace Discussit
     {
         private readonly Context context;
         private List<Post> lstPosts;
+        private List<Post> lstSearch;
 
         /// <summary>
         /// Initializes a new instance of the PostAdapter class.
@@ -24,9 +25,9 @@ namespace Discussit
             this.context = context;
             lstPosts = new List<Post>();
         }
-        public override Post this[int position] => lstPosts[position];
+        public override Post this[int position] => lstSearch == null ? lstPosts[position] : lstSearch[position];
 
-        public override int Count => lstPosts.Count;
+        public override int Count => lstSearch == null ? lstPosts.Count : lstSearch.Count;
 
         /// <summary>
         /// Gets the ID of the post at the specified position in the adapter.
@@ -49,7 +50,11 @@ namespace Discussit
         {
             LayoutInflater li = LayoutInflater.From(context);
             View v = li.Inflate(Resource.Layout.layout_post, parent, false);
-            Post post = lstPosts[position];
+            Post post;
+            if (lstSearch == null)
+                post = lstPosts[position];
+            else
+                post = lstSearch[position];
             TextView tvCreatorName = v.FindViewById<TextView>(Resource.Id.tvCreatorName);
             TextView tvPostTitle = v.FindViewById<TextView>(Resource.Id.tvPostTitle);
             tvCreatorName.Text = post.CreatorName;
@@ -118,6 +123,26 @@ namespace Discussit
         public Post GetPostById(string Id)
         {
             return lstPosts.FirstOrDefault(Post => Id == Post.Id);
+        }
+
+        /// <summary>
+        /// Searches for posts based on the specified search criteria and updates the search result list.
+        /// </summary>
+        /// <param name="search">The search criteria.</param>
+        public void Search(string search)
+        {
+            lstSearch = lstPosts.Where(post => post.Title.ToLower().Contains(search.ToLower()) ||
+                                                  post.Description.ToLower().Contains(search.ToLower())).ToList();
+            NotifyDataSetChanged();
+        }
+
+        /// <summary>
+        /// Clears the search result list.
+        /// </summary>
+        public void ClearSearch()
+        {
+            lstSearch = null;
+            NotifyDataSetChanged();
         }
 
         /// <summary>

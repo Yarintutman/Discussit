@@ -194,13 +194,14 @@ namespace Discussit
                 MemberCount--;
                 fbd.IncrementField(General.COMMUNITIES_COLLECTION, Id, General.FIELD_MEMBER_COUNT, -1);
                 Members.RemoveMember(member);
-                user.RemoveArrayFields(General.FIELD_USER_COMMENTS, user.Comments.Where<string>(str => str.Contains(Id)).ToList());
-                user.RemoveArrayFields(General.FIELD_USER_POSTS, user.Posts.Where<string>(str => str.Contains(Id)).ToList());
-                user.RemoveArrayFields(General.FIELD_USER_COMMUNITIES, user.Communities.Where<string>(str => str.Contains(Id)).ToList());
-                user.RemoveArrayFields(General.FIELD_USER_MANAGING_COMMUNITIES, user.ManagingCommunities.Where<string>(str => str.Contains(Id)).ToList());
+                user.RemoveArrayFields(General.FIELD_USER_COMMUNITIES, 
+                                       user.Communities.Where<string>(str => str.Contains(Id)).ToList());
+                user.RemoveArrayFields(General.FIELD_USER_MANAGING_COMMUNITIES, 
+                                       user.ManagingCommunities.Where<string>(str => str.Contains(Id)).ToList());
                 if (member.GetType() == typeof(Leader))
-                    NewLeader = fbd.GetHighestValue(CollectionPath + "/" + General.MEMBERS_COLLECTION, General.FIELD_MEMBER_TYPE,
-                                                    Application.Context.Resources.GetString(Resource.String.leader), General.FIELD_DATE, 1);
+                    NewLeader = fbd.GetHighestValue(CollectionPath + "/" + General.MEMBERS_COLLECTION,
+                                General.FIELD_MEMBER_TYPE, Application.Context.Resources.GetString(Resource.String.leader),
+                                General.FIELD_DATE, 1);
             }
             return NewLeader;
         }
@@ -219,9 +220,9 @@ namespace Discussit
                 {
                     post.DeletePost();
                     Posts.RemovePost(post);
+                    PostCount--;
                     fbd.IncrementField(General.COMMUNITIES_COLLECTION, Id, General.FIELD_POST_COUNT, -1);
                     fbd.RemoveFromArray(General.USERS_COLLECTION, post.CreatorUID, General.FIELD_USER_POSTS, post.Path);
-                    PostCount--;
                 } 
             }
         }
@@ -231,9 +232,11 @@ namespace Discussit
         /// </summary>
         public void SaveChanges()
         {
-            Dictionary<string, Java.Lang.Object> fields = new Dictionary<string, Java.Lang.Object>();
-            fields.Add(General.FIELD_COMMUNITY_NAME, Name);
-            fields.Add(General.FIELD_COMMUNITY_DESCRIPTION, Description);
+            Dictionary<string, Java.Lang.Object> fields = new Dictionary<string, Java.Lang.Object>
+            {
+                { General.FIELD_COMMUNITY_NAME, Name },
+                { General.FIELD_COMMUNITY_DESCRIPTION, Description }
+            };
             fbd.UpdateDocument(General.COMMUNITIES_COLLECTION, Id, fields);
         }
 

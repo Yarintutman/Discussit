@@ -9,6 +9,7 @@
   <string name="profile">Profile</string>
   <string name="tts">text to speach</string>
   <string name="logout">Logout</string>
+  <string name="clearSearch">Clear search</string>
   <string name="HintEmail">Enter Email Address</string>
   <string name="HintPassword">Enter password</string>
   <string name="HintUsername">Enter username</string>
@@ -49,15 +50,17 @@
   <string name="InvalidFields">Invalid Input Fields</string>
   <string name="InvalidUserAlreadyExists">User Already Exists</string>
   <string name="InvalidLoginFields">Invalid Email of password</string>
-  <string name="changeName">Change Username</string>
   <string name="resetPassword">Send Email verification</string>
   <string name="enterEmail">Enter your Email address</string>
   <string name="openResetPassword">Reset your Password</string>
   <string name="sendResetPasswordEmail">Send Email verification</string>
-  <string name="passwordEmail">Sent verification Email</string>
+  <string name="sentEmail">Sent verification Email</string>
+  <string name="wrongEmailOrPassword">Wrong email or password...\nPlease try again</string>
   <string name="wrongEmail">Email address does not match the user\'s Email address</string>
+  <string name="failedToSend">Failed to send email...\nPlease try again</string>
   <string name="sendAgain">Resend Email verification</string>
   <string name="save">Save Changes</string>
+  <string name="savedChanges">Saved Changes!</string>
   <string name="communityName">Community Name</string>
   <string name="enterCommunityName">Enter Community Name</string>
   <string name="communityDescription">Community Description</string>

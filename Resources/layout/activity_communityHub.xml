@@ -31,6 +31,14 @@
         android:orientation="horizontal"
         android:layout_marginLeft="@dimen/marginLeft"
         android:layout_marginRight="@dimen/marginRight">
+        <ImageButton
+            android:id="@+id/ibtnClearSearchBar"
+            android:layout_width="@dimen/clearSearchBarbuttonWidth"
+            android:layout_height="@dimen/clearSearchBarbuttonHeight"
+            android:background="@drawable/ClearSearch"
+            android:contentDescription="@string/clearSearch"
+            android:layout_gravity="center_vertical"
+            android:visibility="gone"/>
         <EditText
             android:id="@+id/etSearchBar"
             android:layout_width="match_parent"

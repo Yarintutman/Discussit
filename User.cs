@@ -174,16 +174,16 @@ namespace Discussit
                 switch (FName)
                 {
                     case General.FIELD_USER_COMMUNITIES:
-                        Communities.Remove(value);
+                        Communities.RemoveAll(General.ListToJavaList(value));
                         break;
                     case General.FIELD_USER_MANAGING_COMMUNITIES:
-                        ManagingCommunities.Remove(value);
+                        ManagingCommunities.RemoveAll(General.ListToJavaList(value));
                         break;
                     case General.FIELD_USER_POSTS:
-                        Posts.Remove(value);
+                        Posts.RemoveAll(General.ListToJavaList(value));
                         break;
                     case General.FIELD_USER_COMMENTS:
-                        Comments.Remove(value);
+                        Comments.RemoveAll(General.ListToJavaList(value));
                         break;
                 }
             }
@@ -204,16 +204,6 @@ namespace Discussit
         public Task GetUserData()
         {
             return fbd.GetDocument(General.USERS_COLLECTION, Id);
-        }
-
-        /// <summary>
-        /// Retrieves user data from the Firebase database.
-        /// </summary>
-        /// <param name="Uid">The id of the user to retrieve</param>
-        /// <returns>A task representing the asynchronous operation.</returns>
-        public Task GetUserData(string Uid)
-        {
-            return fbd.GetDocument(General.USERS_COLLECTION, Uid);
         }
 
         /// <summary>
@@ -267,6 +257,16 @@ namespace Discussit
                     break;
             }
             return tskGetList;
+        }
+
+        /// <summary>
+        /// Sends a password reset email to the specified email address.
+        /// </summary>
+        /// <param name="email">The email address associated with the account.</param>
+        /// <returns>A task representing the asynchronous operation, which upon completion, indicates whether the password reset email was sent successfully.</returns>
+        public Task SendResetPasswordEmail(string email)
+        {
+            return fbd.ResetPassword(email);
         }
 
         /// <summary>

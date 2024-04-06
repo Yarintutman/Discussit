@@ -1,5 +1,6 @@
 ﻿using Android.App;
 using Android.Content;
+using Android.Gms.Tasks;
 using Android.OS;
 using Android.Runtime;
 using Android.Views;
@@ -17,14 +18,15 @@ namespace Discussit
     /// Settings activity allowing users to change their profile settings.
     /// </summary>
     [Activity(Label = "SettingsActivity")]
-    public class SettingsActivity : AppCompatActivity, View.IOnClickListener
+    public class SettingsActivity : AppCompatActivity, View.IOnClickListener, IOnCompleteListener
     {
         User user;
         ImageButton ibtnProfilePicture, ibtnBack;
-        EditText etChangeUserName, etEnterEmail;
-        Button btnChangeUserName, btnResetPassword, btnConfirmResetPassword, btnSaveChanges;
+        EditText etEnterEmail;
+        Button btnResetPassword, btnEmailVerification;
         TextView tvEmailResult;
         LinearLayout llResetPassword;
+        Task tskResetPassword;
 
         /// <summary>
         /// Initializes the activity when created.
@@ -52,22 +54,19 @@ namespace Discussit
         /// </summary>
         private void InitViews()
         {
+            TextView tvUsername = FindViewById<TextView>(Resource.Id.tvUsername);
             ibtnProfilePicture = FindViewById<ImageButton>(Resource.Id.ibtnProfilePicture);
             ibtnBack = FindViewById<ImageButton>(Resource.Id.ibtnBack);
-            etChangeUserName = FindViewById<EditText>(Resource.Id.etChangeUserName);
             etEnterEmail = FindViewById<EditText>(Resource.Id.etEnterEmail);
-            btnChangeUserName = FindViewById<Button>(Resource.Id.btnChangeUserName);
             btnResetPassword = FindViewById<Button>(Resource.Id.btnResetPassword);
-            btnConfirmResetPassword = FindViewById<Button>(Resource.Id.btnConfirmResetPassword);
-            btnSaveChanges = FindViewById<Button>(Resource.Id.btnSaveChanges);
+            btnEmailVerification = FindViewById<Button>(Resource.Id.btnEmailVerification);
             tvEmailResult = FindViewById<TextView>(Resource.Id.tvEmailResult);
             llResetPassword = FindViewById<LinearLayout>(Resource.Id.llResetPassword);
+            tvUsername.Text = user.Username;
             ibtnProfilePicture.SetOnClickListener(this);
             ibtnBack.SetOnClickListener(this);
-            btnChangeUserName.SetOnClickListener(this);
             btnResetPassword.SetOnClickListener(this);
-            btnConfirmResetPassword.SetOnClickListener(this);
-            btnSaveChanges.SetOnClickListener(this);
+            btnEmailVerification.SetOnClickListener(this);
             llResetPassword.Visibility = ViewStates.Invisible;
         }
 
@@ -112,6 +111,25 @@ namespace Discussit
         }
 
         /// <summary>
+        /// Sends a password reset email to the email address entered by the user, if the input fields are valid.
+        /// </summary>
+        private void SendEmailVerification()
+        {
+            if (ValidInputFields(etEnterEmail.Text))
+            {
+                tskResetPassword = user.SendResetPasswordEmail(etEnterEmail.Text);
+                if (tskResetPassword != null)
+                    tskResetPassword.AddOnCompleteListener(this);
+                else
+                    tvEmailResult.Text = Resources.GetString(Resource.String.wrongEmail);
+            }
+            else
+            {
+                tvEmailResult.Text = Resources.GetString(Resource.String.InvalidFields);
+            }
+        }
+
+        /// <summary>
         /// Handles click events for views in the activity.
         /// </summary>
         /// <param name="v">The view that was clicked.</param>
@@ -121,6 +139,23 @@ namespace Discussit
                 Back();
             else if (v == btnResetPassword)
                 ShowPasswordReset();
+            else if (v == btnEmailVerification)
+                SendEmailVerification();
+        }
+
+        /// <summary>
+        /// Handles completion of asynchronous tasks.
+        /// </summary>
+        /// <param name="task">The completed task.</param>
+        public void OnComplete(Task task)
+        {
+            if (task == tskResetPassword)
+            {
+                if (task.IsSuccessful)
+                    tvEmailResult.Text = Resources.GetString(Resource.String.sentEmail);
+                else
+                    tvEmailResult.Text = Resources.GetString(Resource.String.failedToSend);
+            }    
         }
     }
 }

@@ -1,15 +1,13 @@
 ﻿using Android.App;
 using Android.Content;
 using Android.Gms.Tasks;
-using Android.Graphics;
 using Android.OS;
 using Android.Runtime;
+using Android.Speech.Tts;
 using Android.Views;
 using Android.Widget;
 using AndroidX.AppCompat.App;
 using Firebase.Firestore;
-using System;
-using Android.Speech.Tts;
 
 namespace Discussit
 {
@@ -280,11 +278,7 @@ namespace Discussit
         /// <param name="error"Not in use.</param>
         public void OnEvent(Java.Lang.Object obj, FirebaseFirestoreException error)
         {
-            /*QuerySnapshot querySnapshot = (QuerySnapshot)obj;
-            if (querySnapshot.Documents.Count != 0 && querySnapshot.Documents[0].Id.Contains(General.MEMBERS_COLLECTION))
-                GetMembers();
-            else
-                GetComments();*/
+            
             GetMembers();
             GetComments();
         }
@@ -351,6 +345,10 @@ namespace Discussit
             tts.Stop();
         }
 
+        /// <summary>
+        /// Callback method indicating the initialization status of TextToSpeech.
+        /// </summary>
+        /// <param name="status">Not in use</param>
         public void OnInit([GeneratedEnum] OperationResult status) { }
     }
 }
