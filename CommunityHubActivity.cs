@@ -117,6 +117,7 @@ namespace Discussit
             etSearchBar.Text = "";
             ibtnClearSearch.Visibility = ViewStates.Gone;
             communities.ClearSearch();
+            SortCommunities();
         }
 
         /// <summary>

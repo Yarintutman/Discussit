@@ -120,6 +120,7 @@ namespace Discussit
             etSearchBar.Text = "";
             ibtnClearSearch.Visibility = ViewStates.Gone;
             members.ClearSearch();
+            SortMembers();
         }
 
         /// <summary>
