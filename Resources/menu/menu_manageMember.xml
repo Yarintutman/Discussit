@@ -9,7 +9,4 @@
 	<item android:id="@+id/itemKick"
 		android:title="@string/kick"
 		android:showAsAction="always"/>
-	<item android:id="@+id/itemBan"
-		android:title="@string/ban"
-		android:showAsAction="always"/>
 </menu>

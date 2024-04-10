@@ -70,7 +70,6 @@ namespace Discussit
             ibtnSearch.SetOnClickListener(this);
             ibtnClearSearch.SetOnClickListener(this);
             btnNewCommunity.SetOnClickListener(this);
-            RegisterForContextMenu(lvCommunities);
             RegisterForContextMenu(tvSortBy);
             sort = Resources.GetString(Resource.String.sortbyPosts);
             SetSorting(sort);
@@ -261,20 +260,6 @@ namespace Discussit
             if (v == tvSortBy)
             {
                 MenuInflater.Inflate(Resource.Menu.menu_sortCommunities, menu);
-            }
-            else
-            {
-                AdapterView.AdapterContextMenuInfo info = menuInfo as AdapterView.AdapterContextMenuInfo;
-                if (info != null)
-                {
-                    /*int position = info.Position;
-                    currentPost = posts[position];
-                    Member userAsMember = members.GetMemberByUID(user.Id);
-                    if (userAsMember != null && members.HasMember(user.Id) && (userAsMember is Admin || userAsMember.UserID == currentPost.CreatorUID))
-                    {
-                        MenuInflater.Inflate(Resource.Menu.menu_manageItem, menu);
-                    }*/
-                }
             }
             base.OnCreateContextMenu(menu, v, menuInfo);
         }
