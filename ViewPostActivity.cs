@@ -192,11 +192,8 @@ namespace Discussit
             {
                 int position = info.Position;
                 currentComment = comments[position];
-                if (isInCommunity)
-                {
-                    MenuInflater.Inflate(Resource.Menu.menu_createComment, menu);
-                    base.OnCreateContextMenu(menu, v, menuInfo);
-                }
+                MenuInflater.Inflate(Resource.Menu.menu_createComment, menu);
+                base.OnCreateContextMenu(menu, v, menuInfo);
             }
         }
 
@@ -209,7 +206,11 @@ namespace Discussit
         {
             if (item.ItemId == Resource.Id.itemCreateComment)
             {
-                OpenCreateCommentActivity(currentComment);
+                if (isInCommunity)
+                    OpenCreateCommentActivity(currentComment);
+                else
+                    Toast.MakeText(this, Resources.GetString(Resource.String.joinCommunityToToCreateComment), ToastLength.Short);
+
             }
             return base.OnContextItemSelected(item);
         }
