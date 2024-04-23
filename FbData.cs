@@ -224,6 +224,18 @@ namespace Discussit
         }
 
         /// <summary>
+        /// Retrieves documents from a Firestore collection group where a specified field is equal to a given value.
+        /// </summary>
+        /// <param name="cName">The name of the Firestore collection group containing the document.</param>
+        /// <param name="fName">The name of the field to filter by.</param>
+        /// <param name="fValue">The value to filter for.</param>
+        /// <returns>A Task representing the asynchronous operation of fetching documents.</returns>
+        public Task GetEqualToDocsInGroup(string cName, string fName, Java.Lang.Object fValue)
+        {
+            return firestore.CollectionGroup(cName).WhereEqualTo(fName, fValue).Get();
+        }
+
+        /// <summary>
         /// Retrieves documents from a Firestore collection where a specified field is greater than a given value.
         /// </summary>
         /// <param name="cName">The name of the Firestore collection.</param>

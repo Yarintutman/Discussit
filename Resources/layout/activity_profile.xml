@@ -9,8 +9,8 @@
         android:layout_marginTop="@dimen/Profile_marginTop"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <ImageButton
-            android:id="@+id/ibtnPicture"
+        <ImageView
+            android:id="@+id/ivPicture"
             android:layout_width="@dimen/Profile_profileWidth"
             android:layout_height="@dimen/Profile_profileHeight"
             android:background="@drawable/profilepicture"
@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/logout"
             android:contentDescription="@string/logout"
-            android:layout_toRightOf="@id/ibtnPicture"
+            android:layout_toRightOf="@id/ivPicture"
             android:layout_centerVertical="true"/>
         <ImageButton
             android:id="@+id/ibtnBack"
@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/back"
             android:contentDescription="@string/logout"
-            android:layout_toLeftOf="@id/ibtnPicture"
+            android:layout_toLeftOf="@id/ivPicture"
             android:layout_centerVertical="true"/>
     </RelativeLayout>
     <TextView
@@ -63,16 +63,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/Profile_marginTop"
             android:text="@string/viewPosts"
-            android:textAllCaps="false"
-            android:textSize="@dimen/Profile_btnTextSize"
-            android:textColor="@color/clickable"
-            android:background="@drawable/shape"/>
-        <Button
-            android:id="@+id/btnViewComments"
-            android:layout_width="@dimen/Profile_btnWidth"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/Profile_marginTop"
-            android:text="@string/viewComments"
             android:textAllCaps="false"
             android:textSize="@dimen/Profile_btnTextSize"
             android:textColor="@color/clickable"

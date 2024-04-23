@@ -246,6 +246,20 @@ namespace Discussit
         }
 
         /// <summary>
+        /// Enables or disables the ability to edit community details.
+        /// </summary>
+        /// <param name="allow">True to enable editing, false to disable editing.</param>
+        private void AllowEditCommunity(bool allow)
+        {
+            if (allow)
+                btnSaveChanges.Visibility = ViewStates.Visible;
+            else
+                btnSaveChanges.Visibility = ViewStates.Gone;
+            etCommunityName.Enabled = allow;
+            etCommunityDescription.Enabled = allow;
+        }
+
+        /// <summary>
         /// Handles completion of asynchronous tasks.
         /// </summary>
         /// <param name="task">The completed task.</param>
@@ -258,6 +272,8 @@ namespace Discussit
                     QuerySnapshot qs = (QuerySnapshot)task.Result;
                     members.AddMembers(qs.Documents);
                     tvMemberCount.Text = members.MemberCount.ToString();
+                    userAsMember = members.GetMemberByUID(user.Id);
+                    AllowEditCommunity(userAsMember is Leader);
                     SortMembers();
                 }
                 else if (task == tskGetMemberAsUser)
@@ -298,7 +314,6 @@ namespace Discussit
                 {
                     int position = info.Position;
                     currentMember = members[position];
-                    userAsMember = members.GetMemberByUID(user.Id);
                     if (userAsMember!= null && userAsMember.IsHigherRank(currentMember) && userAsMember != currentMember)
                     {
                         if (userAsMember is Leader)

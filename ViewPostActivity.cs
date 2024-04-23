@@ -161,15 +161,6 @@ namespace Discussit
         }
 
         /// <summary>
-        /// Retrieves recursive comments associated with the specified comment.
-        /// </summary>
-        /// <param name="comment">The comment for which recursive comments are retrieved.</param>
-        private void GetRecursiveComments(Comments comment)
-        {
-            tskGetComments = comment.GetComments().AddOnCompleteListener(this);
-        }
-
-        /// <summary>
         /// Opens the profile activity to view the user's profile.
         /// </summary>
         private void ViewProfile()
@@ -209,7 +200,7 @@ namespace Discussit
                 if (isInCommunity)
                     OpenCreateCommentActivity(currentComment);
                 else
-                    Toast.MakeText(this, Resources.GetString(Resource.String.joinCommunityToToCreateComment), ToastLength.Short);
+                    Toast.MakeText(this, Resources.GetString(Resource.String.joinCommunityToToCreateComment), ToastLength.Long).Show();
 
             }
             return base.OnContextItemSelected(item);

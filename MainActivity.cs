@@ -5,10 +5,9 @@ using Android.OS;
 using Android.Views;
 using Android.Views.InputMethods;
 using Android.Widget;
+using AndroidX.AppCompat.App;
 using Firebase.Firestore;
-using Kotlin;
 using System;
-using System.Runtime.InteropServices;
 using System.Threading;
 
 namespace Discussit
@@ -17,7 +16,7 @@ namespace Discussit
     /// Represents the main activity of the application.
     /// </summary>
     [Activity(Label = "@string/app_name", MainLauncher = true)]
-    public class MainActivity : Activity, View.IOnClickListener, IOnCompleteListener
+    public class MainActivity : AppCompatActivity, View.IOnClickListener, IOnCompleteListener
     {
         User user;
         EditText etUsername, etEmail, etPassword;

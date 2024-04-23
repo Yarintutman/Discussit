@@ -92,15 +92,4 @@
             android:layout_marginRight="@dimen/Settigns_marginRight"
             android:textColor="@color/textColor"/>
     </LinearLayout>
-    <Button
-        android:id="@+id/btnSaveChanges"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/save"
-        android:textAllCaps="false"
-        android:textSize="@dimen/Settigns_buttonTextSize"
-        android:textColor="@color/clickable"
-        android:background="@drawable/shape"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="@dimen/marginBottom"/>
 </LinearLayout>

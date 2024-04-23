@@ -15,7 +15,7 @@ namespace Discussit
     /// </summary>
     internal class User
     {
-        public string id;
+        private string id;
         public string Id
         {
             get

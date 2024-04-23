@@ -19,15 +19,15 @@ namespace Discussit
     public class ProfileActivity : AppCompatActivity, View.IOnClickListener, IOnCompleteListener, AdapterView.IOnItemClickListener
     {
         User user;
-        ImageButton ibtnPicture, ibtnBack, ibtnLogout, ibtnCloseDialog, ibtnSearch, ibtnClearSearch;
+        ImageButton ibtnBack, ibtnLogout, ibtnCloseDialog, ibtnSearch, ibtnClearSearch;
         EditText etSearchBar;
-        Button btnViewCommunities, btnViewPosts, btnViewComments, btnManageCommunities, btnSettings;
-        Dialog dialogViewCommunities, dialogViewPosts, dialogViewComments, dialogViewManagedCommunities;
-        Task tskGetCommunities, tskGetPosts, tskGetComments, tskGetManagedCommunities;
+        Button btnViewCommunities, btnViewPosts, btnManageCommunities, btnSettings;
+        Dialog dialogViewCommunities, dialogViewPosts, dialogViewManagedCommunities;
+        Task tskGetCommunities, tskGetPosts, tskGetManagedCommunities, tskGetCommunity;
         CommunityAdapter communities, managedCommunities;
         PostAdapter posts;
-        CommentAdapter comments;
         Dialog logoutDialog;
+        Post currentPost;
         string currentDialog;
 
         /// <summary>
@@ -56,22 +56,18 @@ namespace Discussit
         /// </summary>
         private void InitViews()
         {
-            ibtnPicture = FindViewById<ImageButton>(Resource.Id.ibtnPicture);
             ibtnBack = FindViewById<ImageButton>(Resource.Id.ibtnBack);
             ibtnLogout = FindViewById<ImageButton>(Resource.Id.ibtnLogout);
             TextView tvUsername = FindViewById<TextView>(Resource.Id.tvUsername);
             btnViewCommunities = FindViewById<Button>(Resource.Id.btnViewCommunities);
             btnViewPosts = FindViewById<Button>(Resource.Id.btnViewPosts);
-            btnViewComments = FindViewById<Button>(Resource.Id.btnViewComments);
             btnManageCommunities = FindViewById<Button>(Resource.Id.btnManageCommunities);
             btnSettings = FindViewById<Button>(Resource.Id.btnSettings);
             tvUsername.Text = user.Username;
-            ibtnPicture.SetOnClickListener(this);
             ibtnBack.SetOnClickListener(this);
             ibtnLogout.SetOnClickListener(this);
             btnViewCommunities.SetOnClickListener(this);
             btnViewPosts.SetOnClickListener(this);
-            btnViewComments.SetOnClickListener(this);
             btnManageCommunities.SetOnClickListener(this);
             btnSettings.SetOnClickListener(this);
         }
@@ -148,6 +144,8 @@ namespace Discussit
                 managedCommunities.ClearSearch();
             else if (currentDialog == Resources.GetString(Resource.String.Communities))
                 communities.ClearSearch();
+            else if (currentDialog == Resources.GetString(Resource.String.Posts))
+                posts.ClearSearch();
         }
 
         /// <summary>
@@ -161,6 +159,8 @@ namespace Discussit
                     managedCommunities.Search(etSearchBar.Text);
                 else if (currentDialog == Resources.GetString(Resource.String.Communities))
                     communities.Search(etSearchBar.Text);
+                else if (currentDialog == Resources.GetString(Resource.String.Posts))
+                    posts.Search(etSearchBar.Text);
                 ibtnClearSearch.Visibility = ViewStates.Visible; 
             }
             else
@@ -230,7 +230,7 @@ namespace Discussit
         /// <summary>
         /// Displays a dialog to select and view posts.
         /// </summary>
-        /*private void ViewPosts()
+        private void ViewPosts()
         {
             dialogViewPosts = new Dialog(this);
             dialogViewPosts.SetContentView(Resource.Layout.dialog_selectPost);
@@ -246,10 +246,10 @@ namespace Discussit
             currentDialog = Resources.GetString(Resource.String.Posts);
             if (user.Posts.Size() != 0)
             {
-                tskGetPosts = user.GetDocumentInList(General.FIELD_USER_POSTS);
-                tskGetPosts?.AddOnCompleteListener(this);
+                posts = new PostAdapter(dialogViewPosts.Context);
+                tskGetPosts = posts.GetAllUserPosts(user.Id).AddOnCompleteListener(this);
             }
-        }*/
+        }
 
         /// <summary>
         /// Sets the managed communities in the dialog view based on the provided documents.
@@ -283,9 +283,8 @@ namespace Discussit
         /// <param name="documents">Documents representing the posts.</param>
         private void SetPosts(IList<DocumentSnapshot> documents)
         {
-            posts = new PostAdapter(dialogViewPosts.Context);
-            posts.SetPosts(documents);
             ListView lvPosts = dialogViewPosts.FindViewById<ListView>(Resource.Id.lvPosts);
+            posts.SetPosts(documents);
             lvPosts.Adapter = posts;
             lvPosts.OnItemClickListener = this;
         }
@@ -301,8 +300,19 @@ namespace Discussit
                 dialogViewCommunities.Cancel();
             else if (currentDialog == Resources.GetString(Resource.String.Posts))
                 dialogViewPosts.Cancel();
-            else if (currentDialog == Resources.GetString(Resource.String.Comments))
-                dialogViewComments.Cancel();
+        }
+
+        /// <summary>
+        /// Initiates the process of retrieving a community's data.
+        /// <param name="post">The post inside the community to retrieve</param>
+        /// </summary>
+        private void GetCommunity(Post post)
+        {
+            for (int i = 0; i < user.Posts.Count && post.CommunityPath == null; i++)
+                if (user.Posts[i].Contains(post.Id))
+                    post.CommunityPath = General.RemoveFromString('/' + General.POSTS_COLLECTION, user.Posts[i]);
+            currentPost = post;
+            tskGetCommunity = post.GetCommunity().AddOnCompleteListener(this);
         }
 
         /// <summary>
@@ -321,9 +331,8 @@ namespace Discussit
                 ViewManagedCommunities();
             else if (v == btnViewCommunities)
                 ViewCommunities();
-            else if (v == btnViewPosts) { }
-            //ViewPosts();
-            else if (v == btnViewComments) { }
+            else if (v == btnViewPosts)
+                ViewPosts();
             else if (v == ibtnCloseDialog)
                 CloseDialog();
             else if (v == ibtnSearch)
@@ -350,17 +359,30 @@ namespace Discussit
                     QuerySnapshot qs = (QuerySnapshot)task.Result;
                     SetCommunities(qs.Documents);
                 }
+                else if (task == tskGetPosts)
+                {
+                    QuerySnapshot qs = (QuerySnapshot)task.Result;
+                    SetPosts(qs.Documents);
+                }
+                else if (task == tskGetCommunity)
+                {
+                    DocumentSnapshot ds = (DocumentSnapshot)task.Result;
+                    Community community = new Community(ds);
+                    ViewPost(community, currentPost);
+                }
             }
         }
 
         /// <summary>
         /// Navigates to the activity to view a post.
         /// </summary>
+        /// <param name="community">The community of the post to view.</param>
         /// <param name="post">The post to view.</param>
-        private void ViewPost(Post post)
+        private void ViewPost(Community community,Post post)
         {
             Intent intent = new Intent(this, typeof(ViewPostActivity));
             intent.PutExtra(General.KEY_USER, Intent.GetStringExtra(General.KEY_USER));
+            intent.PutExtra(General.KEY_COMMUNITY, community.GetJson());
             intent.PutExtra(General.KEY_POST, post.GetJson());
             StartActivityForResult(intent, 0);
             dialogViewPosts.Cancel();
@@ -406,9 +428,7 @@ namespace Discussit
             else if (currentDialog == Resources.GetString(Resource.String.Communities))
                 ViewCommunity(communities[position]);
             else if (currentDialog == Resources.GetString(Resource.String.Posts))
-                ViewPost(posts[position]);
-            else if (currentDialog == Resources.GetString(Resource.String.Comments)) { }
-                //TBD
+                GetCommunity(posts[position]);
         }
 
         /// <summary>

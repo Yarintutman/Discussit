@@ -107,7 +107,7 @@ namespace Discussit
         /// <returns>The substring after the specified cutting point.</returns>
         public static string CutStringFrom(string cutFrom, string str)
         {
-            return str.Substring(str.IndexOf(cutFrom) + 1);
+            return str[(str.IndexOf(cutFrom) + 1)..];
         }
 
         /// <summary>
@@ -118,7 +118,7 @@ namespace Discussit
         /// <returns>The modified string with the substring removed.</returns>
         public static string RemoveFromString(string cutAfter, string str)
         {
-            return str.Remove(0, str.LastIndexOf(cutAfter));
+            return str[..str.LastIndexOf(cutAfter)];
         }
 
         /// <summary>

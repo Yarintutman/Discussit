@@ -24,6 +24,7 @@ namespace Discussit
                 return PostAdapter[position];
             }
         }
+
         /// <summary>
         /// Initializes a new instance of the Posts class with the specified context and path.
         /// </summary>
@@ -91,7 +92,7 @@ namespace Discussit
         /// Retrieves the posts from the database.
         /// </summary>
         /// <returns>A task representing the asynchronous operation of getting the posts.</returns>
-        internal Task GetPosts()
+        public Task GetPosts()
         {
             return fbd.GetCollection(Path + "/" + General.POSTS_COLLECTION);
         }

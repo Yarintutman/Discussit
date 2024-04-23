@@ -28,7 +28,7 @@ namespace Discussit
         TextView tvCommunityName, tvDescription, tvMemberCount, tvSortBy;
         Button btnNewPost, btnJoinCommunity;
         EditText etSearchBar;
-        Task tskGetPosts, tskGetMemebers, tskGetComments;
+        Task tskGetPosts, tskGetMemebers;
         Post currentPost;
         string sort;
 

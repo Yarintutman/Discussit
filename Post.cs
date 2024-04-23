@@ -103,13 +103,12 @@ namespace Discussit
         }
 
         /// <summary>
-        /// Retrieves the count of documents in a specific collection associated with the post.
+        /// Retrieves the community containing the post.
         /// </summary>
-        /// <param name="cName">Name of the collection to retrieve the count for.</param>
         /// <returns>A task representing the asynchronous operation, returning the count of documents in the collection.</returns>
-        public Task GetCollectionCount(string cName)
+        public Task GetCommunity()
         {
-            return fbd.GetCollectionCount(Path + "/" + cName);
+            return fbd.GetDocument(General.COMMUNITIES_COLLECTION, General.CutStringFrom("/", CommunityPath));
         }
 
         /// <summary>

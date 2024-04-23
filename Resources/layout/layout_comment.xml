@@ -23,6 +23,7 @@
             android:id="@+id/tvCommentCreator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/Comment_marginLeft"
             android:textColor="@color/textColor"/>
     </LinearLayout>
     <TextView

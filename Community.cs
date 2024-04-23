@@ -5,6 +5,7 @@ using Android.Icu.Text;
 using Android.Runtime;
 using Android.Util;
 using AndroidX.Annotations;
+using Firebase.Firestore;
 using Java.Util;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Bson;
@@ -46,6 +47,21 @@ namespace Discussit
             MemberCount = 0;
             PostCount = 0;
             CreateCommunity();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the Community class from the firebase.
+        /// </summary>
+        /// <param name="document">The DocumentSnapshot containing the community's data.</param>
+        public Community(DocumentSnapshot document)
+        {
+            fbd = new FbData();
+            Id = document.Id;
+            Name = document.GetString(General.FIELD_COMMUNITY_NAME);
+            Description = document.GetString(General.FIELD_COMMUNITY_DESCRIPTION);
+            CreationDate = fbd.FirestoreTimestampToDateTime(document.GetTimestamp(General.FIELD_DATE));
+            MemberCount = document.GetLong(General.FIELD_MEMBER_COUNT).LongValue();
+            PostCount = document.GetLong(General.FIELD_POST_COUNT).LongValue();
         }
 
         /// <summary>
@@ -152,9 +168,11 @@ namespace Discussit
         {
             post.Title = title;
             post.Description = description;
-            Dictionary<string, Java.Lang.Object> fields = new Dictionary<string, Java.Lang.Object>();
-            fields.Add(General.FIELD_POST_TITLE, post.Title);
-            fields.Add(General.FIELD_POST_DESCRIPTION, post.Description);
+            Dictionary<string, Java.Lang.Object> fields = new Dictionary<string, Java.Lang.Object>
+            {
+                { General.FIELD_POST_TITLE, post.Title },
+                { General.FIELD_POST_DESCRIPTION, post.Description }
+            };
             fbd.UpdateDocument(post.CommunityPath + "/" + General.POSTS_COLLECTION, post.Id, fields);
         }
 
