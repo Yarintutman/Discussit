@@ -6,11 +6,8 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using AndroidX.AppCompat.App;
-using AndroidX.Core.Util;
 using Firebase.Firestore;
 using Java.Lang;
-using System.Collections.Generic;
-using System.IO;
 
 namespace Discussit
 {
@@ -133,18 +130,6 @@ namespace Discussit
             {
                 ClearSearch();
             }
-        }
-
-        /// <summary>
-        /// Called when the result of a permission request is received.
-        /// </summary>
-        /// <param name="requestCode">Not in use</param>
-        /// <param name="permissions">Not in use</param>
-        /// <param name="grantResults">Not in use</param>
-        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
-        {
-            Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
-            base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
 
         /// <summary>

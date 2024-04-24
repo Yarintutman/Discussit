@@ -1,12 +1,9 @@
 ﻿using Android.Gms.Tasks;
 using Android.Runtime;
 using Firebase.Firestore;
-using Java.Lang;
 using Java.Util;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Discussit
 {
@@ -15,12 +12,12 @@ namespace Discussit
     /// </summary>
     internal class User
     {
-        private string id;
+        private readonly string id;
         public string Id
         {
             get
             {
-                return id != null? id : fbd.GetUserId();
+                return id ?? fbd.GetUserId();
             }
         }
         public string Username { get; set; }
@@ -33,7 +30,6 @@ namespace Discussit
         public JavaList<string> Communities { get; set; }
         public JavaList<string> ManagingCommunities { get; set; }
         public JavaList<string> Posts { get; set; }
-        public JavaList<string> Comments { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the User class.
@@ -46,7 +42,6 @@ namespace Discussit
             Communities = new JavaList<string>();
             ManagingCommunities = new JavaList<string>();
             Posts = new JavaList<string>();
-            Comments = new JavaList<string>();
             IsRegistered = spd.GetBool(General.KEY_REGISTERED, false);
             if (IsRegistered)
             {
@@ -56,6 +51,9 @@ namespace Discussit
             }
         }
 
+        /// <summary>
+        /// Initializes a new instance of the User class without authentication.
+        /// </summary>
         public User(string id)
         {
             this.id = id;
@@ -63,14 +61,13 @@ namespace Discussit
             Communities = new JavaList<string>();
             ManagingCommunities = new JavaList<string>();
             Posts = new JavaList<string>();
-            Comments = new JavaList<string>();
         }
 
         /// <summary>
         /// Registers the user.
         /// </summary>
         /// <returns>A task representing the asynchronous operation.</returns>
-        internal Task Register()
+        public Task Register()
         {
             return fbd.Register(Email, Password);
         }
@@ -79,7 +76,7 @@ namespace Discussit
         /// Logs in the user.
         /// </summary>
         /// <returns>A task representing the asynchronous operation.</returns>
-        internal Task Login()
+        public Task Login()
         {
             return fbd.Login(Email, Password);
         }
@@ -88,7 +85,7 @@ namespace Discussit
         /// Saves the user's information.
         /// </summary>
         /// <returns>True if the operation was successful; otherwise, false.</returns>
-        internal bool Save()
+        public bool Save()
         {
             bool success = spd.PutString(General.KEY_EMAIL, Email);
             success = success && spd.PutString(General.KEY_UID, Id);
@@ -101,7 +98,7 @@ namespace Discussit
         /// Saves the user's information.
         /// </summary>
         /// <returns>True if the operation was successful; otherwise, false.</returns>
-        internal Task SetFbUser()
+        public Task SetFbUser()
         {
             Task tskSetDocument = fbd.SetDocument(General.USERS_COLLECTION, Id, out _, GetHashMap());
             return tskSetDocument;
@@ -127,9 +124,6 @@ namespace Discussit
                 case General.FIELD_USER_POSTS:
                     Posts.Add(value);
                     break;
-                case General.FIELD_USER_COMMENTS:
-                    Comments.Add(value);
-                    break;
             }
         }
 
@@ -151,9 +145,6 @@ namespace Discussit
                     break;
                 case General.FIELD_USER_POSTS:
                     Posts.Remove(value);
-                    break;
-                case General.FIELD_USER_COMMENTS:
-                    Comments.Remove(value);
                     break;
             }
         }
@@ -181,9 +172,6 @@ namespace Discussit
                         break;
                     case General.FIELD_USER_POSTS:
                         Posts.RemoveAll(General.ListToJavaList(value));
-                        break;
-                    case General.FIELD_USER_COMMENTS:
-                        Comments.RemoveAll(General.ListToJavaList(value));
                         break;
                 }
             }
@@ -217,7 +205,6 @@ namespace Discussit
             hm.Put(General.FIELD_USER_COMMUNITIES, Communities);
             hm.Put(General.FIELD_USER_MANAGING_COMMUNITIES, ManagingCommunities);
             hm.Put(General.FIELD_USER_POSTS, Posts);
-            hm.Put(General.FIELD_USER_COMMENTS, Comments);
             return hm;
         }
 
@@ -231,9 +218,13 @@ namespace Discussit
             Communities = General.JavaListToType<string>((JavaList)document.Get(General.FIELD_USER_COMMUNITIES));
             ManagingCommunities = General.JavaListToType<string>((JavaList)document.Get(General.FIELD_USER_MANAGING_COMMUNITIES));
             Posts = General.JavaListToType<string>((JavaList)document.Get(General.FIELD_USER_POSTS));
-            Comments = General.JavaListToType<string>((JavaList)document.Get(General.FIELD_USER_COMMENTS));
         }
 
+        /// <summary>
+        /// Retrieves documents from the specified list type and returns them as a task.
+        /// </summary>
+        /// <param name="listType">The type of list to retrieve documents from.</param>
+        /// <returns>A task representing the asynchronous operation, which upon completion, contains the documents from the specified list.</returns>
         public Task GetDocumentInList(string listType)
         {
             Task tskGetList = null;
@@ -248,12 +239,7 @@ namespace Discussit
                                            General.JavaListToIListWithCut(ManagingCommunities, "/"));
                     break;
                 case General.FIELD_USER_POSTS:
-                    tskGetList = fbd.GetDocumentsInList(General.COMMUNITIES_COLLECTION,
-                                           General.JavaListToIListWithCut(Posts, "/"));
-                    break;
-                case General.FIELD_USER_COMMENTS:
-                    tskGetList = fbd.GetDocumentsInList(General.COMMUNITIES_COLLECTION,
-                                           General.JavaListToIListWithCut(Comments, "/"));
+                    tskGetList = fbd.GetEqualToDocsInGroup(General.POSTS_COLLECTION, General.FIELD_POST_CREATOR_UID, Id);
                     break;
             }
             return tskGetList;

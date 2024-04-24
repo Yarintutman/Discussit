@@ -112,7 +112,7 @@ namespace Discussit
         /// </summary>
         /// <param name="sender">The object that raised the event.</param>
         /// <param name="e">The event data.</param>
-        public void CancelDialog(object sender, EventArgs e)
+        public void CancelLogoutDialog(object sender, EventArgs e)
         {
             logoutDialog.Cancel();
         }
@@ -120,7 +120,7 @@ namespace Discussit
         /// <summary>
         /// Displays a confirmation dialog for logging out of the application
         /// </summary>
-        private void ConfirmLogout()
+        private void ShowConfirmLogoutDialog()
         {
             logoutDialog = new Dialog(this);
             logoutDialog.SetContentView(Resource.Layout.dialog_confirm);
@@ -129,7 +129,7 @@ namespace Discussit
             Button btnCancel = logoutDialog.FindViewById<Button>(Resource.Id.btnCancel);
             tvDialogTitle.Text = Resources.GetString(Resource.String.confirmLogout);
             btnConfirm.Click += new EventHandler(Logout);
-            btnCancel.Click += new EventHandler(CancelDialog);
+            btnCancel.Click += new EventHandler(CancelLogoutDialog);
             logoutDialog.Show();
         }
 
@@ -247,7 +247,7 @@ namespace Discussit
             if (user.Posts.Size() != 0)
             {
                 posts = new PostAdapter(dialogViewPosts.Context);
-                tskGetPosts = posts.GetAllUserPosts(user.Id).AddOnCompleteListener(this);
+                tskGetPosts = user.GetDocumentInList(General.FIELD_USER_POSTS).AddOnCompleteListener(this);
             }
         }
 
@@ -255,7 +255,7 @@ namespace Discussit
         /// Sets the managed communities in the dialog view based on the provided documents.
         /// </summary>
         /// <param name="documents">Documents representing the managed communities.</param>
-        private void SetManagedCommunities(IList<DocumentSnapshot> documents)
+        private void SetManagedCommunitiesDialog(IList<DocumentSnapshot> documents)
         {
             managedCommunities = new CommunityAdapter(dialogViewManagedCommunities.Context);
             managedCommunities.SetCommunities(documents);
@@ -268,7 +268,7 @@ namespace Discussit
         /// Sets the communities in the dialog view based on the provided documents.
         /// </summary>
         /// <param name="documents">Documents representing the communities.</param>
-        private void SetCommunities(IList<DocumentSnapshot> documents)
+        private void SetCommunitiesDialog(IList<DocumentSnapshot> documents)
         {
             communities = new CommunityAdapter(dialogViewCommunities.Context);
             communities.SetCommunities(documents);
@@ -281,7 +281,7 @@ namespace Discussit
         /// Sets the posts in the dialog view based on the provided documents.
         /// </summary>
         /// <param name="documents">Documents representing the posts.</param>
-        private void SetPosts(IList<DocumentSnapshot> documents)
+        private void SetPostsDialog(IList<DocumentSnapshot> documents)
         {
             ListView lvPosts = dialogViewPosts.FindViewById<ListView>(Resource.Id.lvPosts);
             posts.SetPosts(documents);
@@ -324,7 +324,7 @@ namespace Discussit
             if (v == ibtnBack)
                 Back();
             else if (v == ibtnLogout)
-                ConfirmLogout();
+                ShowConfirmLogoutDialog();
             else if (v == btnSettings)
                 ViewSettings();
             else if (v == btnManageCommunities)
@@ -352,17 +352,17 @@ namespace Discussit
                 if (task == tskGetManagedCommunities)
                 {
                     QuerySnapshot qs = (QuerySnapshot)task.Result;
-                    SetManagedCommunities(qs.Documents);
+                    SetManagedCommunitiesDialog(qs.Documents);
                 }
                 else if (task == tskGetCommunities)
                 {
                     QuerySnapshot qs = (QuerySnapshot)task.Result;
-                    SetCommunities(qs.Documents);
+                    SetCommunitiesDialog(qs.Documents);
                 }
                 else if (task == tskGetPosts)
                 {
                     QuerySnapshot qs = (QuerySnapshot)task.Result;
-                    SetPosts(qs.Documents);
+                    SetPostsDialog(qs.Documents);
                 }
                 else if (task == tskGetCommunity)
                 {

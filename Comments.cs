@@ -1,7 +1,6 @@
 ﻿using Android.App;
 using Android.Gms.Tasks;
 using Firebase.Firestore;
-using Javax.Crypto;
 using System.Collections.Generic;
 
 namespace Discussit
@@ -66,7 +65,7 @@ namespace Discussit
         /// Adds comments from the provided list of Firestore documents to the comment adapter.
         /// </summary>
         /// <param name="documents">The list of Firestore documents representing comments.</param>
-        internal void AddComments(IList<DocumentSnapshot> documents)
+        public void AddComments(IList<DocumentSnapshot> documents)
         {
             Comment comment;
             foreach (DocumentSnapshot document in documents)
@@ -91,7 +90,7 @@ namespace Discussit
         /// </summary>
         /// <param name="documents">The list of Firestore documents representing comments.</param>
         /// <param name="parentComment">The parent comment for the subComments.</param>
-        internal void AddSubComments(IList<DocumentSnapshot> documents, Comment parentComment)
+        public void AddSubComments(IList<DocumentSnapshot> documents, Comment parentComment)
         {
             Comment comment;
             foreach (DocumentSnapshot document in documents)
@@ -112,19 +111,10 @@ namespace Discussit
         }
 
         /// <summary>
-        /// Removes a comment from the comment adapter.
-        /// </summary>
-        /// <param name="comment">The comment to remove.</param>
-        public void RemoveComment(Comment comment)
-        {
-            CommentAdapter.RemoveComment(comment);
-        }
-
-        /// <summary>
         /// Retrieves all comments from the Firestore collection.
         /// </summary>
         /// <returns>A task representing the asynchronous operation.</returns>
-        internal Task GetComments()
+        public Task GetComments()
         {
             return fbd.GetCollection(Path + "/" + General.COMMENTS_COLLECTION);
         }

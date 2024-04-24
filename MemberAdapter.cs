@@ -2,7 +2,6 @@
 using Android.Content;
 using Android.Views;
 using Android.Widget;
-using Java.Lang.Reflect;
 using System.Collections.Generic;
 using System.Linq;
 

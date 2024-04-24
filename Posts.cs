@@ -12,8 +12,8 @@ namespace Discussit
     internal class Posts
     {
         private readonly FbData fbd;
-        public string Path { get; private set; }
         public PostAdapter PostAdapter { get; }
+        public string Path { get; private set; }
         private IListenerRegistration onCollectionChangeListener;
         public long PostCount => PostAdapter.Count;
 
@@ -58,7 +58,7 @@ namespace Discussit
         /// Adds posts to the collection based on the provided list of document snapshots.
         /// </summary>
         /// <param name="documents">The list of document snapshots representing the posts to add.</param>
-        internal void AddPosts(IList<DocumentSnapshot> documents)
+        public void AddPosts(IList<DocumentSnapshot> documents)
         {
             PostAdapter.Clear();
             Post post;

@@ -1,7 +1,5 @@
-﻿using Android.Graphics;
-using Android.Runtime;
+﻿using Android.Runtime;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 
 namespace Discussit
@@ -25,7 +23,6 @@ namespace Discussit
         public const string FIELD_USER_COMMUNITIES = "Communities";
         public const string FIELD_USER_MANAGING_COMMUNITIES = "Managing Communities";
         public const string FIELD_USER_POSTS = "Posts";
-        public const string FIELD_USER_COMMENTS = "Comments";
         public const string FIELD_DATE = "Date";
         public const string FIELD_COMMUNITY_NAME = "Community Name";
         public const string FIELD_COMMUNITY_DESCRIPTION = "Community Description";

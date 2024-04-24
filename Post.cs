@@ -1,8 +1,6 @@
 ﻿using Android.App;
 using Android.Gms.Tasks;
-using Android.Widget;
 using Java.Util;
-using Kotlin.Reflect;
 using Newtonsoft.Json;
 using System;
 
@@ -121,7 +119,6 @@ namespace Discussit
             Comment comment = new Comment(description, creator, Path);
             fbd.SetDocument(Path + "/" + General.COMMENTS_COLLECTION, string.Empty, out string commentId, comment.HashMap);
             comment.Id = commentId;
-            creator.UpdateArrayField(General.FIELD_USER_COMMENTS, comment.Path);
             IncrementComments(1);
         }
 
@@ -132,25 +129,6 @@ namespace Discussit
         public Task GetComments()
         {
             return Comments.GetComments();
-        }
-
-        /// <summary>
-        /// Removes a comment from the post.
-        /// </summary>
-        /// <param name="commentID">ID of the comment to be removed.</param>
-        /// <param name="member">Member attempting to remove the comment.</param>
-        public void RemoveComment(string commentID, Member member)
-        {
-            Comment comment = Comments.GetCommentById(commentID);
-            if (comment != null)
-            {
-                if (comment.CreatorUID == member.UserID || member.GetType() == typeof(Admin) || member.GetType() == typeof(Leader))
-                {
-                    comment.DeleteComment();
-                    Comments.RemoveComment(comment);
-                    IncrementComments(-1);
-                }
-            }
         }
 
         /// <summary>

@@ -1,12 +1,9 @@
-﻿using Android.Views;
+﻿using Android.Content;
+using Android.Views;
 using Android.Widget;
-using static Java.Util.Jar.Attributes;
-using System.Collections.Generic;
-using Android.Content;
-using Android.App;
 using Firebase.Firestore;
+using System.Collections.Generic;
 using System.Linq;
-using Newtonsoft.Json.Bson;
 
 namespace Discussit
 {

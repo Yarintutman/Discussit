@@ -83,7 +83,7 @@ namespace Discussit
             {
                 CommentWidth = (int)TypedValue.ApplyDimension(ComplexUnitType.Dip,
                                General.SUB_COMMENT_PADDING, context.Resources.DisplayMetrics) *
-                               (LowestSubcommentCount() - 1);
+                               (HighestSubcommentCount() - 1);
             }
             LinearLayout llComment = v.FindViewById<LinearLayout>(Resource.Id.llComment);
             ViewGroup.LayoutParams layoutParams = llComment.LayoutParameters;
@@ -164,7 +164,7 @@ namespace Discussit
         /// <summary>
         /// Returns the count of parent comments of the lowest subcomment in the hierarchy
         /// </summary>
-        public int LowestSubcommentCount()
+        public int HighestSubcommentCount()
         {
             return lstComments.Max(comment => General.AppearanceCount<string>(
                                    General.StringToList(comment.Path, '/'),

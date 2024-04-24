@@ -1,17 +1,11 @@
 ﻿using Android.App;
 using Android.Content;
 using Android.Gms.Tasks;
-using Android.Icu.Text;
-using Android.Runtime;
-using Android.Util;
-using AndroidX.Annotations;
 using Firebase.Firestore;
 using Java.Util;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Bson;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 
 namespace Discussit
@@ -32,6 +26,35 @@ namespace Discussit
         public DateTime CreationDate { get; set; }
         public long MemberCount { get; set; }
         public long PostCount { get; set; }
+        /// <summary>
+        /// Gets the HashMap representation of the community.
+        /// </summary>
+        [JsonIgnore]
+        private HashMap HashMap
+        {
+            get
+            {
+                HashMap hm = new HashMap();
+                hm.Put(General.FIELD_COMMUNITY_NAME, Name);
+                hm.Put(General.FIELD_COMMUNITY_DESCRIPTION, Description);
+                hm.Put(General.FIELD_DATE, fbd.DateTimeToFirestoreTimestamp(CreationDate));
+                hm.Put(General.FIELD_MEMBER_COUNT, MemberCount);
+                hm.Put(General.FIELD_POST_COUNT, PostCount);
+                return hm;
+            }
+        }
+
+        /// <summary>
+        /// Gets the collection path of the community.
+        /// </summary>
+        [JsonIgnore]
+        public string CollectionPath
+        {
+            get
+            {
+                return General.COMMUNITIES_COLLECTION + "/" + Id;
+            }
+        }
 
         /// <summary>
         /// Initializes a new instance of the Community class with provided name and description.
@@ -70,46 +93,6 @@ namespace Discussit
         public Community()
         {
             fbd = new FbData();
-        }
-
-        /// <summary>
-        /// Gets the HashMap representation of the community.
-        /// </summary>
-        [JsonIgnore]
-        private HashMap HashMap
-        {
-            get
-            {
-                HashMap hm = new HashMap();
-                hm.Put(General.FIELD_COMMUNITY_NAME, Name);
-                hm.Put(General.FIELD_COMMUNITY_DESCRIPTION, Description);
-                hm.Put(General.FIELD_DATE, fbd.DateTimeToFirestoreTimestamp(CreationDate));
-                hm.Put(General.FIELD_MEMBER_COUNT, MemberCount);
-                hm.Put(General.FIELD_POST_COUNT, PostCount);
-                return hm;
-            }
-        }
-
-        /// <summary>
-        /// Gets the collection path of the community.
-        /// </summary>
-        [JsonIgnore]
-        public string CollectionPath
-        {
-            get
-            {
-                return General.COMMUNITIES_COLLECTION + "/" + Id;
-            }
-        }
-
-        /// <summary>
-        /// Gets the count of a specific collection within the community.
-        /// </summary>
-        /// <param name="cName">The name of the collection.</param>
-        /// <returns>A task representing the asynchronous operation.</returns>
-        public Task GetCollectionCount(string cName)
-        {
-            return fbd.GetCollectionCount(CollectionPath + "/" + cName);
         }
 
         /// <summary>
@@ -256,16 +239,6 @@ namespace Discussit
                 { General.FIELD_COMMUNITY_DESCRIPTION, Description }
             };
             fbd.UpdateDocument(General.COMMUNITIES_COLLECTION, Id, fields);
-        }
-
-        /// <summary>
-        /// Deletes the community.
-        /// </summary>
-        /// <param name="member">The member performing the action.</param>
-        public void DeleteCommunity(Member member) 
-        {
-            if (member.GetType() == typeof(Leader))
-                fbd.DeleteDocument(General.COMMUNITIES_COLLECTION, Id);
         }
 
         /// <summary>

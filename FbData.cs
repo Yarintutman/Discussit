@@ -1,24 +1,11 @@
 ﻿using Android.App;
+using Android.Gms.Tasks;
+using Firebase;
 using Firebase.Auth;
 using Firebase.Firestore;
-using Firebase;
-using Android.Gms.Tasks;
 using Java.Util;
-using Firebase.Storage;
 using System;
-using Android.Graphics;
-using Android.Runtime;
-using System.Linq;
 using System.Collections.Generic;
-using System.Collections;
-using Android.Content;
-using Firebase.Firestore.Model;
-using AndroidX.Startup;
-using Google.Api;
-using static Android.Provider.CalendarContract;
-using Java.Lang.Reflect;
-using Kotlin.Contracts;
-using static Android.Content.Res.Resources;
 
 namespace Discussit
 {
@@ -202,28 +189,6 @@ namespace Discussit
         }
 
         /// <summary>
-        /// Retrieves the count of documents in a Firestore collection.
-        /// </summary>
-        /// <param name="cName">The name of the Firestore collection.</param>
-        /// <returns>A Task representing the asynchronous operation of fetching the document count.</returns>
-        public Task GetCollectionCount(string cName)
-        {
-            return firestore.Collection(cName).Count().Get(AggregateSource.Server);
-        }
-
-        /// <summary>
-        /// Retrieves documents from a Firestore collection where a specified field is equal to a given value.
-        /// </summary>
-        /// <param name="cName">The name of the Firestore collection.</param>
-        /// <param name="fName">The name of the field to filter by.</param>
-        /// <param name="fValue">The value to filter for.</param>
-        /// <returns>A Task representing the asynchronous operation of fetching documents.</returns>
-        public Task GetEqualToDocs(string cName, string fName, Java.Lang.Object fValue)
-        {
-            return firestore.Collection(cName).WhereEqualTo(fName, fValue).Get();
-        }
-
-        /// <summary>
         /// Retrieves documents from a Firestore collection group where a specified field is equal to a given value.
         /// </summary>
         /// <param name="cName">The name of the Firestore collection group containing the document.</param>
@@ -233,31 +198,6 @@ namespace Discussit
         public Task GetEqualToDocsInGroup(string cName, string fName, Java.Lang.Object fValue)
         {
             return firestore.CollectionGroup(cName).WhereEqualTo(fName, fValue).Get();
-        }
-
-        /// <summary>
-        /// Retrieves documents from a Firestore collection where a specified field is greater than a given value.
-        /// </summary>
-        /// <param name="cName">The name of the Firestore collection.</param>
-        /// <param name="fName">The name of the field to filter by.</param>
-        /// <param name="fValue">The value to compare against.</param>
-        /// <returns>A Task representing the asynchronous operation of fetching documents.</returns>
-        public Task GetGreaterThan(string cName, string fName, Java.Lang.Object fValue)
-        {
-            return firestore.Collection(cName).WhereGreaterThan(fName, fValue).Get();
-        }
-
-        /// <summary>
-        /// Updates a numeric field in a Firestore document by incrementing it with a specified value.
-        /// </summary>
-        /// <param name="cName">The name of the Firestore collection containing the document.</param>
-        /// <param name="docId">The ID of the document to update.</param>
-        /// <param name="fName">The name of the field to increment.</param>
-        /// <param name="incrementBy">The value by which to increment the field.</param>
-        /// <returns>A Task representing the asynchronous operation of updating the document.</returns>
-        public Task IncrementField(string cName, string docId, string fName, double incrementBy)
-        {
-            return firestore.Collection(cName).Document(docId).Update(fName, FieldValue.Increment(incrementBy));
         }
 
         /// <summary>
@@ -348,27 +288,6 @@ namespace Discussit
         }
 
         /// <summary>
-        /// Retrieves the download URL for a file stored in Firebase Storage.
-        /// </summary>
-        /// <param name="fbImagePath">The path to the file in Firebase Storage.</param>
-        /// <returns>A Task representing the asynchronous operation of getting the download URL.</returns>
-        public Task GetDownloadUrl(string fbImagePath)
-        {
-            StorageReference storageReference = FirebaseStorage.Instance.GetReference(fbImagePath);
-            return storageReference.GetDownloadUrl();
-        }
-
-        /// <summary>
-        /// Generates a new unique identifier for a Firestore collection.
-        /// </summary>
-        /// <returns>A string representing the new unique identifier.</returns>
-        public string GetNewCollectionId()
-        {
-            Guid guid = Guid.NewGuid();
-            return guid.ToString();
-        }
-
-        /// <summary>
         /// Converts a DateTime object to a Firestore Timestamp object.
         /// </summary>
         /// <param name="dt">The DateTime object to convert.</param>
@@ -388,7 +307,7 @@ namespace Discussit
         /// </summary>
         /// <param name="ts">The Firestore Timestamp to convert.</param>
         /// <returns>A DateTime object representing the converted timestamp.</returns>
-        public DateTime FirestoreTimestampToDateTime(Firebase.Timestamp ts)
+        public DateTime FirestoreTimestampToDateTime(Timestamp ts)
         {
             Java.Util.Date d = ts.ToDate();
 

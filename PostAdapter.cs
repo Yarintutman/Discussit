@@ -4,7 +4,6 @@ using Android.Widget;
 using Firebase.Firestore;
 using System.Collections.Generic;
 using System.Linq;
-using Android.Gms.Tasks;
 
 namespace Discussit
 {
@@ -86,17 +85,6 @@ namespace Discussit
                 };
                 AddPost(post);
             }
-        }
-
-        /// <summary>
-        /// Retrieves all of the posts of a given user from the database
-        /// </summary>
-        /// <param name="CreatorUid">The id of the user</param>
-        /// <returns>A task representing the asynchronous operation of getting the posts.</returns>
-        public Task GetAllUserPosts(string CreatorUid)
-        {
-            FbData fbd = new FbData();
-            return fbd.GetEqualToDocsInGroup(General.POSTS_COLLECTION, General.FIELD_POST_CREATOR_UID, CreatorUid);
         }
 
         /// <summary>

@@ -1,10 +1,7 @@
 ﻿using Android.App;
-using Android.Content;
 using Android.Gms.Tasks;
-using AndroidX.Browser.Trusted;
 using Firebase.Firestore;
 using System.Collections.Generic;
-using System.Runtime.Remoting.Contexts;
 using Context = Android.Content.Context;
 
 namespace Discussit
@@ -66,7 +63,7 @@ namespace Discussit
         /// Adds members from the provided list of document snapshots to the collection.
         /// </summary>
         /// <param name="documents">The list of document snapshots representing members.</param>
-        internal void AddMembers(IList<DocumentSnapshot> documents)
+        public void AddMembers(IList<DocumentSnapshot> documents)
         {
             MemberAdapter.Clear();
             Member member;
@@ -98,20 +95,10 @@ namespace Discussit
         }
 
         /// <summary>
-        /// Gets members of a specific type from the collection.
-        /// </summary>
-        /// <param name="type">The type of members to retrieve.</param>
-        /// <returns>A task representing the asynchronous operation.</returns>
-        public Task GetTypeMembers(string type)
-        {
-            return fbd.GetEqualToDocs(Path + "/" + General.MEMBERS_COLLECTION, General.FIELD_MEMBER_TYPE, type);
-        }
-
-        /// <summary>
         /// Gets all members from the collection.
         /// </summary>
         /// <returns>A task representing the asynchronous operation.</returns>
-        internal Task GetMembers()
+        public  Task GetMembers()
         {
             return fbd.GetCollection(Path + "/" + General.MEMBERS_COLLECTION);
         }
@@ -209,7 +196,6 @@ namespace Discussit
         {
             return MemberAdapter.GetMemberByUID(UID);
         }
-
 
         /// <summary>
         /// Checks if the member with the specified UID exists in the collection.

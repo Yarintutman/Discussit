@@ -2,7 +2,6 @@
 using Android.Gms.Tasks;
 using Firebase.Firestore;
 using System.Collections.Generic;
-using static Java.Util.Jar.Attributes;
 
 namespace Discussit
 {
@@ -58,7 +57,7 @@ namespace Discussit
         /// Adds communities from the provided list of Firestore documents to the community adapter.
         /// </summary>
         /// <param name="documents">The list of Firestore documents representing communities.</param>
-        internal void AddCommunities(IList<DocumentSnapshot> documents)
+        public void AddCommunities(IList<DocumentSnapshot> documents)
         {
             CommunityAdapter.Clear(); 
             Community community;
@@ -81,7 +80,7 @@ namespace Discussit
         /// Retrieves all communities from the Firestore collection.
         /// </summary>
         /// <returns>A task representing the asynchronous operation.</returns>
-        internal Task GetCommunities()
+        public Task GetCommunities()
         {
             return fbd.GetCollection(General.COMMUNITIES_COLLECTION);
         }

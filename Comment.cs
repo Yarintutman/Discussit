@@ -3,7 +3,6 @@ using Android.Gms.Tasks;
 using Java.Util;
 using Newtonsoft.Json;
 using System;
-using System.ComponentModel.Design;
 
 namespace Discussit
 {
@@ -109,46 +108,12 @@ namespace Discussit
         }
 
         /// <summary>
-        /// Method to remove a sub-comment.
-        /// </summary>
-        /// <param name="commentID">The ID of the sub-comment to be removed.</param>
-        /// <param name="member">The member removing the sub-comment.</param>
-        public void RemoveComment(string commentID, Member member)
-        {
-            Comment comment = Comments.GetCommentById(commentID);
-            if (comment != null)
-            {
-                if (comment.CreatorUID == member.UserID || member.GetType() == typeof(Admin) || member.GetType() == typeof(Leader))
-                {
-                    comment.DeleteComment();
-                    Comments.RemoveComment(comment);
-                    if (Comments.CommentsCount == 0)
-                    {
-                        HasComments = false;
-                        fbd.UpdateField(ParentPath + "/" + General.COMMENTS_COLLECTION, Id, General.FIELD_HAS_COMMENTS, HasComments);
-                    }
-                }
-            }
-        }
-
-        /// <summary>
         /// Method to retrieve all sub-comments.
         /// </summary>
         /// <returns>A task representing the asynchronous operation.</returns>
         public Task GetComments()
         {
             return Comments.GetComments();
-        }
-
-        /// <summary>
-        /// Method to delete the comment.
-        /// </summary>
-        public void DeleteComment()
-        {
-            if (ParentPath != null)
-            {
-                fbd.DeleteDocument(ParentPath + "/" + General.COMMENTS_COLLECTION, Id);
-            }
         }
 
         /// <summary>

@@ -3,7 +3,6 @@ using Android.Content;
 using Android.Gms.Tasks;
 using Android.OS;
 using Android.Views;
-using Android.Views.InputMethods;
 using Android.Widget;
 using AndroidX.AppCompat.App;
 using Firebase.Firestore;
@@ -113,7 +112,6 @@ namespace Discussit
             {
                 SetRegisterMode();
             }
-            HideSoftKeyboard();
         }
 
         /// <summary>
@@ -178,18 +176,6 @@ namespace Discussit
             Finish();
         }
 
-        /// <summary>
-        /// Hides the soft keyboard if it's currently visible.
-        /// </summary>
-        private void HideSoftKeyboard()
-        {
-            View currentFocus = this.CurrentFocus;
-            if (currentFocus != null)
-            {
-                InputMethodManager inputMethodManager = (InputMethodManager)GetSystemService(InputMethodService);
-                inputMethodManager.HideSoftInputFromWindow(currentFocus.WindowToken, HideSoftInputFlags.None);
-            }
-        }
         /// <summary>
         /// Overrides the back button functionality to switch between login and registration modes.
         /// </summary>

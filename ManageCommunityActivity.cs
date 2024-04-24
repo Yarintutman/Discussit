@@ -301,7 +301,7 @@ namespace Discussit
         /// <param name="menu">The context menu that is being built.</param>
         /// <param name="v">The view for which the context menu is being created.</param>
         /// <param name="menuInfo">Extra information about the item for which the context menu should be shown.</param>
-        public override void OnCreateContextMenu(Android.Views.IContextMenu menu, Android.Views.View v, Android.Views.IContextMenuContextMenuInfo menuInfo)
+        public override void OnCreateContextMenu(IContextMenu menu, View v, IContextMenuContextMenuInfo menuInfo)
         {
             if (v == tvSortBy)
             {
@@ -309,7 +309,7 @@ namespace Discussit
             }
             else
             {
-                AdapterView.AdapterContextMenuInfo info = menuInfo as AdapterView.AdapterContextMenuInfo;
+                AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)menuInfo;
                 if (info != null)
                 {
                     int position = info.Position;
@@ -330,16 +330,16 @@ namespace Discussit
         /// </summary>
         /// <param name="item">The selected menu item.</param>
         /// <returns>True if the item selection was handled, otherwise false.</returns>
-        public override bool OnContextItemSelected(Android.Views.IMenuItem item)
+        public override bool OnContextItemSelected(IMenuItem item)
         {
             if (item.ItemId == Resource.Id.itemPromote)
                 Promote();
             else if (item.ItemId == Resource.Id.itemDemote)
                 Demote();
             else if (item.TitleFormatted.ToString() == Resources.GetString(Resource.String.transferOwner))
-                ConfirmTransferOwner(Resources.GetString(Resource.String.confirmTransferOwner));
+                ConfirmTransferOwnerDialog(Resources.GetString(Resource.String.confirmTransferOwner));
             else if (item.ItemId == Resource.Id.itemKick)
-                ConfirmKickMember();
+                ConfirmKickMemberDialog();
             else if (item.ItemId == Resource.Id.itemSortByRank)
                 SetSorting(Resources.GetString(Resource.String.sortbyRank));
             else if (item.ItemId == Resource.Id.itemSortByJoinDate)
@@ -352,7 +352,7 @@ namespace Discussit
         /// <summary>
         /// Displays a confirmation dialog for kicking a member.
         /// </summary>
-        private void ConfirmKickMember()
+        private void ConfirmKickMemberDialog()
         {
             currentDialog = new Dialog(this);
             currentDialog.SetContentView(Resource.Layout.dialog_confirm);
@@ -370,7 +370,7 @@ namespace Discussit
         /// Displays a confirmation dialog for transferring ownership.
         /// </summary>
         /// <param name="dialogText">The text to be displayed in the dialog.</param>
-        private void ConfirmTransferOwner(string dialogText)
+        private void ConfirmTransferOwnerDialog(string dialogText)
         {
             currentDialog = new Dialog(this);
             currentDialog.SetContentView(Resource.Layout.dialog_confirm);
@@ -387,9 +387,9 @@ namespace Discussit
         /// <summary>
         /// Displays a confirmation dialog for promoting a admin.
         /// </summary>
-        private void ConfirmPromoteAdmin()
+        private void ConfirmPromoteAdminDialog()
         {
-            ConfirmTransferOwner(Resources.GetString(Resource.String.confirmPromoteAdmin));
+            ConfirmTransferOwnerDialog(Resources.GetString(Resource.String.confirmPromoteAdmin));
         }
 
         /// <summary>
@@ -398,7 +398,7 @@ namespace Discussit
         private void Promote()
         {
             if (currentMember is Admin)
-                ConfirmPromoteAdmin();
+                ConfirmPromoteAdminDialog();
             else
                 members.Promote(currentMember);
         }
@@ -425,10 +425,10 @@ namespace Discussit
         }
 
         /// <summary>
-        /// Kick a member from the community
+        /// Event handler for getting user information.
         /// </summary>
         /// <param name="sender">The object that raised the event.</param>
-        /// <param name="e">The event data.</param>
+        /// <param name="e">The event arguments.</param>
         public void GetUser(object sender, EventArgs e)
         {
             currentMemberAsUser = new User(currentMember.UserID);

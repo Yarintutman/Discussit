@@ -176,9 +176,9 @@ namespace Discussit
         /// <param name="menu">The context menu that is being built.</param>
         /// <param name="v">The view for which the context menu is being created.</param>
         /// <param name="menuInfo">Extra information about the item for which the context menu should be shown.</param>
-        public override void OnCreateContextMenu(Android.Views.IContextMenu menu, Android.Views.View v, Android.Views.IContextMenuContextMenuInfo menuInfo)
+        public override void OnCreateContextMenu(IContextMenu menu, View v, IContextMenuContextMenuInfo menuInfo)
         {
-            AdapterView.AdapterContextMenuInfo info = menuInfo as AdapterView.AdapterContextMenuInfo;
+            AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)menuInfo;
             if (info != null)
             {
                 int position = info.Position;
@@ -270,7 +270,6 @@ namespace Discussit
         /// <param name="error"Not in use.</param>
         public void OnEvent(Java.Lang.Object obj, FirebaseFirestoreException error)
         {
-            
             GetMembers();
             GetComments();
         }

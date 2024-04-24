@@ -9,8 +9,6 @@ using Android.Widget;
 using AndroidX.AppCompat.App;
 using Firebase.Firestore;
 using Java.Lang;
-using System.Globalization;
-using System.Threading;
 
 namespace Discussit
 {
@@ -345,7 +343,7 @@ namespace Discussit
             }
             else
             {
-                AdapterView.AdapterContextMenuInfo info = menuInfo as AdapterView.AdapterContextMenuInfo;
+                AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)menuInfo;
                 if (info != null)
                 {
                     int position = info.Position;
