@@ -88,7 +88,6 @@ namespace Discussit
         public bool Save()
         {
             bool success = spd.PutString(General.KEY_EMAIL, Email);
-            success = success && spd.PutString(General.KEY_UID, Id);
             success = success && spd.PutString(General.KEY_PASSWORD, Password);
             success = success && spd.PutBool(General.KEY_REGISTERED, true);
             return success;
